@@ -6,11 +6,12 @@
   "license": "MIT",
   "scripts": {
     "check:skeleton": "node scripts/check-skeleton.cjs",
-    "check:syntax": "node --check scripts/check-skeleton.cjs && node --check scripts/check-license-audit.cjs && node --check scripts/release-check.cjs",
+    "check:syntax": "node --check scripts/check-skeleton.cjs && node --check scripts/check-license-audit.cjs && node --check scripts/release-check.cjs && node --check scripts/check-pack.cjs && node --check packages/htmdoc-spec/src/index.mjs && node --check packages/html-parser/src/index.mjs && node --check packages/html-doc-extractor/src/index.mjs && node --check packages/html-doc-adapter/src/index.mjs && node --check packages/cem-adapter/src/index.mjs && node --check packages/html-doc-source-map/src/index.mjs",
     "license:audit": "node scripts/check-license-audit.cjs",
+    "pack:check": "node scripts/check-pack.cjs",
     "release:check": "node scripts/release-check.cjs",
-    "release:gate": "npm run check:syntax && npm run check:skeleton && npm run license:audit && npm run release:check && npm pack --dry-run --json",
-    "test": "npm run check:skeleton",
+    "release:gate": "npm run check:syntax && npm run check:skeleton && npm run license:audit && npm test && npm run release:check && npm run pack:check",
+    "test": "node --test test",
     "test:all": "npm run release:gate"
   },
   "workspaces": [

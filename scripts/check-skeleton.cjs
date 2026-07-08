@@ -9,17 +9,27 @@ const requiredPaths = [
   "RELEASE_CHECKLIST.md",
   "THIRD_PARTY_NOTICES.md",
   "LICENSE",
+  ".npmignore",
   "package.json",
   "pnpm-workspace.yaml",
   "examples/basic/README.md",
   "fixtures/README.md",
   "test/README.md",
+  "test/htmdoc.test.mjs",
+  "fixtures/basic.html",
   "packages/htmdoc-spec/package.json",
+  "packages/htmdoc-spec/src/index.mjs",
   "packages/html-parser/package.json",
+  "packages/html-parser/src/index.mjs",
   "packages/html-doc-extractor/package.json",
+  "packages/html-doc-extractor/src/index.mjs",
   "packages/html-doc-adapter/package.json",
+  "packages/html-doc-adapter/src/index.mjs",
   "packages/cem-adapter/package.json",
-  "packages/html-doc-source-map/package.json"
+  "packages/cem-adapter/src/index.mjs",
+  "packages/html-doc-source-map/package.json",
+  "packages/html-doc-source-map/src/index.mjs",
+  "scripts/check-pack.cjs"
 ];
 
 let failed = false;

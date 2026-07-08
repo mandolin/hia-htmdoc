@@ -15,7 +15,15 @@ This repository is planned as an umbrella monorepo for HTML documentation specif
 
 ## Status
 
-This workspace is currently a skeleton. Runtime parser dependencies and public package publishing remain intentionally disabled until the foundation ADRs are accepted.
+This workspace contains the first HTMDoc foundation slice:
+
+- a parse5-backed HTML parser boundary;
+- unprefixed HTMDoc annotation extraction;
+- a Custom Elements Manifest bridge;
+- a draft `hia-htmdoc-extraction@0.1.0` artifact shape;
+- a HIA core document adapter.
+
+Packages remain private until the public package naming and release sequence are finalized.
 
 ## Development
 
