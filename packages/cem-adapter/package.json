@@ -1,0 +1,7 @@
+{
+  "name": "@hia-doc/cem-adapter",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Bridges Custom Elements Manifest artifacts to HIA.",
+  "license": "MIT"
+}

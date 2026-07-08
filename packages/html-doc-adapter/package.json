@@ -1,0 +1,7 @@
+{
+  "name": "@hia-doc/html-doc-adapter",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Converts HTMDoc extraction artifacts to HIA core documents.",
+  "license": "MIT"
+}

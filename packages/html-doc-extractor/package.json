@@ -1,0 +1,7 @@
+{
+  "name": "@hia-doc/html-doc-extractor",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Extracts HTMDoc artifacts from HTML sources.",
+  "license": "MIT"
+}
