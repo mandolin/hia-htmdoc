@@ -20,6 +20,7 @@ This workspace contains the first HTMDoc foundation slice:
 - a parse5-backed HTML parser boundary;
 - unprefixed HTMDoc annotation extraction;
 - a Custom Elements Manifest bridge;
+- Web Components fixture generation for CEM and HTML/template inputs;
 - a draft `hia-htmdoc-extraction@0.1.0` artifact shape;
 - a HIA core document adapter.
 
@@ -28,5 +29,7 @@ Packages remain private until the public package naming and release sequence are
 ## Development
 
 ```sh
+npm run build:fixtures
+npm run check:fixtures
 npm run release:gate
 ```

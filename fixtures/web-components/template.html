@@ -1,0 +1,31 @@
+<!--
+@component hia-card
+@description Card custom element usage surface.
+@attr variant Controls the visual tone.
+@attr dismissible Enables the dismiss action.
+@slot default Main card content.
+@slot actions Action controls displayed in the footer.
+@event hia-card-dismiss Fired when the user requests dismissal.
+@stylehook ::part(action) Action area part.
+@stylehook --hia-card-accent Accent color custom property.
+-->
+<hia-card variant="info" dismissible>
+  <strong>Project status</strong>
+  <button slot="actions">Open</button>
+</hia-card>
+
+<!--
+@template hia-card-template
+@description Template used by the hia-card shadow root.
+@slot actions Action controls displayed in the footer.
+-->
+<template id="hia-card-template">
+  <article part="surface">
+    <header part="header">
+      <slot></slot>
+    </header>
+    <footer part="action">
+      <slot name="actions"></slot>
+    </footer>
+  </article>
+</template>

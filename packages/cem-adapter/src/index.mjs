@@ -21,26 +21,125 @@ export function cemManifestToHtmlExtraction(manifest, options = {}) {
         id: componentId,
         kind: HTMDOC_SYMBOL_KINDS.component,
         name: declaration.tagName,
-        summary: declaration.description || declaration.summary || undefined,
+        summary: summaryFrom(declaration),
         source: createCemSource(sourcePath),
         metadata: {
           origin: "custom-elements-manifest",
           modulePath: moduleEntry.path ?? null,
-          declarationName: declaration.name ?? null
+          declarationName: declaration.name ?? null,
+          customElement: declaration.customElement ?? true,
+          superclass: declaration.superclass ?? null,
+          status: declaration.status ?? null,
+          deprecated: declaration.deprecated ?? null,
+          exports: findCustomElementExports(moduleEntry, declaration),
+          javascript: {
+            members: summarizeMembers(declaration.members),
+            methods: summarizeMembers(declaration.methods)
+          }
         }
       });
 
       for (const attr of declaration.attributes ?? []) {
-        symbols.push(createChildSymbol("attr", HTMDOC_SYMBOL_KINDS.attribute, attr.name, attr.description, componentId, sourcePath, usedIds));
+        symbols.push(createChildSymbol({
+          tag: "attr",
+          kind: HTMDOC_SYMBOL_KINDS.attribute,
+          name: attr.name,
+          summary: summaryFrom(attr),
+          parentId: componentId,
+          sourcePath,
+          usedIds,
+          metadata: {
+            fieldName: attr.fieldName ?? null,
+            type: typeText(attr.type),
+            default: attr.default ?? null
+          }
+        }));
       }
       for (const slot of declaration.slots ?? []) {
-        symbols.push(createChildSymbol("slot", HTMDOC_SYMBOL_KINDS.slot, slot.name || "default", slot.description, componentId, sourcePath, usedIds));
+        symbols.push(createChildSymbol({
+          tag: "slot",
+          kind: HTMDOC_SYMBOL_KINDS.slot,
+          name: slot.name || "default",
+          summary: summaryFrom(slot),
+          parentId: componentId,
+          sourcePath,
+          usedIds
+        }));
+      }
+      for (const event of declaration.events ?? []) {
+        symbols.push(createChildSymbol({
+          tag: "event",
+          kind: HTMDOC_SYMBOL_KINDS.event,
+          name: event.name,
+          summary: summaryFrom(event),
+          parentId: componentId,
+          sourcePath,
+          usedIds,
+          metadata: {
+            type: typeText(event.type)
+          }
+        }));
       }
       for (const cssPart of declaration.cssParts ?? []) {
-        symbols.push(createChildSymbol("stylehook", HTMDOC_SYMBOL_KINDS.styleHook, `::part(${cssPart.name})`, cssPart.description, componentId, sourcePath, usedIds));
+        symbols.push(createChildSymbol({
+          tag: "stylehook",
+          kind: HTMDOC_SYMBOL_KINDS.styleHook,
+          name: `::part(${cssPart.name})`,
+          summary: summaryFrom(cssPart),
+          parentId: componentId,
+          sourcePath,
+          usedIds,
+          metadata: {
+            styleHookKind: "css-part",
+            cssName: cssPart.name
+          }
+        }));
       }
       for (const cssProperty of declaration.cssProperties ?? []) {
-        symbols.push(createChildSymbol("stylehook", HTMDOC_SYMBOL_KINDS.styleHook, cssProperty.name, cssProperty.description, componentId, sourcePath, usedIds));
+        symbols.push(createChildSymbol({
+          tag: "stylehook",
+          kind: HTMDOC_SYMBOL_KINDS.styleHook,
+          name: cssProperty.name,
+          summary: summaryFrom(cssProperty),
+          parentId: componentId,
+          sourcePath,
+          usedIds,
+          metadata: {
+            styleHookKind: "css-custom-property",
+            syntax: cssProperty.syntax ?? null,
+            type: typeText(cssProperty.type),
+            default: cssProperty.default ?? null
+          }
+        }));
+      }
+      for (const cssState of declaration.cssStates ?? []) {
+        symbols.push(createChildSymbol({
+          tag: "stylehook",
+          kind: HTMDOC_SYMBOL_KINDS.styleHook,
+          name: `:state(${cssState.name})`,
+          summary: summaryFrom(cssState),
+          parentId: componentId,
+          sourcePath,
+          usedIds,
+          metadata: {
+            styleHookKind: "css-state",
+            cssName: cssState.name
+          }
+        }));
+      }
+      for (const demo of declaration.demos ?? []) {
+        symbols.push(createChildSymbol({
+          tag: "demo",
+          kind: HTMDOC_SYMBOL_KINDS.example,
+          name: demo.url ?? demo.description ?? `${declaration.tagName} demo`,
+          summary: summaryFrom(demo),
+          parentId: componentId,
+          sourcePath,
+          usedIds,
+          metadata: {
+            url: demo.url ?? null
+          }
+        }));
       }
     }
   }
@@ -84,7 +183,7 @@ export function cemManifestToHtmlExtraction(manifest, options = {}) {
   };
 }
 
-function createChildSymbol(tag, kind, name, summary, parentId, sourcePath, usedIds) {
+function createChildSymbol({ tag, kind, name, summary, parentId, sourcePath, usedIds, metadata = {} }) {
   return {
     id: allocateId(`cem:${tag}:${slug(parentId)}:${slug(name)}`, usedIds),
     kind,
@@ -94,9 +193,45 @@ function createChildSymbol(tag, kind, name, summary, parentId, sourcePath, usedI
     source: createCemSource(sourcePath),
     metadata: {
       origin: "custom-elements-manifest",
-      tag
+      tag,
+      ...metadata
     }
   };
+}
+
+function findCustomElementExports(moduleEntry, declaration) {
+  return (moduleEntry.exports ?? [])
+    .filter((exportEntry) => exportEntry.kind === "custom-element-definition")
+    .filter((exportEntry) => exportEntry.name === declaration.tagName || exportEntry.declaration?.name === declaration.name)
+    .map((exportEntry) => ({
+      name: exportEntry.name ?? null,
+      declaration: exportEntry.declaration ?? null
+    }));
+}
+
+function summarizeMembers(members = []) {
+  return members.map((member) => ({
+    kind: member.kind ?? null,
+    name: member.name ?? null,
+    summary: summaryFrom(member) ?? null,
+    type: typeText(member.type),
+    privacy: member.privacy ?? null,
+    static: member.static ?? false
+  }));
+}
+
+function summaryFrom(entry) {
+  return entry?.summary || entry?.description || undefined;
+}
+
+function typeText(type) {
+  if (!type) {
+    return null;
+  }
+  if (typeof type === "string") {
+    return type;
+  }
+  return type.text ?? null;
 }
 
 function createCemSource(sourcePath) {

@@ -1,0 +1,539 @@
+{
+  "schemaVersion": "0.2.0",
+  "id": "htmdoc:web-components:cem",
+  "title": "Web Components CEM Fixture",
+  "defaultLocale": "en",
+  "locales": [
+    "en"
+  ],
+  "nodes": [
+    {
+      "id": "root",
+      "kind": "root",
+      "title": "Web Components CEM Fixture",
+      "symbolIds": [
+        "cem:component:hia-card",
+        "cem:attr:cem-component-hia-card:variant",
+        "cem:attr:cem-component-hia-card:dismissible",
+        "cem:slot:cem-component-hia-card:default",
+        "cem:slot:cem-component-hia-card:actions",
+        "cem:event:cem-component-hia-card:hia-card-dismiss",
+        "cem:stylehook:cem-component-hia-card:part-header",
+        "cem:stylehook:cem-component-hia-card:part-action",
+        "cem:stylehook:cem-component-hia-card:-hia-card-accent",
+        "cem:stylehook:cem-component-hia-card:state-selected",
+        "cem:demo:cem-component-hia-card:examples-basic-index-html"
+      ]
+    }
+  ],
+  "symbols": [
+    {
+      "id": "cem:component:hia-card",
+      "name": "hia-card",
+      "kind": "html-component",
+      "summary": "A documented card custom element.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "modulePath": "src/hia-card.js",
+          "declarationName": "HiaCard",
+          "customElement": true,
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "status": null,
+          "deprecated": null,
+          "exports": [
+            {
+              "name": "hia-card",
+              "declaration": {
+                "name": "HiaCard",
+                "module": "src/hia-card.js"
+              }
+            }
+          ],
+          "javascript": {
+            "members": [
+              {
+                "kind": "field",
+                "name": "variant",
+                "summary": "Visual variant reflected from the variant attribute.",
+                "type": "\"info\" | \"success\" | \"warning\"",
+                "privacy": "public",
+                "static": false
+              },
+              {
+                "kind": "method",
+                "name": "dismiss",
+                "summary": "Requests that the card be dismissed.",
+                "type": null,
+                "privacy": "public",
+                "static": false
+              }
+            ],
+            "methods": []
+          }
+        }
+      }
+    },
+    {
+      "id": "cem:attr:cem-component-hia-card:variant",
+      "name": "variant",
+      "kind": "html-attribute",
+      "parentId": "cem:component:hia-card",
+      "summary": "Controls the visual tone.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "attr",
+          "fieldName": "variant",
+          "type": "\"info\" | \"success\" | \"warning\"",
+          "default": "\"info\""
+        }
+      }
+    },
+    {
+      "id": "cem:attr:cem-component-hia-card:dismissible",
+      "name": "dismissible",
+      "kind": "html-attribute",
+      "parentId": "cem:component:hia-card",
+      "summary": "Enables the dismiss action.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "attr",
+          "fieldName": "dismissible",
+          "type": "boolean",
+          "default": null
+        }
+      }
+    },
+    {
+      "id": "cem:slot:cem-component-hia-card:default",
+      "name": "default",
+      "kind": "html-slot",
+      "parentId": "cem:component:hia-card",
+      "summary": "Main card content.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "slot"
+        }
+      }
+    },
+    {
+      "id": "cem:slot:cem-component-hia-card:actions",
+      "name": "actions",
+      "kind": "html-slot",
+      "parentId": "cem:component:hia-card",
+      "summary": "Action controls displayed in the footer.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "slot"
+        }
+      }
+    },
+    {
+      "id": "cem:event:cem-component-hia-card:hia-card-dismiss",
+      "name": "hia-card-dismiss",
+      "kind": "html-event",
+      "parentId": "cem:component:hia-card",
+      "summary": "Fired when the user requests dismissal.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "event",
+          "type": "CustomEvent<{ source: \"button\" | \"keyboard\" }>"
+        }
+      }
+    },
+    {
+      "id": "cem:stylehook:cem-component-hia-card:part-header",
+      "name": "::part(header)",
+      "kind": "html-style-hook",
+      "parentId": "cem:component:hia-card",
+      "summary": "Header container.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "stylehook",
+          "styleHookKind": "css-part",
+          "cssName": "header"
+        }
+      }
+    },
+    {
+      "id": "cem:stylehook:cem-component-hia-card:part-action",
+      "name": "::part(action)",
+      "kind": "html-style-hook",
+      "parentId": "cem:component:hia-card",
+      "summary": "Action area.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "stylehook",
+          "styleHookKind": "css-part",
+          "cssName": "action"
+        }
+      }
+    },
+    {
+      "id": "cem:stylehook:cem-component-hia-card:-hia-card-accent",
+      "name": "--hia-card-accent",
+      "kind": "html-style-hook",
+      "parentId": "cem:component:hia-card",
+      "summary": "Accent color used by the card border.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "stylehook",
+          "styleHookKind": "css-custom-property",
+          "syntax": "<color>",
+          "type": null,
+          "default": "CanvasText"
+        }
+      }
+    },
+    {
+      "id": "cem:stylehook:cem-component-hia-card:state-selected",
+      "name": ":state(selected)",
+      "kind": "html-style-hook",
+      "parentId": "cem:component:hia-card",
+      "summary": "Applied when the card represents the current selection.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "stylehook",
+          "styleHookKind": "css-state",
+          "cssName": "selected"
+        }
+      }
+    },
+    {
+      "id": "cem:demo:cem-component-hia-card:examples-basic-index-html",
+      "name": "examples/basic/index.html",
+      "kind": "html-example",
+      "parentId": "cem:component:hia-card",
+      "summary": "Basic HIA card demo.",
+      "source": {
+        "model": "hia-source",
+        "modelVersion": "0.2.0",
+        "mode": "link",
+        "definedIn": {
+          "kind": "defined-in",
+          "relativePath": "fixtures/web-components/custom-elements.json",
+          "language": "html",
+          "position": {
+            "line": 1,
+            "column": 1
+          },
+          "range": {
+            "start": {
+              "line": 1,
+              "column": 1
+            },
+            "end": {
+              "line": 1,
+              "column": 1
+            }
+          }
+        },
+        "fragments": []
+      },
+      "diagnostics": [],
+      "metadata": {
+        "htmdoc": {
+          "annotation": null,
+          "origin": "custom-elements-manifest",
+          "tag": "demo",
+          "url": "examples/basic/index.html"
+        }
+      }
+    }
+  ],
+  "diagnostics": [],
+  "metadata": {
+    "sourceContract": "hia-htmdoc-extraction",
+    "sourceContractVersion": "0.1.0-draft",
+    "producer": {
+      "name": "@hia-doc/cem-adapter",
+      "version": "0.0.0"
+    },
+    "sourceMap": {
+      "kind": "hia-doc-source-map-ref",
+      "href": null,
+      "sourcesContentPolicy": "none"
+    }
+  }
+}

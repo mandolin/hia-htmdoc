@@ -5,12 +5,14 @@
   "description": "Workspace for HIA HTML/HTM documentation packages.",
   "license": "MIT",
   "scripts": {
+    "build:fixtures": "node scripts/build-fixtures.cjs",
+    "check:fixtures": "node scripts/check-fixtures.cjs",
     "check:skeleton": "node scripts/check-skeleton.cjs",
-    "check:syntax": "node --check scripts/check-skeleton.cjs && node --check scripts/check-license-audit.cjs && node --check scripts/release-check.cjs && node --check scripts/check-pack.cjs && node --check packages/htmdoc-spec/src/index.mjs && node --check packages/html-parser/src/index.mjs && node --check packages/html-doc-extractor/src/index.mjs && node --check packages/html-doc-adapter/src/index.mjs && node --check packages/cem-adapter/src/index.mjs && node --check packages/html-doc-source-map/src/index.mjs",
+    "check:syntax": "node --check scripts/check-skeleton.cjs && node --check scripts/check-license-audit.cjs && node --check scripts/release-check.cjs && node --check scripts/check-pack.cjs && node --check scripts/build-fixtures.cjs && node --check scripts/check-fixtures.cjs && node --check packages/htmdoc-spec/src/index.mjs && node --check packages/html-parser/src/index.mjs && node --check packages/html-doc-extractor/src/index.mjs && node --check packages/html-doc-adapter/src/index.mjs && node --check packages/cem-adapter/src/index.mjs && node --check packages/html-doc-source-map/src/index.mjs",
     "license:audit": "node scripts/check-license-audit.cjs",
     "pack:check": "node scripts/check-pack.cjs",
     "release:check": "node scripts/release-check.cjs",
-    "release:gate": "npm run check:syntax && npm run check:skeleton && npm run license:audit && npm test && npm run release:check && npm run pack:check",
+    "release:gate": "npm run check:syntax && npm run build:fixtures && npm run check:skeleton && npm run check:fixtures && npm run license:audit && npm test && npm run release:check && npm run pack:check",
     "test": "node --test test",
     "test:all": "npm run release:gate"
   },

@@ -8,6 +8,7 @@ export const HTMDOC_SYMBOL_KINDS = Object.freeze({
   template: "html-template",
   attribute: "html-attribute",
   slot: "html-slot",
+  event: "html-event",
   styleHook: "html-style-hook",
   a11yNote: "html-a11y-note",
   example: "html-example"
@@ -19,6 +20,7 @@ export const HTMDOC_TAGS = Object.freeze([
   "template",
   "attr",
   "slot",
+  "event",
   "stylehook",
   "a11y",
   "description",
@@ -32,6 +34,7 @@ const TAG_TO_KIND = Object.freeze({
   template: HTMDOC_SYMBOL_KINDS.template,
   attr: HTMDOC_SYMBOL_KINDS.attribute,
   slot: HTMDOC_SYMBOL_KINDS.slot,
+  event: HTMDOC_SYMBOL_KINDS.event,
   stylehook: HTMDOC_SYMBOL_KINDS.styleHook,
   a11y: HTMDOC_SYMBOL_KINDS.a11yNote,
   example: HTMDOC_SYMBOL_KINDS.example

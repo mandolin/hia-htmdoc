@@ -8,6 +8,8 @@ import { extractHtmlDoc } from "../packages/html-doc-extractor/src/index.mjs";
 import { parseHtml } from "../packages/html-parser/src/index.mjs";
 
 const fixture = await readFile(new URL("../fixtures/basic.html", import.meta.url), "utf8");
+const webComponentManifest = JSON.parse(await readFile(new URL("../fixtures/web-components/custom-elements.json", import.meta.url), "utf8"));
+const webComponentTemplate = await readFile(new URL("../fixtures/web-components/template.html", import.meta.url), "utf8");
 
 test("parseHtml wraps parse5 with source locations", () => {
   const parsed = parseHtml(fixture, { path: "fixtures/basic.html", fragment: true });
@@ -24,6 +26,7 @@ test("extractHtmlDoc maps unprefixed annotations to HTMDoc symbols", () => {
   assert.ok(kinds.includes("html-component"));
   assert.ok(kinds.includes("html-attribute"));
   assert.ok(kinds.includes("html-slot"));
+  assert.ok(kinds.includes("html-event"));
   assert.ok(kinds.includes("html-style-hook"));
   assert.ok(kinds.includes("html-a11y-note"));
   assert.equal(artifact.source.sourcesContent, undefined);
@@ -52,6 +55,7 @@ test("cemManifestToHtmlExtraction bridges Custom Elements Manifest symbols", () 
             tagName: "x-alert",
             description: "Custom alert element.",
             attributes: [{ name: "variant", description: "Visual variant." }],
+            events: [{ name: "close", description: "Dismiss event." }],
             slots: [{ name: "default", description: "Message content." }],
             cssParts: [{ name: "button", description: "Close button." }],
             cssProperties: [{ name: "--alert-color", description: "Text color." }]
@@ -63,5 +67,20 @@ test("cemManifestToHtmlExtraction bridges Custom Elements Manifest symbols", () 
 
   assert.equal(artifact.contract, "hia-htmdoc-extraction");
   assert.ok(artifact.symbols.some((symbol) => symbol.kind === "html-component" && symbol.name === "x-alert"));
+  assert.ok(artifact.symbols.some((symbol) => symbol.kind === "html-event" && symbol.name === "close"));
   assert.ok(artifact.symbols.some((symbol) => symbol.kind === "html-style-hook" && symbol.name === "--alert-color"));
+});
+
+test("web components fixture covers CEM and HTML template surfaces", () => {
+  const cemArtifact = cemManifestToHtmlExtraction(webComponentManifest, { path: "fixtures/web-components/custom-elements.json" });
+  const htmlArtifact = extractHtmlDoc(webComponentTemplate, { path: "fixtures/web-components/template.html", fragment: true });
+  const cemDocument = htmlExtractionToHiaDocument(cemArtifact, { title: "CEM Fixture" });
+  const htmlDocument = htmlExtractionToHiaDocument(htmlArtifact, { title: "HTML Fixture" });
+
+  assert.ok(cemArtifact.symbols.some((symbol) => symbol.kind === "html-event" && symbol.name === "hia-card-dismiss"));
+  assert.ok(cemArtifact.symbols.some((symbol) => symbol.kind === "html-style-hook" && symbol.name === ":state(selected)"));
+  assert.ok(cemArtifact.symbols.some((symbol) => symbol.kind === "html-example"));
+  assert.ok(htmlArtifact.symbols.some((symbol) => symbol.kind === "html-template" && symbol.name === "hia-card-template"));
+  assert.equal(cemDocument.symbols.length, cemArtifact.symbols.length);
+  assert.equal(htmlDocument.symbols.length, htmlArtifact.symbols.length);
 });

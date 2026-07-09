@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "2.1.0",
+  "readme": "README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/hia-card.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "HiaCard",
+          "tagName": "hia-card",
+          "customElement": true,
+          "summary": "A documented card custom element.",
+          "description": "Displays a compact content panel with optional action slot and dismiss event.",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "\"info\" | \"success\" | \"warning\""
+              },
+              "privacy": "public",
+              "description": "Visual variant reflected from the variant attribute."
+            },
+            {
+              "kind": "method",
+              "name": "dismiss",
+              "privacy": "public",
+              "description": "Requests that the card be dismissed."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "fieldName": "variant",
+              "type": {
+                "text": "\"info\" | \"success\" | \"warning\""
+              },
+              "default": "\"info\"",
+              "description": "Controls the visual tone."
+            },
+            {
+              "name": "dismissible",
+              "fieldName": "dismissible",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Enables the dismiss action."
+            }
+          ],
+          "events": [
+            {
+              "name": "hia-card-dismiss",
+              "type": {
+                "text": "CustomEvent<{ source: \"button\" | \"keyboard\" }>"
+              },
+              "description": "Fired when the user requests dismissal."
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Main card content."
+            },
+            {
+              "name": "actions",
+              "description": "Action controls displayed in the footer."
+            }
+          ],
+          "cssParts": [
+            {
+              "name": "header",
+              "description": "Header container."
+            },
+            {
+              "name": "action",
+              "description": "Action area."
+            }
+          ],
+          "cssProperties": [
+            {
+              "name": "--hia-card-accent",
+              "syntax": "<color>",
+              "default": "CanvasText",
+              "description": "Accent color used by the card border."
+            }
+          ],
+          "cssStates": [
+            {
+              "name": "selected",
+              "description": "Applied when the card represents the current selection."
+            }
+          ],
+          "demos": [
+            {
+              "url": "examples/basic/index.html",
+              "description": "Basic HIA card demo."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "hia-card",
+          "declaration": {
+            "name": "HiaCard",
+            "module": "src/hia-card.js"
+          }
+        }
+      ]
+    }
+  ]
+}

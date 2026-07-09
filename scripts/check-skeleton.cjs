@@ -29,7 +29,16 @@ const requiredPaths = [
   "packages/cem-adapter/src/index.mjs",
   "packages/html-doc-source-map/package.json",
   "packages/html-doc-source-map/src/index.mjs",
-  "scripts/check-pack.cjs"
+  "scripts/check-pack.cjs",
+  "scripts/build-fixtures.cjs",
+  "scripts/check-fixtures.cjs",
+  "fixtures/web-components/custom-elements.json",
+  "fixtures/web-components/template.html",
+  "fixtures/web-components/src/hia-card.js",
+  "fixtures/web-components/dist/custom-elements.htmdoc.json",
+  "fixtures/web-components/dist/custom-elements.hia.json",
+  "fixtures/web-components/dist/template.htmdoc.json",
+  "fixtures/web-components/dist/template.hia.json"
 ];
 
 let failed = false;
