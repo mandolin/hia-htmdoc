@@ -1,5 +1,6 @@
 export const HTMDOC_EXTRACTION_CONTRACT = "hia-htmdoc-extraction";
 export const HTMDOC_EXTRACTION_CONTRACT_VERSION = "0.1.0-draft";
+export const HTMDOC_EXTRACTION_SCHEMA_ID = "https://hia-doc.local/schema/hia-htmdoc-extraction-0.1.0-draft.json";
 export const HTMDOC_PROFILE_VERSION = "0.1.0-draft";
 
 export const HTMDOC_SYMBOL_KINDS = Object.freeze({
@@ -27,6 +28,124 @@ export const HTMDOC_TAGS = Object.freeze([
   "example",
   "lang"
 ]);
+
+export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: HTMDOC_EXTRACTION_SCHEMA_ID,
+  type: "object",
+  required: ["contract", "contractVersion", "producer", "profile", "source", "symbols", "annotations", "diagnostics", "sourceMap"],
+  additionalProperties: true,
+  properties: {
+    contract: { const: HTMDOC_EXTRACTION_CONTRACT },
+    contractVersion: { const: HTMDOC_EXTRACTION_CONTRACT_VERSION },
+    producer: { $ref: "#/$defs/producer" },
+    profile: { $ref: "#/$defs/profile" },
+    source: { $ref: "#/$defs/source" },
+    symbols: {
+      type: "array",
+      items: { $ref: "#/$defs/symbol" }
+    },
+    annotations: {
+      type: "array",
+      items: { type: "object" }
+    },
+    diagnostics: {
+      type: "array",
+      items: { $ref: "#/$defs/diagnostic" }
+    },
+    sourceMap: { type: "object" },
+    metadata: { type: "object" }
+  },
+  $defs: {
+    nonEmptyString: { type: "string", minLength: 1 },
+    producer: {
+      type: "object",
+      required: ["name", "version"],
+      additionalProperties: true,
+      properties: {
+        name: { $ref: "#/$defs/nonEmptyString" },
+        version: { $ref: "#/$defs/nonEmptyString" }
+      }
+    },
+    profile: {
+      type: "object",
+      required: ["name", "version"],
+      additionalProperties: true,
+      properties: {
+        name: { $ref: "#/$defs/nonEmptyString" },
+        version: { $ref: "#/$defs/nonEmptyString" }
+      }
+    },
+    source: {
+      type: "object",
+      required: ["kind", "path"],
+      additionalProperties: true,
+      properties: {
+        kind: { $ref: "#/$defs/nonEmptyString" },
+        path: { $ref: "#/$defs/nonEmptyString" },
+        sourcesContent: { type: "string" }
+      }
+    },
+    sourcePosition: {
+      type: "object",
+      required: ["line"],
+      additionalProperties: true,
+      properties: {
+        line: { type: "integer", minimum: 1 },
+        column: { type: "integer", minimum: 1 }
+      }
+    },
+    sourceRange: {
+      anyOf: [
+        { type: "null" },
+        {
+          type: "object",
+          required: ["start"],
+          additionalProperties: true,
+          properties: {
+            start: { $ref: "#/$defs/sourcePosition" },
+            end: { $ref: "#/$defs/sourcePosition" }
+          }
+        }
+      ]
+    },
+    symbol: {
+      type: "object",
+      required: ["id", "kind", "name", "source"],
+      additionalProperties: true,
+      properties: {
+        id: { $ref: "#/$defs/nonEmptyString" },
+        kind: { enum: Object.values(HTMDOC_SYMBOL_KINDS) },
+        name: { $ref: "#/$defs/nonEmptyString" },
+        parentId: { $ref: "#/$defs/nonEmptyString" },
+        summary: { type: "string" },
+        source: {
+          type: "object",
+          required: ["path"],
+          additionalProperties: true,
+          properties: {
+            path: { $ref: "#/$defs/nonEmptyString" },
+            range: { $ref: "#/$defs/sourceRange" }
+          }
+        },
+        annotation: { type: "object" },
+        metadata: { type: "object" }
+      }
+    },
+    diagnostic: {
+      type: "object",
+      required: ["code", "message", "severity"],
+      additionalProperties: true,
+      properties: {
+        code: { $ref: "#/$defs/nonEmptyString" },
+        message: { $ref: "#/$defs/nonEmptyString" },
+        severity: { enum: ["info", "warning", "error"] },
+        path: { $ref: "#/$defs/nonEmptyString" },
+        data: { type: "object" }
+      }
+    }
+  }
+});
 
 const TAG_TO_KIND = Object.freeze({
   component: HTMDOC_SYMBOL_KINDS.component,

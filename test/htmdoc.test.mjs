@@ -6,6 +6,12 @@ import { cemManifestToHtmlExtraction } from "../packages/cem-adapter/src/index.m
 import { htmlExtractionToHiaDocument } from "../packages/html-doc-adapter/src/index.mjs";
 import { extractHtmlDoc } from "../packages/html-doc-extractor/src/index.mjs";
 import { parseHtml } from "../packages/html-parser/src/index.mjs";
+import {
+  HTMDOC_EXTRACTION_CONTRACT,
+  HTMDOC_EXTRACTION_CONTRACT_VERSION,
+  HTMDOC_EXTRACTION_JSON_SCHEMA,
+  HTMDOC_EXTRACTION_SCHEMA_ID
+} from "../packages/htmdoc-spec/src/index.mjs";
 
 const fixture = await readFile(new URL("../fixtures/basic.html", import.meta.url), "utf8");
 const webComponentManifest = JSON.parse(await readFile(new URL("../fixtures/web-components/custom-elements.json", import.meta.url), "utf8"));
@@ -30,6 +36,13 @@ test("extractHtmlDoc maps unprefixed annotations to HTMDoc symbols", () => {
   assert.ok(kinds.includes("html-style-hook"));
   assert.ok(kinds.includes("html-a11y-note"));
   assert.equal(artifact.source.sourcesContent, undefined);
+});
+
+test("htmdoc spec exports the extraction JSON Schema contract", () => {
+  assert.equal(HTMDOC_EXTRACTION_JSON_SCHEMA.$id, HTMDOC_EXTRACTION_SCHEMA_ID);
+  assert.equal(HTMDOC_EXTRACTION_JSON_SCHEMA.properties.contract.const, HTMDOC_EXTRACTION_CONTRACT);
+  assert.equal(HTMDOC_EXTRACTION_JSON_SCHEMA.properties.contractVersion.const, HTMDOC_EXTRACTION_CONTRACT_VERSION);
+  assert.ok(HTMDOC_EXTRACTION_JSON_SCHEMA.required.includes("symbols"));
 });
 
 test("htmlExtractionToHiaDocument emits a core document compatible shape", () => {
