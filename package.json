@@ -13,7 +13,7 @@
     "pack:check": "node scripts/check-pack.cjs",
     "release:check": "node scripts/release-check.cjs",
     "release:gate": "npm run check:syntax && npm run build:fixtures && npm run check:skeleton && npm run check:fixtures && npm run license:audit && npm test && npm run release:check && npm run pack:check",
-    "test": "node --test test",
+    "test": "node --test test/htmdoc.test.mjs",
     "test:all": "npm run release:gate"
   },
   "workspaces": [

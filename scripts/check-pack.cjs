@@ -2,14 +2,30 @@ const { spawnSync } = require("node:child_process");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
-const result = spawnSync("npm", ["pack", "--dry-run", "--json"], {
+const npmCli = process.env.npm_execpath;
+const npmArgs = ["pack", "--dry-run", "--json"];
+const command = npmCli
+  ? process.execPath
+  : process.platform === "win32"
+    ? process.env.ComSpec || "cmd.exe"
+    : "npm";
+const args = npmCli
+  ? [npmCli, ...npmArgs]
+  : process.platform === "win32"
+    ? ["/d", "/s", "/c", `npm ${npmArgs.join(" ")}`]
+    : npmArgs;
+const result = spawnSync(command, args, {
   cwd: root,
-  encoding: "utf8",
-  shell: process.platform === "win32"
+  encoding: "utf8"
 });
 
+if (result.error) {
+  console.error(result.error.message);
+  process.exit(1);
+}
+
 if (result.status !== 0) {
-  process.stderr.write(result.stderr || result.stdout);
+  process.stderr.write(result.stderr || result.stdout || "npm pack failed.\n");
   process.exit(result.status || 1);
 }
 
