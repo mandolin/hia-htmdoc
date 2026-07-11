@@ -1,35 +1,127 @@
 # HIA HTMDoc
 
-HIA HTMDoc is the HTML/HTM documentation workspace for HIA.
+HIA HTMDoc is a standards-oriented HTML documentation toolkit. It extracts
+structured documentation from HTML comments and Custom Elements Manifests,
+then produces HTMDoc artifacts, HIA documents and documentation source maps.
 
-This repository is planned as an umbrella monorepo for HTML documentation specification, parsing, extraction, HIA adapter output, Custom Elements Manifest bridging and documentation source-map linkage.
+The workspace supports two usage modes:
+
+- standalone API and CLI for ordinary HTML projects;
+- a `documentation-producer` adapter for HIA project orchestration.
+
+## Inputs
+
+- complete HTML documents;
+- HTML fragments;
+- HTML `<template>` sources;
+- Custom Elements Manifest JSON.
+
+Core annotations use unprefixed tags such as `@component`, `@template`,
+`@attr`, `@slot`, `@event`, `@stylehook`, `@a11y` and `@example`.
+
+## Standalone CLI
+
+The packages are currently local release candidates. From a source checkout:
+
+```sh
+npm install
+npm run smoke:standalone
+```
+
+The public command exposed by `@hia-doc/htmdoc-runner` is:
+
+```sh
+htmdoc --config htmdoc.config.json
+```
+
+Minimal config:
+
+```json
+{
+  "schemaVersion": "0.1.0-draft",
+  "workspaceRoot": ".",
+  "outputDirectory": "dist/htmdoc",
+  "inputs": [
+    { "kind": "html", "path": "src/index.html" },
+    { "kind": "custom-elements-manifest", "path": "custom-elements.json" }
+  ],
+  "options": {
+    "emitDocSourceMap": true,
+    "sourcesContentPolicy": "none"
+  }
+}
+```
+
+See [`examples/standalone`](examples/standalone) for all supported input kinds.
+
+## Programmatic API
+
+```js
+import path from "node:path";
+import { runHtmDoc } from "@hia-doc/htmdoc-runner";
+
+const result = await runHtmDoc({
+  workspaceRoot: process.cwd(),
+  outputDirectory: path.resolve("dist/htmdoc"),
+  inputs: [{ kind: "html-fragment", path: "src/card.html" }]
+});
+```
+
+The result follows `documentation-producer-result@0.1.0-draft`. Artifact paths
+are relative to `outputDirectory` and can be consumed without exposing runtime
+absolute paths.
+
+## HIA Producer
+
+`@hia-doc/htmdoc-producer` exports a descriptor plus one-shot `produce()`
+module. HIA project tooling loads it explicitly; standalone and integrated
+builds share the same runner implementation.
+
+```js
+import htmdocProducer from "@hia-doc/htmdoc-producer";
+```
+
+## Outputs
+
+Each successful input can produce:
+
+- `htmdoc-extraction` JSON;
+- HIA core document JSON;
+- direct-source `doc-source-map` JSON.
+
+The CLI also writes `htmdoc.producer-result.json`. Source content is not
+embedded by default; `sourcesContentPolicy: "embed"` requires explicit opt-in.
 
 ## Packages
 
-- `@hia-doc/htmdoc-spec`: HTML documentation annotation, tag registry and rule drafts.
-- `@hia-doc/html-parser`: HTML parser wrapper boundary.
-- `@hia-doc/html-doc-extractor`: HTML source to HTMDoc extraction artifact.
-- `@hia-doc/html-doc-adapter`: HTMDoc extraction artifact to HIA core document.
-- `@hia-doc/cem-adapter`: Custom Elements Manifest to HIA bridge.
-- `@hia-doc/html-doc-source-map`: HTML documentation source-map linkage.
+- `@hia-doc/htmdoc-spec`: annotation registry and extraction schema.
+- `@hia-doc/html-parser`: parse5 parser boundary.
+- `@hia-doc/html-doc-extractor`: HTML annotation extraction.
+- `@hia-doc/html-doc-adapter`: HTMDoc to HIA document adapter.
+- `@hia-doc/cem-adapter`: Custom Elements Manifest bridge.
+- `@hia-doc/html-doc-source-map`: direct and generated source linkage helpers.
+- `@hia-doc/htmdoc-runner`: standalone API, config and CLI.
+- `@hia-doc/htmdoc-producer`: HIA documentation producer adapter.
 
-## Status
+## Compatibility
 
-This workspace contains the first HTMDoc foundation slice:
-
-- a parse5-backed HTML parser boundary;
-- unprefixed HTMDoc annotation extraction;
-- a Custom Elements Manifest bridge;
-- Web Components fixture generation for CEM and HTML/template inputs;
-- a draft `hia-htmdoc-extraction@0.1.0` artifact shape;
-- a HIA core document adapter.
-
-Packages remain private until the public package naming and release sequence are finalized.
+- Node.js `>=20.19.0`; local development is pinned to `20.20.2` with mise.
+- CI release gates cover Node 20.20.2, 22.x and 24.x.
+- parse5 `7.3.0`.
+- HTMDoc extraction contract `0.1.0-draft`.
+- HTMDoc config schema `0.1.0-draft`.
+- documentation producer contract `0.1.0-draft`.
+- doc-source-map contract `0.1.0-draft`.
 
 ## Development
 
 ```sh
 npm run build:fixtures
-npm run check:fixtures
+npm test
 npm run release:gate
 ```
+
+## License
+
+MIT. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for reviewed parser
+dependencies.

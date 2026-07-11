@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "0.1.0-draft",
+  "workspaceRoot": ".",
+  "outputDirectory": "dist/htmdoc",
+  "inputs": [
+    {
+      "kind": "html",
+      "path": "src/page.html"
+    },
+    {
+      "kind": "html-fragment",
+      "path": "src/badge.fragment.html"
+    },
+    {
+      "kind": "html-template",
+      "path": "src/card.template.html"
+    },
+    {
+      "kind": "custom-elements-manifest",
+      "path": "custom-elements.json"
+    }
+  ],
+  "options": {
+    "emitDocSourceMap": true,
+    "sourcesContentPolicy": "none",
+    "writeResultManifest": true
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/hia-notice.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "HiaNotice",
+          "tagName": "hia-notice",
+          "customElement": true,
+          "description": "A dismissible notice.",
+          "attributes": [
+            {
+              "name": "variant",
+              "description": "Visual variant."
+            }
+          ],
+          "events": [
+            {
+              "name": "hia-notice-dismiss",
+              "description": "Emitted after dismissal."
+            }
+          ],
+          "slots": [
+            {
+              "name": "",
+              "description": "Notice content."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

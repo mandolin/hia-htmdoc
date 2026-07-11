@@ -1,7 +1,12 @@
 const { spawnSync } = require("node:child_process");
+const fs = require("node:fs");
 const path = require("node:path");
 
 const root = path.resolve(__dirname, "..");
+const packageRoots = fs.readdirSync(path.join(root, "packages"), { withFileTypes: true })
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => path.join(root, "packages", entry.name))
+  .filter((directory) => fs.existsSync(path.join(directory, "package.json")));
 const npmCli = process.env.npm_execpath;
 const npmArgs = ["pack", "--dry-run", "--json"];
 const command = npmCli
@@ -14,25 +19,21 @@ const args = npmCli
   : process.platform === "win32"
     ? ["/d", "/s", "/c", `npm ${npmArgs.join(" ")}`]
     : npmArgs;
-const result = spawnSync(command, args, {
-  cwd: root,
-  encoding: "utf8"
-});
-
-if (result.error) {
-  console.error(result.error.message);
-  process.exit(1);
-}
-
-if (result.status !== 0) {
-  process.stderr.write(result.stderr || result.stdout || "npm pack failed.\n");
-  process.exit(result.status || 1);
-}
-
-const packs = JSON.parse(result.stdout);
 let failed = false;
 
-for (const pack of packs) {
+for (const packageRoot of packageRoots) {
+  const result = spawnSync(command, args, {
+    cwd: packageRoot,
+    encoding: "utf8"
+  });
+  if (result.error || result.status !== 0) {
+    process.stderr.write(result.error?.message || result.stderr || result.stdout || "npm pack failed.\n");
+    failed = true;
+    continue;
+  }
+  const [pack] = JSON.parse(result.stdout);
+  const packageJson = JSON.parse(fs.readFileSync(path.join(packageRoot, "package.json"), "utf8"));
+  const packedPaths = new Set((pack.files || []).map((file) => file.path.replaceAll("\\", "/")));
   for (const file of pack.files || []) {
     const filePath = file.path.replaceAll("\\", "/");
     if (filePath.includes("/node_modules/") || filePath.startsWith("node_modules/") || filePath.endsWith(".tgz")) {
@@ -40,10 +41,22 @@ for (const pack of packs) {
       failed = true;
     }
   }
+  if (packageJson.name === "@hia-doc/htmdoc-runner" || packageJson.name === "@hia-doc/htmdoc-producer") {
+    for (const requiredPath of ["LICENSE", "README.md", "package.json", "src/index.mjs"]) {
+      if (!packedPaths.has(requiredPath)) {
+        console.error(`Missing ${requiredPath} in ${packageJson.name} pack dry-run.`);
+        failed = true;
+      }
+    }
+  }
+  if (packageJson.name === "@hia-doc/htmdoc-runner" && !packedPaths.has("src/cli.mjs")) {
+    console.error("Missing src/cli.mjs in @hia-doc/htmdoc-runner pack dry-run.");
+    failed = true;
+  }
 }
 
 if (failed) {
   process.exit(1);
 }
 
-console.log("HTMDoc pack check passed.");
+console.log(`HTMDoc pack check passed: ${packageRoots.length} workspace packages.`);
