@@ -41,12 +41,12 @@ for (const packageRoot of packageRoots) {
       failed = true;
     }
   }
-  if (packageJson.name === "@hia-doc/htmdoc-runner" || packageJson.name === "@hia-doc/htmdoc-producer") {
-    for (const requiredPath of ["LICENSE", "README.md", "package.json", "src/index.mjs"]) {
-      if (!packedPaths.has(requiredPath)) {
-        console.error(`Missing ${requiredPath} in ${packageJson.name} pack dry-run.`);
-        failed = true;
-      }
+  // 每个可发布子包都必须自带许可证、说明和入口，不能依赖 workspace 根目录。
+  // Every publishable child package must carry its license, README and entry point without relying on the workspace root.
+  for (const requiredPath of ["LICENSE", "README.md", "package.json", "src/index.mjs"]) {
+    if (!packedPaths.has(requiredPath)) {
+      console.error(`Missing ${requiredPath} in ${packageJson.name} pack dry-run.`);
+      failed = true;
     }
   }
   if (packageJson.name === "@hia-doc/htmdoc-runner" && !packedPaths.has("src/cli.mjs")) {
