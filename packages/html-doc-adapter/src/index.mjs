@@ -8,13 +8,14 @@ export function htmlExtractionToHiaDocument(artifact, options = {}) {
   assertHtmlExtractionArtifact(artifact);
   const title = options.title ?? titleFromPath(artifact.source.path);
   const symbols = artifact.symbols.map((symbol) => mapSymbol(symbol, artifact));
+  const defaultLocale = options.defaultLocale ?? artifact.defaultLocale ?? "en";
 
   return {
     schemaVersion: HIA_CORE_SCHEMA_VERSION,
     id: options.id ?? `htmdoc:${artifact.source.path}`,
     title,
-    defaultLocale: options.defaultLocale ?? "en",
-    locales: options.locales ?? ["en"],
+    defaultLocale,
+    locales: collectDocumentLocales(options.locales, artifact.locales, symbols, defaultLocale),
     nodes: [
       {
         id: "root",
@@ -49,12 +50,12 @@ function mapSymbol(symbol, artifact) {
   const fragmentContent = range && artifact.source?.sourcesContent
     ? extractRangeContent(artifact.source.sourcesContent, range)
     : null;
-  return {
+  const mapped = {
     id: symbol.id,
     name: symbol.name,
     kind: symbol.kind,
     parentId: symbol.parentId,
-    summary: symbol.summary,
+    summary: symbol.i18n?.fields?.description?.defaultText ?? symbol.summary,
     source: {
       model: HIA_SOURCE_MODEL,
       modelVersion: HIA_SOURCE_MODEL_VERSION,
@@ -93,6 +94,27 @@ function mapSymbol(symbol, artifact) {
       }
     }
   };
+  if (symbol.i18n) {
+    mapped.i18n = symbol.i18n;
+  }
+  return mapped;
+}
+
+function collectDocumentLocales(optionLocales, artifactLocales, symbols, defaultLocale) {
+  const locales = [
+    defaultLocale,
+    ...(Array.isArray(optionLocales) ? optionLocales : []),
+    ...(Array.isArray(artifactLocales) ? artifactLocales : [])
+  ];
+  for (const symbol of symbols) {
+    locales.push(...(Array.isArray(symbol.i18n?.locales) ? symbol.i18n.locales : []));
+  }
+  return [...new Set(locales.map((locale) => normalizeLocale(locale)).filter(Boolean))];
+}
+
+function normalizeLocale(value) {
+  const locale = String(value ?? "").trim().replace(/_/g, "-");
+  return /^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$/.test(locale) ? locale : "";
 }
 
 function titleFromPath(sourcePath) {

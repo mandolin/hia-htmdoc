@@ -56,6 +56,25 @@ test("htmlExtractionToHiaDocument emits a core document compatible shape", () =>
   assert.equal(document.symbols[0].source.definedIn.relativePath, "fixtures/basic.html");
 });
 
+test("HTMDoc maps @lang and inline <lang> into HIA i18n fields", () => {
+  const artifact = extractHtmlDoc(`<!--
+@component GreetingCard
+@description Greets a <lang><zh-CN>用户</zh-CN><en>user</en></lang>.
+@lang zh-CN 问候一个用户。
+@slot default <l><zh-CN>默认内容</zh-CN><en>default content</en></l>
+-->
+<section data-component="GreetingCard"><slot></slot></section>`, { path: "fixtures/lang.html", fragment: true });
+  const document = htmlExtractionToHiaDocument(artifact, { title: "HTML Locale" });
+  const component = document.symbols.find((symbol) => symbol.kind === "html-component");
+  const slot = document.symbols.find((symbol) => symbol.kind === "html-slot");
+
+  assert.ok(document.locales.includes("zh-CN"));
+  assert.equal(component.i18n.fields.description.localizedText["zh-CN"], "问候一个用户。");
+  assert.equal(component.i18n.fields.description.localizedText.en, "Greets a user.");
+  assert.equal(slot.i18n.fields.description.localizedText["zh-CN"], "默认内容");
+  assert.equal(slot.i18n.fields.description.localizedText.en, "default content");
+});
+
 test("cemManifestToHtmlExtraction bridges Custom Elements Manifest symbols", () => {
   const artifact = cemManifestToHtmlExtraction({
     schemaVersion: "1.0.0",
