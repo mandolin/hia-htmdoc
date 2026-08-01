@@ -3,6 +3,20 @@ export const HTMDOC_EXTRACTION_CONTRACT_VERSION = "0.1.0-draft";
 export const HTMDOC_EXTRACTION_SCHEMA_ID = "https://hia-doc.local/schema/hia-htmdoc-extraction-0.1.0-draft.json";
 export const HTMDOC_PROFILE_VERSION = "0.1.0-draft";
 
+/**
+ * Owner-local output conformance evaluator for already-generated HTMDoc artifacts.
+ *
+ * 中文：针对已生成 HTMDoc artifact 的 owner-local output conformance evaluator。
+ * English: Owner-local output conformance evaluator for already-generated HTMDoc artifacts.
+ * @lang zh-CN 该 evaluator 不读取 source、不写入 artifact，也不成为跨仓 runtime capability schema。
+ */
+export {
+  evaluateHtmDocOutputConformance,
+  HTMDOC_OUTPUT_CONFORMANCE_CODES,
+  HTMDOC_OUTPUT_CONFORMANCE_CONTRACT,
+  HTMDOC_OUTPUT_CONFORMANCE_VERSION
+} from "./output-conformance.mjs";
+
 export const HTMDOC_SYMBOL_KINDS = Object.freeze({
   component: "html-component",
   element: "html-element",
