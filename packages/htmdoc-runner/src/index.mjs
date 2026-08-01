@@ -10,6 +10,19 @@ import {
   HTMDOC_EXTRACTION_CONTRACT_VERSION
 } from "@hia-doc/htmdoc-spec";
 
+/**
+ * Owner-local HTML-authoring metadata handoff 评估器。
+ *
+ * @lang en Owner-local HTML-authoring metadata handoff evaluator.
+ * <lang><zh-CN>该 export 只处理 caller-provided metadata；不发现、读取、运行或写入 target，且不接入 host API。</zh-CN><en>This export handles caller-provided metadata only; it does not discover, read, run, or write a target and it integrates no host API.</en></lang>
+ */
+export {
+  HTML_AUTHORING_DOCUMENTATION_HANDOFF_CONTRACT,
+  HTML_AUTHORING_DOCUMENTATION_HANDOFF_DIAGNOSTIC_CODES,
+  HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION,
+  createHtmlAuthoringDocumentationHandoff
+} from "./html-authoring-handoff.mjs";
+
 export {
   HTMDOC_CONFIG_JSON_SCHEMA,
   HTMDOC_CONFIG_SCHEMA_ID,

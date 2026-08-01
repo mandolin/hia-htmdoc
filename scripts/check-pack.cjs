@@ -49,9 +49,14 @@ for (const packageRoot of packageRoots) {
       failed = true;
     }
   }
-  if (packageJson.name === "@hia-doc/htmdoc-runner" && !packedPaths.has("src/cli.mjs")) {
-    console.error("Missing src/cli.mjs in @hia-doc/htmdoc-runner pack dry-run.");
-    failed = true;
+  if (packageJson.name === "@hia-doc/htmdoc-runner") {
+    // <lang><zh-CN>两个 CLI 与 pure handoff evaluator 都是 runner 的 public tarball surface；缺失任一都会使 source checkout 与 consumer 行为分叉。</zh-CN><en>Both CLIs and the pure handoff evaluator are runner public tarball surface; omitting any one would split source-checkout and consumer behavior.</en></lang>
+    for (const requiredRunnerPath of ["src/cli.mjs", "src/html-authoring-handoff.mjs", "src/html-authoring-handoff-cli.mjs"]) {
+      if (!packedPaths.has(requiredRunnerPath)) {
+        console.error(`Missing ${requiredRunnerPath} in @hia-doc/htmdoc-runner pack dry-run.`);
+        failed = true;
+      }
+    }
   }
 }
 

@@ -9,14 +9,15 @@
     "check:fixtures": "node scripts/check-fixtures.cjs",
     "check:standalone": "node scripts/check-standalone.cjs",
     "check:skeleton": "node scripts/check-skeleton.cjs",
-    "check:syntax": "node --check scripts/check-skeleton.cjs && node --check scripts/check-license-audit.cjs && node --check scripts/release-check.cjs && node --check scripts/check-pack.cjs && node --check scripts/build-fixtures.cjs && node --check scripts/check-fixtures.cjs && node --check scripts/check-standalone.cjs && node --check scripts/check-output-conformance.cjs && node --check packages/htmdoc-spec/src/index.mjs && node --check packages/htmdoc-spec/src/output-conformance.mjs && node --check packages/html-parser/src/index.mjs && node --check packages/html-doc-extractor/src/index.mjs && node --check packages/html-doc-adapter/src/index.mjs && node --check packages/cem-adapter/src/index.mjs && node --check packages/html-doc-source-map/src/index.mjs && node --check packages/htmdoc-runner/src/schema.mjs && node --check packages/htmdoc-runner/src/index.mjs && node --check packages/htmdoc-runner/src/cli.mjs && node --check packages/htmdoc-producer/src/index.mjs",
+    "check:syntax": "node --check scripts/check-skeleton.cjs && node --check scripts/check-license-audit.cjs && node --check scripts/release-check.cjs && node --check scripts/check-pack.cjs && node --check scripts/build-fixtures.cjs && node --check scripts/check-fixtures.cjs && node --check scripts/check-standalone.cjs && node --check scripts/check-output-conformance.cjs && node --check scripts/check-html-authoring-handoff.cjs && node --check packages/htmdoc-spec/src/index.mjs && node --check packages/htmdoc-spec/src/output-conformance.mjs && node --check packages/html-parser/src/index.mjs && node --check packages/html-doc-extractor/src/index.mjs && node --check packages/html-doc-adapter/src/index.mjs && node --check packages/cem-adapter/src/index.mjs && node --check packages/html-doc-source-map/src/index.mjs && node --check packages/htmdoc-runner/src/schema.mjs && node --check packages/htmdoc-runner/src/index.mjs && node --check packages/htmdoc-runner/src/cli.mjs && node --check packages/htmdoc-runner/src/html-authoring-handoff.mjs && node --check packages/htmdoc-runner/src/html-authoring-handoff-cli.mjs && node --check packages/htmdoc-producer/src/index.mjs",
     "license:audit": "node scripts/check-license-audit.cjs",
     "pack:check": "node scripts/check-pack.cjs",
     "release:check": "node scripts/release-check.cjs",
     "check:output-conformance": "node scripts/check-output-conformance.cjs",
-    "release:gate": "npm run check:syntax && npm run build:fixtures && npm run smoke:standalone && npm run check:skeleton && npm run check:fixtures && npm run check:standalone && npm run check:output-conformance && npm run license:audit && npm test && npm run release:check && npm run pack:check",
+    "check:html-authoring-handoff": "node scripts/check-html-authoring-handoff.cjs",
+    "release:gate": "npm run check:syntax && npm run build:fixtures && npm run smoke:standalone && npm run check:skeleton && npm run check:fixtures && npm run check:standalone && npm run check:output-conformance && npm run check:html-authoring-handoff && npm run license:audit && npm test && npm run release:check && npm run pack:check",
     "smoke:standalone": "htmdoc --config examples/standalone/htmdoc.config.json",
-    "test": "node --test test/htmdoc.test.mjs test/htmdoc-runner.test.mjs test/htmdoc-output-conformance.test.mjs",
+    "test": "node --test test/htmdoc.test.mjs test/htmdoc-runner.test.mjs test/htmdoc-output-conformance.test.mjs test/htmdoc-html-authoring-handoff.test.mjs",
     "test:all": "npm run release:gate"
   },
   "workspaces": [

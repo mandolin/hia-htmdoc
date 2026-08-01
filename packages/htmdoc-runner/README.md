@@ -26,3 +26,22 @@ htmdoc --config htmdoc.config.json
 
 Source content is not embedded unless `sourcesContentPolicy: "embed"` is set
 explicitly in the config `options` object.
+
+## HTML-authoring metadata handoff
+
+`createHtmlAuthoringDocumentationHandoff()` evaluates one explicit,
+metadata-only handoff request. It accepts only `sourcesContentPolicy: "none"`,
+stable output/entry identities, an accepted HTMDoc conformance summary, and an
+ordinary-map linkage declaration. The result is `accepted` or `refused` and
+does not contain source, artifact/map/sidecar bodies, paths, locators,
+credentials, target state, or host API handles.
+
+```js
+import { createHtmlAuthoringDocumentationHandoff } from "@hia-doc/htmdoc-runner";
+
+const report = createHtmlAuthoringDocumentationHandoff(metadataRequest);
+```
+
+The optional `htmdoc-handoff --input handoff.json [--out report.json]` command
+reads only its explicit safe-relative JSON input. It does not discover or run a
+project, open Tauri/Obsidian, fetch source, or publish a package.

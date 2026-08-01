@@ -1,0 +1,11 @@
+{
+  "contract": "html-authoring-documentation-handoff-request",
+  "contractVersion": "0.1.0-draft",
+  "output": { "id": "htmdoc-output:standalone-basic", "stableEntryIds": ["entry:html-component:status-badge"], "locale": "und" },
+  "producer": { "id": "htmdoc", "version": "0.0.0", "status": "success" },
+  "conformance": { "contract": "htmdoc-output-conformance", "contractVersion": "0.1.0-draft", "conformant": true, "violations": [] },
+  "docSourceMap": { "contract": "doc-source-map", "contractVersion": "0.1.0-draft", "linkage": "explicit-reference-only", "carriesHandoffModel": false, "sourcesContentPolicy": "none" },
+  "privacy": { "sourceBodySerialized": false, "mapBodySerialized": false, "sidecarBodySerialized": false, "absolutePathSerialized": false, "rawLocatorSerialized": false, "credentialSerialized": false, "workingStateSerialized": false },
+  "permissions": { "targetRepositoryRead": false, "targetRepositoryWrite": false, "targetCommandExecuted": false, "targetRuntimeOpened": false, "tauriIpcIntegration": false, "obsidianVaultIntegration": false, "sourceReaderImplemented": false, "fetchEnabled": false, "networkAccessed": false, "packagePublished": false, "targetAdoptionClaimed": false },
+  "unsafeCallerPath": "C:\\private\\html-authoring-source.html"
+}

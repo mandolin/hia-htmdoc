@@ -9,7 +9,8 @@
     ".": "./src/index.mjs"
   },
   "bin": {
-    "htmdoc": "./src/cli.mjs"
+    "htmdoc": "./src/cli.mjs",
+    "htmdoc-handoff": "./src/html-authoring-handoff-cli.mjs"
   },
   "files": [
     "src",

@@ -92,6 +92,12 @@ Each successful input can produce:
 The CLI also writes `htmdoc.producer-result.json`. Source content is not
 embedded by default; `sourcesContentPolicy: "embed"` requires explicit opt-in.
 
+For owner review of HTML-authoring documentation evidence,
+`@hia-doc/htmdoc-runner` also provides an optional metadata-only handoff API
+and `htmdoc-handoff` CLI. This surface accepts only `sourcesContentPolicy:
+"none"` and explicit stable identity/provenance metadata; it does not read or
+write a consumer project, open a desktop host, fetch source, or render a UI.
+
 ## Packages
 
 - `@hia-doc/htmdoc-spec`: annotation registry and extraction schema.
@@ -100,7 +106,7 @@ embedded by default; `sourcesContentPolicy: "embed"` requires explicit opt-in.
 - `@hia-doc/html-doc-adapter`: HTMDoc to HIA document adapter.
 - `@hia-doc/cem-adapter`: Custom Elements Manifest bridge.
 - `@hia-doc/html-doc-source-map`: direct and generated source linkage helpers.
-- `@hia-doc/htmdoc-runner`: standalone API, config and CLI.
+- `@hia-doc/htmdoc-runner`: standalone API, config, CLI and metadata-only HTML-authoring handoff.
 - `@hia-doc/htmdoc-producer`: HIA documentation producer adapter.
 
 ## Compatibility
