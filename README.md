@@ -98,6 +98,13 @@ and `htmdoc-handoff` CLI. This surface accepts only `sourcesContentPolicy:
 "none"` and explicit stable identity/provenance metadata; it does not read or
 write a consumer project, open a desktop host, fetch source, or render a UI.
 
+The runner also provides a pure
+`createHtmlAuthoringSourceCommentProjectionRequest()` adapter. It combines an
+already-materialized extraction with a none-only doc-source-map entry and emits
+the neutral W-P96 projection request shape. It performs no source read, parser
+execution, target/host action, or network access, and the ordinary map remains
+linkage-only.
+
 ## Packages
 
 - `@hia-doc/htmdoc-spec`: annotation registry and extraction schema.
@@ -106,7 +113,7 @@ write a consumer project, open a desktop host, fetch source, or render a UI.
 - `@hia-doc/html-doc-adapter`: HTMDoc to HIA document adapter.
 - `@hia-doc/cem-adapter`: Custom Elements Manifest bridge.
 - `@hia-doc/html-doc-source-map`: direct and generated source linkage helpers.
-- `@hia-doc/htmdoc-runner`: standalone API, config, CLI and metadata-only HTML-authoring handoff.
+- `@hia-doc/htmdoc-runner`: standalone API, config, CLI, metadata-only HTML-authoring handoff and source-comment projection-request adapter.
 - `@hia-doc/htmdoc-producer`: HIA documentation producer adapter.
 
 ## Compatibility

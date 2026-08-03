@@ -45,3 +45,30 @@ const report = createHtmlAuthoringDocumentationHandoff(metadataRequest);
 The optional `htmdoc-handoff --input handoff.json [--out report.json]` command
 reads only its explicit safe-relative JSON input. It does not discover or run a
 project, open Tauri/Obsidian, fetch source, or publish a package.
+
+## HTML-authoring source-comment integration
+
+`createHtmlAuthoringSourceCommentProjectionRequest()` converts one
+already-materialized HTMDoc extraction and none-only doc-source-map into a
+`documentation-source-comment-projection@0.1.0-draft` request. It selects a
+symbol and map entry through explicit identity, preserves canonical `@lang` /
+inline `<lang>` field text, and converts HTMDoc's 1-based annotation columns to
+the projection contract's 0-based columns.
+
+```js
+import { createHtmlAuthoringSourceCommentProjectionRequest } from "@hia-doc/htmdoc-runner";
+
+const projectionRequest = createHtmlAuthoringSourceCommentProjectionRequest({
+  extraction,
+  docSourceMap,
+  documentId: "htmdoc:card",
+  symbolId: "html:component:card",
+  projectionId: "projection:card:description",
+  requestedLocale: "zh-CN",
+  fallbackLocales: ["en"],
+  contentPolicy: "explicit-projected-text"
+});
+```
+
+中文说明：该 adapter 是 pure metadata bridge；它不读取源码、不运行 parser 或 core evaluator、不执行表达式，也不访问
+target、Tauri/Obsidian host 或 network。ordinary doc-source-map 只提供 entry/source linkage，不承载完整 projection 或正文。

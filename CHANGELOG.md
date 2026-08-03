@@ -10,3 +10,4 @@
 - Added fixture coverage and release gate tests.
 - Added a W-P9.4 Web Components fixture covering CEM, HTML/template extraction, `html-event`, CSS parts/properties/states, HIA adapter output and fixture validation.
 - Added an owner-local `html-authoring-documentation-handoff@0.1.0-draft` evaluator and `htmdoc-handoff` CLI for explicit none-only metadata review reports.
+- Added a pure HTML-authoring source-comment projection-request adapter and bilingual owner fixture that bind structured HTMDoc comments to none-only doc-source-map entries without target or host access.

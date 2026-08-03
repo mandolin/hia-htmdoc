@@ -23,6 +23,17 @@ export {
   createHtmlAuthoringDocumentationHandoff
 } from "./html-authoring-handoff.mjs";
 
+/**
+ * Owner-local HTML-authoring source-comment projection request adapter.
+ *
+ * 中文：HTML-authoring 源码注释 projection request 的 owner-local adapter。
+ * English: Owner-local adapter for HTML-authoring source-comment projection requests.
+ * <lang><zh-CN>该 export 只消费 already-materialized extraction/map，不读取 source、不运行 core，也不接入 target host。</zh-CN><en>This export consumes only an already-materialized extraction/map; it reads no source, runs no core, and integrates no target host.</en></lang>
+ */
+export {
+  createHtmlAuthoringSourceCommentProjectionRequest
+} from "./html-authoring-source-comment-integration.mjs";
+
 export {
   HTMDOC_CONFIG_JSON_SCHEMA,
   HTMDOC_CONFIG_SCHEMA_ID,
