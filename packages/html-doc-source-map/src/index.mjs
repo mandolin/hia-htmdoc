@@ -1,5 +1,8 @@
 export const HTML_DOC_SOURCE_CONTENT_POLICIES = Object.freeze(["none", "reference", "embed"]);
 
+// <lang><zh-CN>doc-source-map provenance 使用公开候选版本，同时不改变 draft contractVersion。</zh-CN><en>Doc-source-map provenance uses the public candidate version without changing the draft contractVersion.</en></lang>
+const HTML_DOC_SOURCE_MAP_VERSION = "0.1.0";
+
 export function createHtmlDocSourceMapRef(options = {}) {
   return {
     kind: "hia-doc-source-map-ref",
@@ -39,7 +42,7 @@ export function createHtmlDocumentationSourceMap(options = {}) {
     id: options.id ?? `docmap:htmdoc:${slug(sourcePath)}`,
     producer: {
       name: "@hia-doc/html-doc-source-map",
-      version: "0.0.0",
+      version: HTML_DOC_SOURCE_MAP_VERSION,
       runtime: "node",
       profile: "htmdoc-direct-source"
     },

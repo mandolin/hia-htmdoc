@@ -1,11 +1,21 @@
 {
   "name": "@hia-doc/htmdoc-spec",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "HTML documentation annotation, tag registry and rule drafts.",
   "license": "MIT",
+  "keywords": ["documentation", "html", "htmdoc", "schema"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandolin/hia-htmdoc.git",
+    "directory": "packages/htmdoc-spec"
+  },
+  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/htmdoc-spec#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
-  }
+  },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": { "node": ">=20.19.0" },
+  "publishConfig": { "access": "public" }
 }

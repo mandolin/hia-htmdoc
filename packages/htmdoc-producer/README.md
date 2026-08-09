@@ -2,6 +2,10 @@
 
 Thin `documentation-producer@0.1.0-draft` adapter for HTMDoc.
 
+```sh
+npm install @hia-doc/htmdoc-producer
+```
+
 ```js
 import htmdocProducer from "@hia-doc/htmdoc-producer";
 ```

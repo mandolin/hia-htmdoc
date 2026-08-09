@@ -3,6 +3,10 @@
 Creates safe documentation source-map references and direct-source manifests
 for HTMDoc extraction artifacts.
 
+```sh
+npm install @hia-doc/html-doc-source-map
+```
+
 ```js
 import { createHtmlDocumentationSourceMap } from "@hia-doc/html-doc-source-map";
 

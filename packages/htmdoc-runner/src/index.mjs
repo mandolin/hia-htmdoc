@@ -41,7 +41,13 @@ export {
 } from "./schema.mjs";
 import { HTMDOC_CONFIG_SCHEMA_ID, HTMDOC_CONFIG_SCHEMA_VERSION } from "./schema.mjs";
 
-export const HTMDOC_RUNNER_VERSION = "0.0.0";
+/**
+ * HTMDoc runner public package version.
+ *
+ * @lang zh-CN 写入 producer descriptor/result 的精确实现版本；它与 draft contract version 是不同维度。
+ * @lang en Exact implementation version written to producer descriptors/results; it is independent from draft contract versions.
+ */
+export const HTMDOC_RUNNER_VERSION = "0.1.0";
 export const HTMDOC_INPUT_KINDS = Object.freeze([
   "html",
   "html-fragment",

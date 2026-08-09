@@ -1,14 +1,24 @@
 {
   "name": "@hia-doc/cem-adapter",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "Bridges Custom Elements Manifest artifacts to HIA.",
   "license": "MIT",
+  "keywords": ["documentation", "custom-elements-manifest", "web-components", "htmdoc"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandolin/hia-htmdoc.git",
+    "directory": "packages/cem-adapter"
+  },
+  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/cem-adapter#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
   },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": { "node": ">=20.19.0" },
+  "publishConfig": { "access": "public" },
   "dependencies": {
-    "@hia-doc/htmdoc-spec": "0.0.0"
+    "@hia-doc/htmdoc-spec": "0.1.0"
   }
 }

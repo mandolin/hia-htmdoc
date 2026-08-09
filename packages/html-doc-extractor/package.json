@@ -1,16 +1,26 @@
 {
   "name": "@hia-doc/html-doc-extractor",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "Extracts HTMDoc artifacts from HTML sources.",
   "license": "MIT",
+  "keywords": ["documentation", "html", "extractor", "htmdoc"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandolin/hia-htmdoc.git",
+    "directory": "packages/html-doc-extractor"
+  },
+  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/html-doc-extractor#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
   },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": { "node": ">=20.19.0" },
+  "publishConfig": { "access": "public" },
   "dependencies": {
-    "@hia-doc/htmdoc-spec": "0.0.0",
-    "@hia-doc/html-doc-source-map": "0.0.0",
-    "@hia-doc/html-parser": "0.0.0"
+    "@hia-doc/htmdoc-spec": "0.1.0",
+    "@hia-doc/html-doc-source-map": "0.1.0",
+    "@hia-doc/html-parser": "0.1.0"
   }
 }

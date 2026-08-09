@@ -5,6 +5,9 @@ import {
   HTMDOC_SYMBOL_KINDS
 } from "@hia-doc/htmdoc-spec";
 
+// <lang><zh-CN>产物 provenance 使用公开候选包版本，并与 package.json 的精确版本保持同步。</zh-CN><en>Artifact provenance uses the public candidate package version and stays aligned with the exact package.json version.</en></lang>
+const CEM_ADAPTER_VERSION = "0.1.0";
+
 export function cemManifestToHtmlExtraction(manifest, options = {}) {
   const sourcePath = normalizeSourcePath(options.path ?? "custom-elements.json");
   const symbols = [];
@@ -158,7 +161,7 @@ export function cemManifestToHtmlExtraction(manifest, options = {}) {
     contractVersion: HTMDOC_EXTRACTION_CONTRACT_VERSION,
     producer: {
       name: "@hia-doc/cem-adapter",
-      version: "0.0.0"
+      version: CEM_ADAPTER_VERSION
     },
     profile: {
       name: "custom-elements-manifest",

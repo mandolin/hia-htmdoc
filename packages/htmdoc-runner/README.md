@@ -2,6 +2,10 @@
 
 Standalone API and CLI for HTML documentation projects.
 
+```sh
+npm install --save-dev @hia-doc/htmdoc-runner
+```
+
 JSON configs use `schemaVersion: "0.1.0-draft"`. The package exports
 `HTMDOC_CONFIG_JSON_SCHEMA` for validation and editor integration.
 

@@ -1,11 +1,21 @@
 {
   "name": "@hia-doc/html-doc-source-map",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "HTML documentation source-map linkage.",
   "license": "MIT",
+  "keywords": ["documentation", "html", "source-map", "htmdoc"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandolin/hia-htmdoc.git",
+    "directory": "packages/html-doc-source-map"
+  },
+  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/html-doc-source-map#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
-  }
+  },
+  "files": ["src", "README.md", "LICENSE"],
+  "engines": { "node": ">=20.19.0" },
+  "publishConfig": { "access": "public" }
 }

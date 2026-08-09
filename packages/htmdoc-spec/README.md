@@ -1,6 +1,17 @@
-# HTMDoc Spec
+# @hia-doc/htmdoc-spec
 
 Defines draft annotation, tag registry, rule, diagnostic and compatibility semantics for HTML documentation.
+
+```sh
+npm install @hia-doc/htmdoc-spec
+```
+
+```js
+import {
+  HTMDOC_EXTRACTION_CONTRACT,
+  HTMDOC_EXTRACTION_JSON_SCHEMA
+} from "@hia-doc/htmdoc-spec";
+```
 
 The current tag registry includes standard-level, unprefixed tags for components, elements, templates, attributes, slots, events, style hooks, accessibility notes, examples, descriptions and language metadata.
 

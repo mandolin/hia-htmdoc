@@ -1,9 +1,16 @@
 {
   "name": "@hia-doc/htmdoc-producer",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "Documentation producer adapter for HTMDoc.",
   "license": "MIT",
+  "keywords": ["documentation", "html", "producer", "htmdoc"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandolin/hia-htmdoc.git",
+    "directory": "packages/htmdoc-producer"
+  },
+  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/htmdoc-producer#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
@@ -16,7 +23,8 @@
   "engines": {
     "node": ">=20.19.0"
   },
+  "publishConfig": { "access": "public" },
   "dependencies": {
-    "@hia-doc/htmdoc-runner": "0.0.0"
+    "@hia-doc/htmdoc-runner": "0.1.0"
   }
 }

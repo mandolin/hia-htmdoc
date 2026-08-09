@@ -1,9 +1,16 @@
 {
   "name": "@hia-doc/htmdoc-runner",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.1.0",
   "description": "Standalone HTMDoc project runner and CLI.",
   "license": "MIT",
+  "keywords": ["documentation", "html", "cli", "htmdoc"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mandolin/hia-htmdoc.git",
+    "directory": "packages/htmdoc-runner"
+  },
+  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/htmdoc-runner#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
@@ -20,11 +27,12 @@
   "engines": {
     "node": ">=20.19.0"
   },
+  "publishConfig": { "access": "public" },
   "dependencies": {
-    "@hia-doc/cem-adapter": "0.0.0",
-    "@hia-doc/html-doc-adapter": "0.0.0",
-    "@hia-doc/html-doc-extractor": "0.0.0",
-    "@hia-doc/html-doc-source-map": "0.0.0",
-    "@hia-doc/htmdoc-spec": "0.0.0"
+    "@hia-doc/cem-adapter": "0.1.0",
+    "@hia-doc/html-doc-adapter": "0.1.0",
+    "@hia-doc/html-doc-extractor": "0.1.0",
+    "@hia-doc/html-doc-source-map": "0.1.0",
+    "@hia-doc/htmdoc-spec": "0.1.0"
   }
 }

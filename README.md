@@ -21,7 +21,8 @@ Core annotations use unprefixed tags such as `@component`, `@template`,
 
 ## Standalone CLI
 
-The packages are currently local release candidates. From a source checkout:
+Version `0.1.0` is currently a local release candidate and has not been
+published from this repository. From a source checkout:
 
 ```sh
 npm install
@@ -132,7 +133,13 @@ linkage-only.
 npm run build:fixtures
 npm test
 npm run release:gate
+npm run release:local-consumer:check
 ```
+
+The local consumer check packs all eight public candidates, installs the
+tarballs into a fresh offline project, imports every package and runs a
+privacy-preserving end-to-end smoke. Public publication remains separately
+approved and is never performed by the local gate.
 
 ## License
 

@@ -18,6 +18,8 @@ const PRIMARY_TAGS = ["component", "element", "template"];
 const DEFAULT_LOCALE = "en";
 const HIA_TEXT_I18N_MODEL = "hia-text-i18n";
 const HIA_TEXT_I18N_MODEL_VERSION = "0.2.0";
+// <lang><zh-CN>提取产物 provenance 的版本必须与公开候选 manifest 同步，不能保留 skeleton 版本。</zh-CN><en>The extraction provenance version must match the public candidate manifest and cannot retain the skeleton version.</en></lang>
+const HTML_DOC_EXTRACTOR_VERSION = "0.1.0";
 
 export function extractHtmlDoc(source, options = {}) {
   const sourcePath = normalizeSourcePath(options.path ?? "input.html");
@@ -77,7 +79,7 @@ export function extractHtmlDoc(source, options = {}) {
     contractVersion: HTMDOC_EXTRACTION_CONTRACT_VERSION,
     producer: {
       name: "@hia-doc/html-doc-extractor",
-      version: "0.0.0"
+      version: HTML_DOC_EXTRACTOR_VERSION
     },
     profile: {
       name: "htmdoc",
