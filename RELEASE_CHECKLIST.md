@@ -22,7 +22,8 @@
 - [x] Resolve first publication as an exact-commit GitHub-hosted workflow with one dedicated temporary granular token.
 - [x] Change both train and package status to `publish-approved` under separate W-P110 authorization.
 - [x] Add fail-closed partial-batch resume, anonymous registry preflight and post-publish integrity/provenance/consumer checks.
-- [ ] Run the final Node compatibility matrix and provenance-enabled publish gate.
-- [ ] Publish all eight exact `0.1.0` packages and confirm anonymous registry visibility.
-- [ ] Configure every package for `mandolin/hia-htmdoc` / `npm-trusted-publish.yml` with `npm publish` as the sole allowed action.
-- [ ] Delete the GitHub bootstrap secret and revoke the npm bootstrap token after Trusted Publisher verification.
+- [x] Run the final Node 20/22/24 compatibility matrix and provenance-enabled publish gate.
+- [x] Publish all eight exact `0.1.0` packages from GitHub Actions and confirm anonymous registry visibility.
+- [x] Verify eight SHA-512 integrities, eight SLSA provenance statements and an anonymous empty-cache consumer across all packages.
+- [x] Configure every package for `mandolin/hia-htmdoc` / `npm-trusted-publish.yml` with `npm publish` as the sole allowed action.
+- [x] Delete the GitHub bootstrap secret and revoke the npm bootstrap token after Trusted Publisher verification.

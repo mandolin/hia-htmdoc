@@ -21,10 +21,11 @@ async function main() {
   const execute = process.argv.includes("--publish");
   const resume = process.argv.includes("--resume");
 
-  assert.equal(inventory.releaseStatus, "publish-approved", "HTMDoc bootstrap requires a publish-approved train.");
+  assert.ok(["publish-approved", "published"].includes(inventory.releaseStatus), "HTMDoc bootstrap requires an approved or completed train.");
   assert.equal(inventory.trustedPublisher?.firstPublishBootstrap, "github-actions-temporary-granular-token", "HTMDoc bootstrap strategy drifted.");
   assert.equal(inventory.bootstrap?.resumePolicy, "explicit-after-registry-verification", "HTMDoc bootstrap resume policy drifted.");
-  assert.ok(packages.every((candidate) => candidate.status === "publish-approved"), "Every HTMDoc package must be publish-approved.");
+  const expectedPackageStatus = inventory.releaseStatus === "published" ? "published" : "publish-approved";
+  assert.ok(packages.every((candidate) => candidate.status === expectedPackageStatus), "Every HTMDoc package status must align with the train.");
 
   // <lang><zh-CN>registry 状态按精确 name@version 分类；网络或协议错误不能被误判为“尚未发布”。</zh-CN><en>Registry state is classified by exact name@version; network or protocol errors can never be mistaken for “unpublished.”</en></lang>
   const states = await Promise.all(packages.map((candidate) => readRegistryState(inventory.registry, candidate)));
@@ -33,6 +34,12 @@ async function main() {
 
   const published = states.filter((state) => state.status === "published");
   const pending = states.filter((state) => state.status === "unpublished");
+  if (inventory.releaseStatus === "published") {
+    assert.equal(published.length, packages.length, "A completed HTMDoc train requires every exact package version to remain public.");
+    assert.equal(execute, false, "The completed bootstrap train permanently refuses --publish; use the Trusted Publisher workflow for future versions.");
+    process.stdout.write(`HTMDoc completed bootstrap check passed: ${published.length} published, 0 unpublished.\n`);
+    return;
+  }
   if (published.length > 0 && !resume) {
     throw new Error(`Refusing a partial or repeated bootstrap without --resume: ${published.map((state) => state.name).join(", ")}`);
   }

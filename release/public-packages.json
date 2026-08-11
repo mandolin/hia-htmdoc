@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "releaseLine": "0.1.x",
   "candidateVersion": "0.1.0",
-  "releaseStatus": "publish-approved",
+  "releaseStatus": "published",
   "registry": "https://registry.npmjs.org/",
   "access": "public",
   "provenanceRequired": true,
@@ -26,49 +26,49 @@
       "name": "@hia-doc/htmdoc-spec",
       "directory": "packages/htmdoc-spec",
       "order": 10,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/html-parser",
       "directory": "packages/html-parser",
       "order": 20,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/html-doc-source-map",
       "directory": "packages/html-doc-source-map",
       "order": 30,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/html-doc-extractor",
       "directory": "packages/html-doc-extractor",
       "order": 40,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/html-doc-adapter",
       "directory": "packages/html-doc-adapter",
       "order": 50,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/cem-adapter",
       "directory": "packages/cem-adapter",
       "order": 60,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/htmdoc-runner",
       "directory": "packages/htmdoc-runner",
       "order": 70,
-      "status": "publish-approved"
+      "status": "published"
     },
     {
       "name": "@hia-doc/htmdoc-producer",
       "directory": "packages/htmdoc-producer",
       "order": 80,
-      "status": "publish-approved"
+      "status": "published"
     }
   ]
 }

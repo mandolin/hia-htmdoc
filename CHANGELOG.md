@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 - Unreleased
+## 0.1.0 - 2026-08-11
 
 - Prepared eight MIT-licensed public package candidates with consistent npm metadata, exact internal dependency versions and dependency-first release order.
 - Added real-tarball, offline consumer validation across every public package and the default source-content privacy boundary.
