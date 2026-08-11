@@ -31,22 +31,29 @@ function main() {
   assert.equal(rootPackage.private, true, "The workspace root must remain private.");
   assert.equal(rootPackage.version, inventory.candidateVersion, "Workspace and candidate versions must stay aligned.");
   assert.deepEqual(packages.map((item) => item.name), expectedNames, "Public package order or identity drifted.");
-  assert.ok(["local-release-candidate", "publish-approved"].includes(inventory.releaseStatus), "Release train status is unsupported.");
+  assert.ok(["local-release-candidate", "publish-approved", "published"].includes(inventory.releaseStatus), "Release train status is unsupported.");
   assert.equal(inventory.trustedPublisher?.nodeMinimum, "22.14.0", "Trusted Publishing Node minimum drifted from npm requirements.");
   assert.equal(inventory.trustedPublisher?.npmMinimum, "11.15.0", "npm trust management baseline drifted from npm requirements.");
+  assert.equal(inventory.trustedPublisher?.allowedAction, "publish", "Trusted Publisher must allow npm publish only.");
   assert.equal(inventory.provenanceRequired, true, "Future public publication must require provenance.");
   if (inventory.releaseStatus === "local-release-candidate") {
     assert.equal(inventory.trustedPublisher?.firstPublishBootstrap, "decision-required-before-first-publish", "First-publish bootstrap must remain unresolved before publication approval.");
   } else {
     assert.notEqual(inventory.trustedPublisher?.firstPublishBootstrap, "decision-required-before-first-publish", "A publish-approved train must resolve first-publish bootstrap.");
   }
+  assert.equal(inventory.bootstrap?.workflow, "npm-bootstrap-publish.yml", "Bootstrap workflow identity drifted.");
+  assert.equal(inventory.bootstrap?.secret, "HIA_NPM_BOOTSTRAP_TOKEN", "Bootstrap secret identity drifted.");
+  assert.equal(inventory.bootstrap?.credential, "temporary-granular-access-token", "Bootstrap credential class drifted.");
+  assert.equal(inventory.bootstrap?.resumePolicy, "explicit-after-registry-verification", "Bootstrap resume policy drifted.");
+  const expectedPackageStatus = inventory.releaseStatus === "published" ? "published" : inventory.releaseStatus;
+  assert.ok(packages.every((candidate) => candidate.status === expectedPackageStatus), "Package statuses must align with the release train.");
 
   // <lang><zh-CN>依赖顺序表用于证明任一内部依赖都位于消费者之前。</zh-CN><en>The dependency-order table proves that every internal dependency precedes its consumer.</en></lang>
   const packageOrder = new Map(packages.map((item) => [item.name, item.order]));
   for (const candidate of packages) {
     const manifest = candidate.packageJson;
     assert.equal(candidate.version, inventory.candidateVersion, `${candidate.name} version drifted.`);
-    assert.equal(manifest.private, undefined, `${candidate.name} must be publishable but not yet published.`);
+    assert.equal(manifest.private, undefined, `${candidate.name} must remain publishable.`);
     assert.equal(manifest.license, "MIT", `${candidate.name} must retain the MIT license.`);
     assert.equal(manifest.repository?.url, expectedRepositoryUrl, `${candidate.name} repository URL drifted.`);
     assert.equal(manifest.repository?.directory, candidate.directory, `${candidate.name} repository directory drifted.`);
@@ -84,6 +91,33 @@ function main() {
     "--provenance"
   ]) {
     assert.ok(workflow.includes(requiredText), `Trusted Publish workflow is missing: ${requiredText}`);
+  }
+
+  // <lang><zh-CN>首发 workflow 与脚本共同锁住精确提交、GitHub-hosted provenance、专用 secret 和显式 partial resume。</zh-CN><en>The bootstrap workflow and script jointly lock the exact commit, GitHub-hosted provenance, dedicated secret, and explicit partial resume.</en></lang>
+  const bootstrapWorkflow = fs.readFileSync(path.join(root, ".github", "workflows", inventory.bootstrap.workflow), "utf8");
+  for (const requiredText of [
+    "runs-on: ubuntu-latest",
+    "id-token: write",
+    "expected_head_sha",
+    "HIA_NPM_BOOTSTRAP_TOKEN",
+    "npm@11.18.0",
+    "--publish",
+    "resume_partial_batch",
+    "release:registry:check"
+  ]) {
+    assert.ok(bootstrapWorkflow.includes(requiredText), `Bootstrap workflow is missing: ${requiredText}`);
+  }
+  const bootstrapScript = fs.readFileSync(path.join(root, "scripts", "bootstrap-public-release.cjs"), "utf8");
+  for (const requiredText of ["--provenance", "--resume", "RUNNER_ENVIRONMENT", "github-hosted", "explicit-after-registry-verification"]) {
+    assert.ok(bootstrapScript.includes(requiredText), `Bootstrap script is missing: ${requiredText}`);
+  }
+  const registryCheck = fs.readFileSync(path.join(root, "scripts", "check-registry-release.cjs"), "utf8");
+  for (const requiredText of ["sha512-", "https://slsa.dev/provenance/v1", "htmdoc-public-registry-consumer", "sourcesContentPolicy"]) {
+    assert.ok(registryCheck.includes(requiredText), `Registry release check is missing: ${requiredText}`);
+  }
+  const trustManager = fs.readFileSync(path.join(root, "scripts", "manage-trusted-publishers.cjs"), "utf8");
+  for (const requiredText of ["npmMinimum", "--allow-publish", "trust", "list", "inventory.trustedPublisher.workflow"]) {
+    assert.ok(trustManager.includes(requiredText), `Trusted Publisher manager is missing: ${requiredText}`);
   }
 
   const npmIgnore = fs.readFileSync(path.join(root, ".npmignore"), "utf8");

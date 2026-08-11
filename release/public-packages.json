@@ -2,7 +2,7 @@
   "schemaVersion": "1.0.0",
   "releaseLine": "0.1.x",
   "candidateVersion": "0.1.0",
-  "releaseStatus": "local-release-candidate",
+  "releaseStatus": "publish-approved",
   "registry": "https://registry.npmjs.org/",
   "access": "public",
   "provenanceRequired": true,
@@ -10,58 +10,65 @@
     "repository": "mandolin/hia-htmdoc",
     "workflow": "npm-trusted-publish.yml",
     "environment": null,
+    "allowedAction": "publish",
     "nodeMinimum": "22.14.0",
     "npmMinimum": "11.15.0",
-    "firstPublishBootstrap": "decision-required-before-first-publish"
+    "firstPublishBootstrap": "github-actions-temporary-granular-token"
+  },
+  "bootstrap": {
+    "workflow": "npm-bootstrap-publish.yml",
+    "secret": "HIA_NPM_BOOTSTRAP_TOKEN",
+    "credential": "temporary-granular-access-token",
+    "resumePolicy": "explicit-after-registry-verification"
   },
   "packages": [
     {
       "name": "@hia-doc/htmdoc-spec",
       "directory": "packages/htmdoc-spec",
       "order": 10,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/html-parser",
       "directory": "packages/html-parser",
       "order": 20,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/html-doc-source-map",
       "directory": "packages/html-doc-source-map",
       "order": 30,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/html-doc-extractor",
       "directory": "packages/html-doc-extractor",
       "order": 40,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/html-doc-adapter",
       "directory": "packages/html-doc-adapter",
       "order": 50,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/cem-adapter",
       "directory": "packages/cem-adapter",
       "order": 60,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/htmdoc-runner",
       "directory": "packages/htmdoc-runner",
       "order": 70,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     },
     {
       "name": "@hia-doc/htmdoc-producer",
       "directory": "packages/htmdoc-producer",
       "order": 80,
-      "status": "local-release-candidate"
+      "status": "publish-approved"
     }
   ]
 }

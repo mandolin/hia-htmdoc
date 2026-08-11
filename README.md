@@ -21,8 +21,8 @@ Core annotations use unprefixed tags such as `@component`, `@template`,
 
 ## Standalone CLI
 
-Version `0.1.0` is currently a local release candidate and has not been
-published from this repository. From a source checkout:
+Version `0.1.0` is an approved public release train. Before the controlled
+bootstrap completes, use a source checkout:
 
 ```sh
 npm install
@@ -138,8 +138,13 @@ npm run release:local-consumer:check
 
 The local consumer check packs all eight public candidates, installs the
 tarballs into a fresh offline project, imports every package and runs a
-privacy-preserving end-to-end smoke. Public publication remains separately
-approved and is never performed by the local gate.
+privacy-preserving end-to-end smoke. `npm run release:bootstrap:check` performs
+an anonymous registry preflight without publishing. Registry writes are
+restricted to the manually dispatched, exact-commit GitHub Actions bootstrap;
+partial batches require explicit reviewed resume. After publication,
+`npm run release:registry:check` verifies package integrity, npm provenance and
+a clean registry-only consumer, while `npm run release:trust:check` verifies
+the per-package Trusted Publisher takeover.
 
 ## License
 

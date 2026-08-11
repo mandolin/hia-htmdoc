@@ -5,6 +5,8 @@
 - Prepared eight MIT-licensed public package candidates with consistent npm metadata, exact internal dependency versions and dependency-first release order.
 - Added real-tarball, offline consumer validation across every public package and the default source-content privacy boundary.
 - Added a manually dispatched, provenance-enabled Trusted Publishing workflow that remains blocked until explicit publication approval and first-publish bootstrap resolution.
+- Added an exact-commit, GitHub-hosted first-publication workflow using a dedicated temporary `@hia-doc` credential, fail-closed partial-batch resume and provenance on every publish.
+- Added anonymous registry integrity/attestation verification, clean registry-only consumer smoke and npm Trusted Publisher configuration/verification tooling.
 - Aligned runtime producer provenance with the `0.1.0` package candidate version.
 
 ## 0.0.0

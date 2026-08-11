@@ -18,7 +18,11 @@
 - [x] Remove `private: true` from the eight inventoried public candidates only.
 - [x] Add package-level repository, support, engine, file allow-list and public access metadata.
 - [x] Add a manual provenance workflow with immutable action revisions and a publish-ready refusal guard.
-- [ ] Confirm npm scope ownership and Trusted Publishing.
-- [ ] Resolve the first-publication bootstrap required before Trusted Publisher configuration can exist for new package names.
-- [ ] Change both train and package status to `publish-approved` under separate authorization.
+- [x] Confirm npm `@hia-doc` scope access, account 2FA and GitHub repository administration.
+- [x] Resolve first publication as an exact-commit GitHub-hosted workflow with one dedicated temporary granular token.
+- [x] Change both train and package status to `publish-approved` under separate W-P110 authorization.
+- [x] Add fail-closed partial-batch resume, anonymous registry preflight and post-publish integrity/provenance/consumer checks.
 - [ ] Run the final Node compatibility matrix and provenance-enabled publish gate.
+- [ ] Publish all eight exact `0.1.0` packages and confirm anonymous registry visibility.
+- [ ] Configure every package for `mandolin/hia-htmdoc` / `npm-trusted-publish.yml` with `npm publish` as the sole allowed action.
+- [ ] Delete the GitHub bootstrap secret and revoke the npm bootstrap token after Trusted Publisher verification.
