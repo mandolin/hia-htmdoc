@@ -23,18 +23,71 @@ async function main() {
   }
 
   // <lang><zh-CN>consumer 使用独立临时根与空 npm cache，避免 workspace link、开发缓存或登录态污染结论。</zh-CN><en>The consumer uses an independent temporary root and empty npm cache so workspace links, development cache, and login state cannot contaminate the result.</en></lang>
+  const packumentWaitAttempts = await waitForPublicPackuments(inventory.registry, packages);
   const consumerReport = runRegistryConsumer(inventory, packages);
   process.stdout.write(`${JSON.stringify({
     status: "public-registry-release-verified",
     packageCount: registryReports.length,
     integrityCount: registryReports.filter((report) => report.integrity).length,
     provenanceCount: registryReports.filter((report) => report.provenance).length,
+    packumentWaitAttempts,
     importedPackageCount: consumerReport.importedPackageCount,
     artifactCount: consumerReport.artifactCount,
     sourcesContentPolicy: consumerReport.sourcesContentPolicy,
     absolutePathLeakCount: consumerReport.absolutePathLeakCount,
     sourceContentLeakCount: consumerReport.sourceContentLeakCount
   })}\n`);
+}
+
+/**
+ * Wait until npm's root package metadata is anonymously installable for the whole train.
+ *
+ * @lang zh-CN 新包的精确版本 endpoint 可能先于 root packument 可见；clean install 依赖后者，因此最多等待十分钟并把 404 视为传播中，任何其它错误立即失败。
+ * @lang en A new package's exact-version endpoint may become visible before its root packument; clean installation depends on the latter, so this waits up to ten minutes, treats 404 as propagation, and fails immediately on every other error.
+ * @param {string} registry npm registry 根 URL。 / npm registry base URL.
+ * @param {object[]} packages 发布候选。 / Publication candidates.
+ * @returns {Promise<number>} 全部可见时使用的 attempt 数。 / Attempt count when all packages became visible.
+ */
+async function waitForPublicPackuments(registry, packages) {
+  for (let attempt = 1; attempt <= 120; attempt += 1) {
+    const states = await Promise.all(packages.map((candidate) => readPackumentState(registry, candidate)));
+    const errors = states.filter((state) => state.status === "error");
+    assert.equal(errors.length, 0, errors.map((state) => `${state.name}: ${state.reason}`).join("\n"));
+    if (states.every((state) => state.status === "published")) {
+      return attempt;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 5_000));
+  }
+  throw new Error("HTMDoc root packuments did not become anonymously visible within ten minutes.");
+}
+
+/**
+ * Classify one root packument without authentication.
+ *
+ * @lang zh-CN scoped name 只编码分隔 slash，保持 npm packument endpoint 使用的 `@scope%2fname` 形式。
+ * @lang en Encodes only the scoped-name separator slash, preserving the `@scope%2fname` form used by npm's packument endpoint.
+ * @param {string} registry npm registry 根 URL。 / npm registry base URL.
+ * @param {object} candidate 发布候选。 / Publication candidate.
+ * @returns {Promise<{name: string, reason?: string, status: "error"|"published"|"propagating"}>} packument 状态。 / Packument state.
+ */
+async function readPackumentState(registry, candidate) {
+  try {
+    const packagePath = candidate.name.replace("/", "%2f");
+    const response = await fetch(new URL(packagePath, registry), { headers: { accept: "application/json" } });
+    if (response.status === 404) {
+      return { name: candidate.name, status: "propagating" };
+    }
+    if (!response.ok) {
+      return { name: candidate.name, reason: `HTTP ${response.status}`, status: "error" };
+    }
+    const metadata = await response.json();
+    if (metadata.name !== candidate.name || metadata.versions?.[candidate.version]?.version !== candidate.version) {
+      return { name: candidate.name, reason: "packument identity or exact version mismatch", status: "error" };
+    }
+    return { name: candidate.name, status: "published" };
+  } catch (error) {
+    return { name: candidate.name, reason: String(error.message ?? error), status: "error" };
+  }
 }
 
 /**
@@ -84,8 +137,11 @@ function runRegistryConsumer(inventory, packages) {
   try {
     const consumerRoot = path.join(temporaryRoot, "consumer");
     const cacheRoot = path.join(temporaryRoot, "npm-cache");
+    const anonymousNpmrc = path.join(temporaryRoot, "anonymous.npmrc");
     fs.mkdirSync(consumerRoot, { recursive: true });
     fs.mkdirSync(cacheRoot, { recursive: true });
+    // <lang><zh-CN>空 userconfig 与清空 token 环境确保公开消费验证不会继承 setup-node 或开发机登录态。</zh-CN><en>An empty userconfig plus cleared token environment ensures the public consumer cannot inherit setup-node or developer-machine authentication.</en></lang>
+    fs.writeFileSync(anonymousNpmrc, "# Intentionally empty: public registry consumer must be anonymous.\n", "utf8");
     const dependencies = Object.fromEntries(packages.map((candidate) => [candidate.name, candidate.version]));
     writeJson(path.join(consumerRoot, "package.json"), {
       name: "htmdoc-public-registry-consumer",
@@ -103,7 +159,7 @@ function runRegistryConsumer(inventory, packages) {
       "--cache",
       cacheRoot,
       `--registry=${inventory.registry}`
-    ], consumerRoot, "clean registry consumer install");
+    ], consumerRoot, "clean registry consumer install", createAnonymousNpmEnvironment(anonymousNpmrc));
 
     for (const candidate of packages) {
       const installedManifest = readJson(path.join(consumerRoot, "node_modules", ...candidate.name.split("/"), "package.json"));
@@ -224,15 +280,44 @@ await main();
 `;
 }
 
-/** @lang zh-CN 通过当前 mise/npm 进程链运行 npm。 @lang en Runs npm through the active mise/npm process lineage. */
-function runNpm(npmArgs, cwd, label) {
+/**
+ * Run npm through the active mise/npm process lineage.
+ *
+ * @lang zh-CN 默认保留当前环境；registry consumer 可传入去认证环境以证明公开可消费性。
+ * @lang en Preserves the current environment by default; the registry consumer may pass an unauthenticated environment to prove public consumability.
+ * @param {string[]} npmArgs npm 参数。 / npm arguments.
+ * @param {string} cwd 工作目录。 / Working directory.
+ * @param {string} label 稳定步骤名。 / Stable step label.
+ * @param {NodeJS.ProcessEnv} [environment=process.env] 显式子进程环境。 / Explicit subprocess environment.
+ * @returns {import("node:child_process").SpawnSyncReturns<string>} 子进程结果。 / Subprocess result.
+ */
+function runNpm(npmArgs, cwd, label, environment = process.env) {
   const npmCli = process.env.npm_execpath;
   const result = npmCli
-    ? spawnSync(process.execPath, [npmCli, ...npmArgs], { cwd, encoding: "utf8", maxBuffer: 8 * 1024 * 1024 })
-    : spawnSync(process.platform === "win32" ? "npm.cmd" : "npm", npmArgs, { cwd, encoding: "utf8", maxBuffer: 8 * 1024 * 1024 });
+    ? spawnSync(process.execPath, [npmCli, ...npmArgs], { cwd, encoding: "utf8", env: environment, maxBuffer: 8 * 1024 * 1024 })
+    : spawnSync(process.platform === "win32" ? "npm.cmd" : "npm", npmArgs, { cwd, encoding: "utf8", env: environment, maxBuffer: 8 * 1024 * 1024 });
   assert.ifError(result.error);
   assert.equal(result.status, 0, `${label} failed:\n${result.stderr || result.stdout || "no process output"}`);
   return result;
+}
+
+/**
+ * Derive a public-registry-only npm environment.
+ *
+ * @lang zh-CN 保留普通工具链变量，但移除常见 npm token 入口并覆盖 userconfig；返回值只进入 isolated install 子进程。
+ * @lang en Retains ordinary toolchain variables while removing common npm token inputs and overriding userconfig; the result is used only by the isolated install subprocess.
+ * @param {string} userConfigPath 本次临时空 npmrc。 / This run's temporary empty npmrc.
+ * @returns {NodeJS.ProcessEnv} 匿名 npm 子进程环境。 / Anonymous npm subprocess environment.
+ */
+function createAnonymousNpmEnvironment(userConfigPath) {
+  const environment = { ...process.env };
+  for (const key of Object.keys(environment)) {
+    if (/^(?:node_auth_token|npm_token)$/i.test(key) || /^npm_config_.*auth.*token/i.test(key)) {
+      delete environment[key];
+    }
+  }
+  environment.NPM_CONFIG_USERCONFIG = userConfigPath;
+  return environment;
 }
 
 /** @lang zh-CN 读取 UTF-8 JSON。 @lang en Reads UTF-8 JSON. */
