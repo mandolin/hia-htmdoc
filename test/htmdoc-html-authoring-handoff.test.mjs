@@ -68,6 +68,17 @@ test("HTML-authoring handoff accepts deterministic none-only metadata", async ()
   assert.doesNotMatch(serialized, /source\.html|artifact|targetId|vaultPath/u);
 });
 
+test("HTML-authoring handoff accepts current map identity and refuses an unreviewed future identity", async () => {
+  // <lang><zh-CN>只变更已提交的元数据 fixture 副本，旧版仍由原测试读取；未来版本必须给固定拒绝码。</zh-CN><en>Only a metadata fixture copy changes; the original test still reads the historical version, and future versions must receive a fixed refusal code.</en></lang>
+  const request = await loadFixture("accepted.request.json");
+  request.docSourceMap.contractVersion = "1.1.0";
+  assert.equal(createHtmlAuthoringDocumentationHandoff(request).status, "accepted");
+  request.docSourceMap.contractVersion = "1.2.0";
+  const refused = createHtmlAuthoringDocumentationHandoff(request);
+  assert.equal(refused.status, "refused");
+  assert.ok(refused.diagnostics.some((diagnostic) => diagnostic.code === "HTMDOC_HTML_HANDOFF_VERSION_UNSUPPORTED"));
+});
+
 for (const [fixtureName, expectedCode] of refusalFixtures) {
   test(`HTML-authoring handoff refuses ${fixtureName} without reflecting caller input`, async () => {
     // <lang><zh-CN>每次 load 返回 fresh JSON object，避免一个 negative mutation 影响其它 refusal fixture。</zh-CN><en>Each load returns a fresh JSON object, preventing one negative mutation from influencing another refusal fixture.</en></lang>

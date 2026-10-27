@@ -228,7 +228,7 @@ async function processInput(input, request, index) {
       kind: "doc-source-map",
       path: docSourceMapPath,
       contract: "doc-source-map",
-      contractVersion: "0.1.0-draft",
+      contractVersion: docSourceMap.contractVersion,
       language: "json",
       mediaType: "application/json",
       profileIds: request.profileIds

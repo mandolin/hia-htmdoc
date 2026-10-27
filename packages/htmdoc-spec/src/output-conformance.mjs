@@ -156,8 +156,14 @@ function validateDocument(document, extraction, violations) {
  */
 function validateDocSourceMap(docSourceMap, extraction, allowEmbeddedSource, violations) {
   // <lang><zh-CN>普通 map 必须保留 explicit sources/artifacts/chains/entries；它仍不是完整 capability model。</zh-CN><en>An ordinary map must retain explicit sources/artifacts/chains/entries; it is still not a full capability model.</en></lang>
-  if (!docSourceMap || docSourceMap.contract !== "doc-source-map" || docSourceMap.contractVersion !== "0.1.0-draft" || !Array.isArray(docSourceMap.sources) || !Array.isArray(docSourceMap.artifacts) || !Array.isArray(docSourceMap.chains) || !Array.isArray(docSourceMap.entries) || !extraction) {
+  if (!docSourceMap || docSourceMap.contract !== "doc-source-map" || !["0.1.0-draft", "1.1.0"].includes(docSourceMap.contractVersion) || !Array.isArray(docSourceMap.sources) || !Array.isArray(docSourceMap.artifacts) || !Array.isArray(docSourceMap.chains) || !Array.isArray(docSourceMap.entries) || !extraction) {
     addViolation(violations, "HTMDOC_OUTPUT_CONFORMANCE_PROVENANCE_INVALID", "HTMDoc doc-source-map must retain the supported ordinary-map identity and relation arrays.");
+    return false;
+  }
+  // <lang><zh-CN>新版逐引用范围必须声明完整约定；旧版原样读取，不把后来的语义套进历史工件。</zh-CN><en>Current ranged references must declare complete conventions; legacy input remains readable under its historical semantics.</en></lang>
+  if (docSourceMap.contractVersion === "1.1.0" && !docSourceMap.entries.every((entry) =>
+    Array.isArray(entry?.sourceRefs) && entry.sourceRefs.every(isValidCurrentSourceRef))) {
+    addViolation(violations, "HTMDOC_OUTPUT_CONFORMANCE_PROVENANCE_INVALID", "HTMDoc current doc-source-map must declare each ranged source reference convention.");
     return false;
   }
   // <lang><zh-CN>HTMDoc P1 尚未生产 metadata sidecar；任何未审核 sidecar field 都必须拒绝，防止私有 locator 或 body 偷渡。</zh-CN><en>HTMDoc P1 does not produce metadata sidecars; reject any unreviewed sidecar field to prevent private locators or bodies from bypassing review.</en></lang>
@@ -186,6 +192,28 @@ function validateDocSourceMap(docSourceMap, extraction, allowEmbeddedSource, vio
     addViolation(violations, "HTMDOC_OUTPUT_CONFORMANCE_EMBED_UNAUTHORIZED", "HTMDoc embedded source content requires explicit evaluator confirmation.");
   }
   return true;
+}
+
+/**
+ * @param {unknown} value <lang><zh-CN>新版映射内的一条来源引用。</zh-CN><en>One source reference from a current map.</en></lang>
+ * @returns {boolean} <lang><zh-CN>范围与约定的双向存在性、闭集值及列精度一致时为真。</zh-CN><en>True when range and convention presence, closed values, and column precision agree.</en></lang>
+ * @lang zh-CN 这是 HTMDoc owner-local 的最小输出门禁，完整通用契约仍由共享 schema/reader 验收。
+ * @lang en This is HTMDoc's minimal owner-local output gate; the shared schema and reader remain the full general contract gate.
+ */
+function isValidCurrentSourceRef(value) {
+  if (!isRecord(value)) return false;
+  const hasRange = Object.hasOwn(value, "range");
+  const hasConvention = Object.hasOwn(value, "rangeConvention");
+  if (hasRange !== hasConvention) return false;
+  if (!hasRange) return true;
+  const convention = value.rangeConvention;
+  if (!isRecord(convention) || Object.keys(convention).length !== 2
+    || !["inclusive", "exclusive", "unknown"].includes(convention.endBoundary)
+    || !["utf16-code-unit", "unicode-code-point", "byte", "unknown"].includes(convention.columnUnit)) return false;
+  if (convention.columnUnit === "unknown") return true;
+  const range = value.range;
+  return Number.isSafeInteger(range?.start?.column) && range.start.column > 0
+    && Number.isSafeInteger(range?.end?.column) && range.end.column > 0;
 }
 
 /**
@@ -256,7 +284,9 @@ function validateProducerResult(producerResult, docSourceMap, violations) {
   const hasRequiredKinds = ["htmdoc-extraction", "hia-document", "doc-source-map"].every((kind) => artifacts.some((artifact) => artifact.kind === kind));
   const mapArtifact = artifacts.find((artifact) => artifact.kind === "doc-source-map");
   const mapPathMatches = mapArtifact && docSourceMap.artifacts.filter(isRecord).every((artifact) => isSafeRelativePath(artifact.path));
-  if (!pathsAreSafe || !hasRequiredKinds || !mapPathMatches) {
+  // <lang><zh-CN>分发清单版本必须与实际映射相同，避免消费方按错误 schema 解释逐引用约定。</zh-CN><en>The delivery manifest version must match the actual map so consumers cannot interpret per-reference conventions under the wrong schema.</en></lang>
+  const mapVersionMatches = mapArtifact?.contractVersion === docSourceMap.contractVersion;
+  if (!pathsAreSafe || !hasRequiredKinds || !mapPathMatches || !mapVersionMatches) {
     addViolation(violations, "HTMDOC_OUTPUT_CONFORMANCE_PRODUCER_RESULT_INVALID", "HTMDoc producer result must deliver the extraction, HIA document, and ordinary doc-source-map through safe relative artifacts.");
   }
 }

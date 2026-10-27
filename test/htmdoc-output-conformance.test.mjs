@@ -66,6 +66,39 @@ test("HTMDoc output conformance accepts default none policy and stable artifact 
   }
 });
 
+test("HTMDoc current map requires per-reference conventions and matching delivery version", async () => {
+  const fixture = await createConformanceBundle("none");
+  try {
+    // <lang><zh-CN>当前输出先成立；随后各自在内存副本中删除约定或篡改分发版本，证明两个门禁独立拒绝。</zh-CN><en>First accept current output, then independently remove a convention or alter the delivery version in memory to prove both gates reject.</en></lang>
+    assert.equal(fixture.bundle.docSourceMap.contractVersion, "1.1.0");
+    assert.equal(evaluateHtmDocOutputConformance(fixture.bundle).conformant, true);
+    const missingConvention = structuredClone(fixture.bundle);
+    delete missingConvention.docSourceMap.entries[0].sourceRefs[0].rangeConvention;
+    const staleDelivery = structuredClone(fixture.bundle);
+    staleDelivery.producerResult.artifacts.find((artifact) => artifact.kind === "doc-source-map").contractVersion = "0.1.0-draft";
+    assert.ok(evaluateHtmDocOutputConformance(missingConvention).violations.some((violation) => violation.code === "HTMDOC_OUTPUT_CONFORMANCE_PROVENANCE_INVALID"));
+    assert.ok(evaluateHtmDocOutputConformance(staleDelivery).violations.some((violation) => violation.code === "HTMDOC_OUTPUT_CONFORMANCE_PRODUCER_RESULT_INVALID"));
+  } finally {
+    await rm(fixture.outputDirectory, { recursive: true, force: true });
+  }
+});
+
+test("HTMDoc output conformance retains historical map input without assigning new range semantics", async () => {
+  const fixture = await createConformanceBundle("none");
+  try {
+    // <lang><zh-CN>旧工件模拟仅修改身份并移除新字段；这验证历史读取路径，而非声称新写入器仍生产旧版。</zh-CN><en>The historical sample changes only identity and removes current fields; it verifies legacy reading without claiming the new writer still produces that version.</en></lang>
+    const historical = structuredClone(fixture.bundle);
+    historical.docSourceMap.contractVersion = "0.1.0-draft";
+    historical.producerResult.artifacts.find((artifact) => artifact.kind === "doc-source-map").contractVersion = "0.1.0-draft";
+    for (const entry of historical.docSourceMap.entries) {
+      for (const sourceRef of entry.sourceRefs) delete sourceRef.rangeConvention;
+    }
+    assert.equal(evaluateHtmDocOutputConformance(historical).conformant, true);
+  } finally {
+    await rm(fixture.outputDirectory, { recursive: true, force: true });
+  }
+});
+
 test("HTMDoc output conformance requires explicit confirmation for embedded source", async () => {
   // <lang><zh-CN>embed fixture 只验证授权语义；source content 不写入 assertion message、test output 或 repository artifact。</zh-CN><en>The embed fixture validates authorization semantics only; source content is not written into assertion messages, test output, or repository artifacts.</en></lang>
   const fixture = await createConformanceBundle("embed");

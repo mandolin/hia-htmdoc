@@ -47,8 +47,11 @@ const CONFORMANCE_CONTRACT = "htmdoc-output-conformance";
 const CONFORMANCE_VERSION = "0.1.0-draft";
 /** Ordinary documentation map identity remains a linkage declaration, never a transport container. / ordinary documentation map identity 保持 linkage declaration，绝不是 transport container。 */
 const DOC_SOURCE_MAP_CONTRACT = "doc-source-map";
-/** Current ordinary map version used by the HTMDoc P1 output boundary. / HTMDoc P1 output boundary 使用的 current ordinary map version。 */
-const DOC_SOURCE_MAP_VERSION = "0.1.0-draft";
+/**
+ * @lang zh-CN handoff 元数据声明显式接受历史与新版映射身份；未来版本不会按范围猜测兼容。
+ * @lang en The handoff metadata declaration explicitly accepts historical and current map identities without guessing future version compatibility.
+ */
+const DOC_SOURCE_MAP_VERSIONS = Object.freeze(["0.1.0-draft", "1.1.0"]);
 /** The report is deliberately target-neutral and cannot accept a target identifier. / report 特意保持 target-neutral，不能接受 target identifier。 */
 const PRODUCER_ID = "htmdoc";
 /** Output identity uses a compact logical namespace and excludes paths, URLs, whitespace, and opaque hashes. / output identity 使用 compact logical namespace，并排除 path、URL、whitespace 和 opaque hash。 */
@@ -229,7 +232,7 @@ function normalizeDocSourceMap(value, diagnostics) {
     addDiagnostic(diagnostics, "HTMDOC_HTML_HANDOFF_PRIVATE_DATA_DENIED");
     return null;
   }
-  if (value.contract !== DOC_SOURCE_MAP_CONTRACT || value.contractVersion !== DOC_SOURCE_MAP_VERSION) {
+  if (value.contract !== DOC_SOURCE_MAP_CONTRACT || !DOC_SOURCE_MAP_VERSIONS.includes(value.contractVersion)) {
     addDiagnostic(diagnostics, "HTMDOC_HTML_HANDOFF_VERSION_UNSUPPORTED");
   }
   if (value.sourcesContentPolicy !== "none") {
@@ -238,12 +241,12 @@ function normalizeDocSourceMap(value, diagnostics) {
   if (value.linkage !== "explicit-reference-only" || value.carriesHandoffModel !== false) {
     addDiagnostic(diagnostics, "HTMDOC_HTML_HANDOFF_MAP_LINKAGE_DENIED");
   }
-  if (value.contract !== DOC_SOURCE_MAP_CONTRACT || value.contractVersion !== DOC_SOURCE_MAP_VERSION || value.sourcesContentPolicy !== "none" || value.linkage !== "explicit-reference-only" || value.carriesHandoffModel !== false) {
+  if (value.contract !== DOC_SOURCE_MAP_CONTRACT || !DOC_SOURCE_MAP_VERSIONS.includes(value.contractVersion) || value.sourcesContentPolicy !== "none" || value.linkage !== "explicit-reference-only" || value.carriesHandoffModel !== false) {
     return null;
   }
   return Object.freeze({
     contract: DOC_SOURCE_MAP_CONTRACT,
-    contractVersion: DOC_SOURCE_MAP_VERSION,
+    contractVersion: value.contractVersion,
     linkage: "explicit-reference-only",
     carriesHandoffModel: false,
     sourcesContentPolicy: "none"

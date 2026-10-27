@@ -19,3 +19,11 @@ const manifest = createHtmlDocumentationSourceMap({
 
 Source paths are workspace-relative, artifact paths are output-relative and
 source content is not embedded by default.
+
+The source checkout emits `doc-source-map@1.1.0`. Each ranged `sourceRef`
+includes `rangeConvention` with `endBoundary` and `columnUnit`. Proven parse5
+HTML element ranges use `exclusive` and `utf16-code-unit`. The synthetic `1:1`
+positions from Custom Elements Manifest, parser recovery paths and unverified
+origins use `unknown` for both fields; consumers should treat them as source
+relations rather than exact cursor positions. A source reference without a
+range has no `rangeConvention`.

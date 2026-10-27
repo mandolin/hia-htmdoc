@@ -36,7 +36,7 @@ test("parse5 HTML comment and element ranges preserve CRLF, UTF-16 and adjacent 
   assert.equal(extraction.symbols.length, 2);
   assert.equal(extraction.annotations.length, 2);
   assert.equal(map.entries.length, 2);
-  assert.equal(map.contractVersion, "0.1.0-draft");
+  assert.equal(map.contractVersion, "1.1.0");
 
   // <lang><zh-CN>独立偏移基准核对注释终点、元素起止和下一注释起点，确认相接处不重叠。</zh-CN><en>Independent offsets check comment ends, element bounds and the next comment start, including touching boundaries.</en></lang>
   const firstCommentEnd = firstComment.length;
@@ -56,6 +56,8 @@ test("parse5 HTML comment and element ranges preserve CRLF, UTF-16 and adjacent 
 
   // <lang><zh-CN>映射直接透传元素范围；结束列比码点列多一，证明非 BMP 在此分支按 UTF-16 计。</zh-CN><en>The map forwards element ranges; its end column exceeds a code-point column by one, confirming UTF-16 on this branch.</en></lang>
   assert.deepEqual(map.entries.map((entry) => entry.sourceRefs[0].range), extraction.symbols.map((symbol) => symbol.source.range));
+  assert.ok(map.entries.every((entry) => entry.sourceRefs[0].rangeConvention.endBoundary === "exclusive"));
+  assert.ok(map.entries.every((entry) => entry.sourceRefs[0].rangeConvention.columnUnit === "utf16-code-unit"));
   assert.equal(extraction.symbols[0].source.range.end.column, Array.from(firstElement).length + 2);
 });
 
@@ -83,6 +85,7 @@ test("multiline template range keeps the parse5 exclusive UTF-16 end", () => {
     end: utf16Position(source, endOffset)
   });
   assert.deepEqual(map.entries[0].sourceRefs[0].range, extraction.symbols[0].source.range);
+  assert.deepEqual(map.entries[0].sourceRefs[0].rangeConvention, { endBoundary: "exclusive", columnUnit: "utf16-code-unit" });
 });
 
 test("legacy CEM adapter reuses a synthetic 1:1 point for unrelated JSON declarations", () => {
@@ -102,6 +105,22 @@ test("legacy CEM adapter reuses a synthetic 1:1 point for unrelated JSON declara
   assert.deepEqual(extraction.symbols.map((symbol) => symbol.source.range), [point, point]);
   assert.deepEqual(map.entries.map((entry) => entry.sourceRefs[0].range), [point, point]);
   assert.ok(map.entries.every((entry) => entry.sourceRefs[0].rangeSource === "adapter"));
-  assert.ok(map.entries.every((entry) => entry.sourceRefs[0].confidence === "high"));
-  assert.equal(map.contractVersion, "0.1.0-draft");
+  assert.ok(map.entries.every((entry) => entry.sourceRefs[0].confidence === "low"));
+  assert.ok(map.entries.every((entry) => entry.sourceRefs[0].rangeConvention.endBoundary === "unknown"));
+  assert.ok(map.entries.every((entry) => entry.sourceRefs[0].rangeConvention.columnUnit === "unknown"));
+  assert.equal(map.contractVersion, "1.1.0");
+});
+
+test("unproven HTML recovery and missing columns keep range conventions unknown", () => {
+  // <lang><zh-CN>只改变内存中的提取记录，确保已证解析器路径不会给恢复诊断或缺列引用套用精确语义。</zh-CN><en>Mutate only an in-memory extraction record so recovery diagnostics and missing columns cannot inherit proven parser precision.</en></lang>
+  const extraction = extractHtmlDoc("<!-- @component Card --><x-card></x-card>", { path: "fixtures/recovery.html", fragment: true });
+  const recovered = structuredClone(extraction);
+  recovered.diagnostics.push({ code: "HTML_PARSE_SYNTHETIC_RECOVERY", severity: "warning" });
+  const missingColumn = structuredClone(extraction);
+  delete missingColumn.symbols[0].source.range.end.column;
+
+  assert.deepEqual(createHtmlDocumentationSourceMap({ extraction: recovered }).entries[0].sourceRefs[0].rangeConvention,
+    { endBoundary: "unknown", columnUnit: "unknown" });
+  assert.deepEqual(createHtmlDocumentationSourceMap({ extraction: missingColumn }).entries[0].sourceRefs[0].rangeConvention,
+    { endBoundary: "unknown", columnUnit: "unknown" });
 });

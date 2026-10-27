@@ -3,7 +3,8 @@ const SOURCE_COMMENT_PROJECTION_VERSION = "0.1.0-draft";
 const HTMDOC_EXTRACTION_CONTRACT = "hia-htmdoc-extraction";
 const HTMDOC_EXTRACTION_VERSION = "0.1.0-draft";
 const DOC_SOURCE_MAP_CONTRACT = "doc-source-map";
-const DOC_SOURCE_MAP_VERSION = "0.1.0-draft";
+// <lang><zh-CN>历史输入仍可只读投影；新版需要逐引用约定，未来版本不得静默进入。</zh-CN><en>Historical input remains readable for projection; current input requires per-reference conventions, and future versions cannot enter silently.</en></lang>
+const DOC_SOURCE_MAP_VERSIONS = Object.freeze(["0.1.0-draft", "1.1.0"]);
 const STABLE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]*$/;
 
 /**
@@ -28,9 +29,9 @@ export function createHtmlAuthoringSourceCommentProjectionRequest(value) {
   if (extraction.contract !== HTMDOC_EXTRACTION_CONTRACT || extraction.contractVersion !== HTMDOC_EXTRACTION_VERSION || !Array.isArray(extraction.symbols)) {
     throw new TypeError("HTML-authoring source-comment integration requires hia-htmdoc-extraction@0.1.0-draft.");
   }
-  if (docSourceMap.contract !== DOC_SOURCE_MAP_CONTRACT || docSourceMap.contractVersion !== DOC_SOURCE_MAP_VERSION
+  if (docSourceMap.contract !== DOC_SOURCE_MAP_CONTRACT || !DOC_SOURCE_MAP_VERSIONS.includes(docSourceMap.contractVersion)
     || !Array.isArray(docSourceMap.entries) || !Array.isArray(docSourceMap.sources)) {
-    throw new TypeError("HTML-authoring source-comment integration requires doc-source-map@0.1.0-draft.");
+    throw new TypeError("HTML-authoring source-comment integration requires a supported doc-source-map version.");
   }
   if (docSourceMap.privacy?.sourcesContentPolicy !== "none"
     || docSourceMap.sources.some((source) => source?.sourcesContentPolicy !== "none" || Object.hasOwn(source ?? {}, "sourcesContent"))) {
@@ -62,6 +63,19 @@ export function createHtmlAuthoringSourceCommentProjectionRequest(value) {
     throw new TypeError("HTML-authoring source-comment integration requires one explicit source reference.");
   }
   const sourceRef = requireRecord(mapEntry.sourceRefs[0], "HTML-authoring source-comment integration requires one source reference object.");
+  // <lang><zh-CN>新版范围不能缺逐引用约定；本适配器只转交身份，不据未知范围创建定位承诺。</zh-CN><en>A current range cannot omit its per-reference convention; this adapter forwards identity without turning an unknown range into a location claim.</en></lang>
+  const hasRange = Object.hasOwn(sourceRef, "range");
+  const hasConvention = Object.hasOwn(sourceRef, "rangeConvention");
+  const convention = sourceRef.rangeConvention;
+  if (docSourceMap.contractVersion === "1.1.0" && (hasRange !== hasConvention || (hasRange
+    && (!isRecord(convention) || Object.keys(convention).length !== 2
+      || !["inclusive", "exclusive", "unknown"].includes(convention.endBoundary)
+      || !["utf16-code-unit", "unicode-code-point", "byte", "unknown"].includes(convention.columnUnit)
+      || (convention.columnUnit !== "unknown"
+        && (!Number.isSafeInteger(sourceRef.range?.start?.column) || !Number.isSafeInteger(sourceRef.range?.end?.column)
+          || sourceRef.range.start.column < 1 || sourceRef.range.end.column < 1)))))) {
+    throw new TypeError("HTML-authoring source-comment integration requires a current source range convention.");
+  }
   const sourceId = requireStableId(sourceRef.sourceId, "sourceId");
   if (!docSourceMap.sources.some((source) => source?.id === sourceId && source?.sourcesContentPolicy === "none")) {
     throw new TypeError("HTML-authoring source-comment integration source reference must resolve inside the none-only map.");

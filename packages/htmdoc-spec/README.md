@@ -25,3 +25,8 @@ It also exports the owner-local `evaluateHtmDocOutputConformance()` evaluator an
 ordinary doc-source-map and producer-result JSON records. It performs no file, source, network or target-project
 access, and is not a cross-package runtime capability schema. The default `none` source-content policy remains
 content-free; an `embed` artifact requires explicit evaluator confirmation.
+Its owner-local output gate accepts exact `doc-source-map@1.1.0` and historical
+`0.1.0-draft` identities. Current ranged references must carry a valid
+`rangeConvention`, and the producer-result map version must match the delivered
+map. Full general map validation remains the responsibility of the shared
+schema and reader.

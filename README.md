@@ -125,7 +125,11 @@ linkage-only.
 - HTMDoc extraction contract `0.1.0-draft`.
 - HTMDoc config schema `0.1.0-draft`.
 - documentation producer contract `0.1.0-draft`.
-- doc-source-map contract `0.1.0-draft`.
+- doc-source-map output contract `1.1.0`; the owner-local conformance and
+  HTML-authoring adapters also read historical `0.1.0-draft` maps. Ranged
+  references declare their end boundary and column unit individually. Proven
+  parse5 HTML elements use an exclusive end and UTF-16 columns; synthetic
+  Custom Elements Manifest positions declare unknown precision.
 
 ## Development
 

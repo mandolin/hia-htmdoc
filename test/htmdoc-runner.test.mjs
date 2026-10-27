@@ -36,6 +36,8 @@ test("standalone runner handles HTML, fragment, template and CEM inputs", async 
     const docMap = JSON.parse(await readFile(path.join(outputDirectory, docMapPath), "utf8"));
     assert.equal(manifest.contract, "documentation-producer-result");
     assert.equal(docMap.contract, "doc-source-map");
+    assert.equal(docMap.contractVersion, "1.1.0");
+    assert.equal(result.artifacts.find((artifact) => artifact.kind === "doc-source-map").contractVersion, docMap.contractVersion);
     assert.deepEqual(docMap.pathBases, { artifacts: "outputDirectory", sources: "workspaceRoot" });
     assert.equal(docMap.privacy.sourcesContentPolicy, "none");
     assert.equal(JSON.stringify(manifest).includes(outputDirectory), false);

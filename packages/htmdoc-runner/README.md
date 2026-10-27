@@ -76,3 +76,8 @@ const projectionRequest = createHtmlAuthoringSourceCommentProjectionRequest({
 
 中文说明：该 adapter 是 pure metadata bridge；它不读取源码、不运行 parser 或 core evaluator、不执行表达式，也不访问
 target、Tauri/Obsidian host 或 network。ordinary doc-source-map 只提供 entry/source linkage，不承载完整 projection 或正文。
+
+The runner writes `doc-source-map@1.1.0` and records the same exact version in
+its producer-result artifact. The source-comment and metadata handoff adapters
+accept both this version and historical `0.1.0-draft` inputs. They do not
+promote unknown source ranges to exact positions.
