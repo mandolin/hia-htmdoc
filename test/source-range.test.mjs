@@ -111,6 +111,29 @@ test("legacy CEM adapter reuses a synthetic 1:1 point for unrelated JSON declara
   assert.equal(map.contractVersion, "1.1.0");
 });
 
+test("actual parse5 recovery keeps a source hint without claiming exact range semantics", () => {
+  // <lang><zh-CN>缺失属性值使真实 parse5 产出错误恢复诊断；修正对照只改变该属性值。</zh-CN><en>A missing attribute value triggers an actual parse5 recovery diagnostic; the control changes only that value.</en></lang>
+  const malformedSource = '<!-- @component Card --><x-card a="b" c=>body</x-card>';
+  const correctedSource = '<!-- @component Card --><x-card a="b" c="ok">body</x-card>';
+  const options = { path: "fixtures/recovery.html", fragment: true };
+  const malformedExtraction = extractHtmlDoc(malformedSource, options);
+  const correctedExtraction = extractHtmlDoc(correctedSource, options);
+  const malformedMap = createHtmlDocumentationSourceMap({ extraction: malformedExtraction });
+  const correctedMap = createHtmlDocumentationSourceMap({ extraction: correctedExtraction });
+
+  // <lang><zh-CN>两个输入都保留符号及来源范围；只有真实恢复诊断把逐引用精度降为未知。</zh-CN><en>Both inputs retain a symbol and source range; only the real recovery diagnostic downgrades per-reference precision to unknown.</en></lang>
+  assert.equal(malformedExtraction.symbols.length, 1);
+  assert.equal(correctedExtraction.symbols.length, 1);
+  assert.ok(malformedExtraction.diagnostics.some((diagnostic) => diagnostic.code === "HTML_PARSE_MISSING_ATTRIBUTE_VALUE"));
+  assert.deepEqual(correctedExtraction.diagnostics, []);
+  assert.equal(malformedMap.contractVersion, "1.1.0");
+  assert.deepEqual(malformedMap.entries[0].sourceRefs[0].range, malformedExtraction.symbols[0].source.range);
+  assert.deepEqual(malformedMap.entries[0].sourceRefs[0].rangeConvention,
+    { endBoundary: "unknown", columnUnit: "unknown" });
+  assert.deepEqual(correctedMap.entries[0].sourceRefs[0].rangeConvention,
+    { endBoundary: "exclusive", columnUnit: "utf16-code-unit" });
+});
+
 test("unproven HTML recovery and missing columns keep range conventions unknown", () => {
   // <lang><zh-CN>只改变内存中的提取记录，确保已证解析器路径不会给恢复诊断或缺列引用套用精确语义。</zh-CN><en>Mutate only an in-memory extraction record so recovery diagnostics and missing columns cannot inherit proven parser precision.</en></lang>
   const extraction = extractHtmlDoc("<!-- @component Card --><x-card></x-card>", { path: "fixtures/recovery.html", fragment: true });
