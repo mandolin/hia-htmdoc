@@ -119,8 +119,10 @@ linkage-only.
 
 ## Compatibility
 
-- Node.js `>=20.19.0`; local development is pinned to `20.20.2` with mise.
-- CI release gates cover Node 20.20.2, 22.x and 24.x.
+- Node.js `^22.23.4 || ^24.22.1`; local development is pinned to `24.22.1` with mise.
+- CI release gates cover Node.js 22.23.4 and 24.22.1.
+- The already published `0.1.0` tarballs retain their original package metadata;
+  the source-tree engine declaration takes effect for consumers with a later package release.
 - parse5 `7.3.0`.
 - HTMDoc extraction contract `0.1.0-draft`.
 - HTMDoc config schema `0.1.0-draft`.
@@ -141,7 +143,7 @@ npm run release:local-consumer:check
 ```
 
 The local consumer check packs all eight public candidates, installs the
-tarballs into a fresh offline project, imports every package and runs a
+tarballs with strict Node.js engine checks into a fresh offline project, imports every package and runs a
 privacy-preserving end-to-end smoke. `npm run release:bootstrap:check` performs
 an anonymous completed-train check without publishing. The first registry
 write was restricted to a manually dispatched, exact-commit GitHub-hosted

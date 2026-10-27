@@ -22,9 +22,8 @@ jobs:
       fail-fast: false
       matrix:
         node:
-          - 20.20.2
-          - 22.x
-          - 24.x
+          - 22.23.4
+          - 24.22.1
 
     steps:
       - name: Check out repository

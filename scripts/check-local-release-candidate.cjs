@@ -56,8 +56,10 @@ function main() {
     });
     fs.writeFileSync(path.join(consumerDirectory, "smoke.mjs"), createConsumerSmokeSource(), "utf8");
 
+    // <lang><zh-CN>八份真实归档的 engines 在隔离安装中必须由 npm 强制检查；默认安装只给警告，不能作为运行范围证据。</zh-CN><en>npm must enforce engines while installing all eight real tarballs; its default advisory warning is not runtime-range evidence.</en></lang>
     const installResult = runNpm([
       "install",
+      "--engine-strict",
       "--offline",
       "--ignore-scripts",
       "--no-audit",
@@ -74,6 +76,7 @@ function main() {
       const installedManifest = readJson(installedManifestPath);
       assert.equal(installedManifest.name, candidate.name, `${candidate.name} installed identity drifted.`);
       assert.equal(installedManifest.version, inventory.candidateVersion, `${candidate.name} installed version drifted.`);
+      assert.equal(installedManifest.engines?.node, "^22.23.4 || ^24.22.1", `${candidate.name} installed Node.js support range drifted.`);
       for (const [dependencyName, dependencyVersion] of Object.entries(installedManifest.dependencies ?? {})) {
         if (!dependencyName.startsWith("@hia-doc/")) {
           continue;

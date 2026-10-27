@@ -26,10 +26,26 @@ function main() {
     "@hia-doc/htmdoc-producer"
   ];
   const expectedRepositoryUrl = "git+https://github.com/mandolin/hia-htmdoc.git";
+  // <lang><zh-CN>同一范围同时约束公开包、锁文件、工作流与本地运行时，不从旧已发布归档推断当前源码元数据。</zh-CN><en>One range binds public packages, the lockfile, workflows, and local runtime; historical published tarballs do not define current source metadata.</en></lang>
+  const expectedNodeRange = "^22.23.4 || ^24.22.1";
   const rootPackage = readJson(path.join(root, "package.json"));
+  const lock = readJson(path.join(root, "package-lock.json"));
 
   assert.equal(rootPackage.private, true, "The workspace root must remain private.");
   assert.equal(rootPackage.version, inventory.candidateVersion, "Workspace and candidate versions must stay aligned.");
+  assert.equal(rootPackage.engines?.node, expectedNodeRange, "Workspace Node support range drifted.");
+  assert.equal(lock.packages?.[""]?.engines?.node, expectedNodeRange, "Locked workspace Node range drifted.");
+  // <lang><zh-CN>发布候选门禁还须在实际 Node.js 进程上执行，避免 npm 默认仅警告 engines 时误记绿色。</zh-CN><en>The release gate must also run on an allowed Node.js process because npm otherwise treats engines as advisory.</en></lang>
+  const [runtimeMajor, runtimeMinor, runtimePatch] = process.versions.node.split(".").map(Number);
+  assert.ok(
+    (runtimeMajor === 22 && (runtimeMinor > 23 || (runtimeMinor === 23 && runtimePatch >= 4))) ||
+    (runtimeMajor === 24 && (runtimeMinor > 22 || (runtimeMinor === 22 && runtimePatch >= 1))),
+    `Unsupported release-gate Node.js runtime: ${process.version}.`
+  );
+  assert.match(fs.readFileSync(path.join(root, ".mise.toml"), "utf8"), /^node = "24\.22\.1"\s*$/m, "mise runtime drifted.");
+  const ciWorkflow = fs.readFileSync(path.join(root, ".github", "workflows", "ci.yml"), "utf8");
+  assert.match(ciWorkflow, /node:\s*\n\s*- 22\.23\.4\s*\n\s*- 24\.22\.1\s*\n\s*steps:/, "CI Node.js matrix drifted.");
+  assert.doesNotMatch(ciWorkflow, /20\.20\.2/, "CI must not run unsupported Node.js 20.");
   assert.deepEqual(packages.map((item) => item.name), expectedNames, "Public package order or identity drifted.");
   assert.ok(["local-release-candidate", "publish-approved", "published"].includes(inventory.releaseStatus), "Release train status is unsupported.");
   assert.equal(inventory.trustedPublisher?.nodeMinimum, "22.14.0", "Trusted Publishing Node minimum drifted from npm requirements.");
@@ -59,7 +75,8 @@ function main() {
     assert.equal(manifest.repository?.directory, candidate.directory, `${candidate.name} repository directory drifted.`);
     assert.equal(manifest.bugs?.url, "https://github.com/mandolin/hia-htmdoc/issues", `${candidate.name} bugs URL drifted.`);
     assert.match(manifest.homepage ?? "", /^https:\/\/github\.com\/mandolin\/hia-htmdoc\/tree\/main\/packages\//, `${candidate.name} homepage must point to its public package directory.`);
-    assert.equal(manifest.engines?.node, ">=20.19.0", `${candidate.name} Node support floor drifted.`);
+    assert.equal(manifest.engines?.node, expectedNodeRange, `${candidate.name} Node support range drifted.`);
+    assert.equal(lock.packages?.[candidate.directory]?.engines?.node, expectedNodeRange, `${candidate.name} locked Node support range drifted.`);
     assert.equal(manifest.publishConfig?.access, "public", `${candidate.name} must opt into public scoped publication.`);
     assert.deepEqual(manifest.files, ["src", "README.md", "LICENSE"], `${candidate.name} pack allow-list drifted.`);
     assert.ok(Array.isArray(manifest.keywords) && manifest.keywords.includes("documentation"), `${candidate.name} must expose public discovery metadata.`);
@@ -81,6 +98,7 @@ function main() {
 
   // <lang><zh-CN>工作流文本检查锁住最小 OIDC 权限、不可变 action SHA、显式确认和 publish-ready resolver。</zh-CN><en>Workflow text checks lock the minimum OIDC permission, immutable action SHAs, explicit confirmation, and the publish-ready resolver.</en></lang>
   const workflow = fs.readFileSync(path.join(root, ".github", "workflows", inventory.trustedPublisher.workflow), "utf8");
+  assert.match(workflow, /node-version:\s*24\.22\.1/, "Trusted Publish Node.js baseline drifted.");
   for (const requiredText of [
     "id-token: write",
     "contents: read",
@@ -95,6 +113,7 @@ function main() {
 
   // <lang><zh-CN>首发 workflow 与脚本共同锁住精确提交、GitHub-hosted provenance、专用 secret 和显式 partial resume。</zh-CN><en>The bootstrap workflow and script jointly lock the exact commit, GitHub-hosted provenance, dedicated secret, and explicit partial resume.</en></lang>
   const bootstrapWorkflow = fs.readFileSync(path.join(root, ".github", "workflows", inventory.bootstrap.workflow), "utf8");
+  assert.match(bootstrapWorkflow, /node-version:\s*24\.22\.1/, "Bootstrap Publish Node.js baseline drifted.");
   for (const requiredText of [
     "runs-on: ubuntu-latest",
     "id-token: write",

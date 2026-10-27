@@ -16,7 +16,7 @@
     ".": "./src/index.mjs"
   },
   "files": ["src", "README.md", "LICENSE"],
-  "engines": { "node": ">=20.19.0" },
+  "engines": { "node": "^22.23.4 || ^24.22.1" },
   "publishConfig": { "access": "public" },
   "dependencies": {
     "parse5": "7.3.0"
