@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Enforced declared runner booleans, nonempty input languages, unique profile identifiers and explicit-null rejection before output creation.
+- Redacted unknown fields/enums and config read failures; included CLI argument parsing in the same safe failure boundary.
+- Adopted confirmed documentation producer/producer-result 1.0.0 in new source builds and retained exact legacy result conformance reads.
+- Added regressions for request/CLI failures, persisted contract identities and legacy/current/unknown conformance versions; historical config/extraction identities are unchanged.
+
 ## 0.1.0 - 2026-08-11
 
 - Prepared eight MIT-licensed public package candidates with consistent npm metadata, exact internal dependency versions and dependency-first release order.

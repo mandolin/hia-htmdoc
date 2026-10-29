@@ -31,7 +31,7 @@
     "check:html-authoring-handoff": "node scripts/check-html-authoring-handoff.cjs",
     "release:gate": "npm run check:syntax && npm run build:fixtures && npm run smoke:standalone && npm run check:skeleton && npm run check:fixtures && npm run check:standalone && npm run check:output-conformance && npm run check:html-authoring-handoff && npm run license:audit && npm test && npm run release:check && npm run pack:check && npm run release:local-consumer:check",
     "smoke:standalone": "htmdoc --config examples/standalone/htmdoc.config.json",
-    "test": "node --test --test-concurrency=1 test/htmdoc.test.mjs test/htmdoc-runner.test.mjs test/htmdoc-output-conformance.test.mjs test/htmdoc-html-authoring-handoff.test.mjs test/htmdoc-html-authoring-source-comment-integration.test.mjs test/source-range.test.mjs test/runtime-policy.test.mjs",
+    "test": "node --test --test-concurrency=1 test/htmdoc.test.mjs test/htmdoc-runner.test.mjs test/htmdoc-output-conformance.test.mjs test/htmdoc-html-authoring-handoff.test.mjs test/htmdoc-html-authoring-source-comment-integration.test.mjs test/source-range.test.mjs test/runtime-policy.test.mjs test/runner-boundary.test.mjs",
     "test:all": "npm run release:gate"
   },
   "workspaces": [

@@ -24,6 +24,26 @@ The runner accepts `html`, `html-fragment`, `html-template` and
 `custom-elements-manifest` inputs. It writes HTMDoc extraction artifacts, HIA
 documents, direct-source documentation maps and a documentation producer result.
 
+Current source builds write `documentation-producer-result@1.0.0`; existing
+published package versions are unchanged. `options.emitDocSourceMap` and
+`options.writeResultManifest` default to `true` and accept only booleans.
+`sourcesContentPolicy` defaults to `none` and accepts exactly `none`,
+`reference` or `embed`. A supplied input `language` must be a nonempty string;
+`profileIds` defaults to `["htmdoc"]` and must be nonempty, unique lower-case
+identifiers. Explicit `null` is not an omitted optional value.
+
+`runHtmDoc()` validates declared input types before creating output. It writes
+incrementally, without rolling back or deleting previous files. Per-input
+failures become relative-path diagnostics; output-root/manifest I/O failures
+and caller progress-callback exceptions propagate. The CLI exits nonzero on
+failure and reports a fixed safe error rather than raw arguments, JSON or
+absolute paths. `loadHtmDocConfig()` also redacts read/JSON syntax failures.
+
+The legacy exported schema still requires explicit directories and input
+`kind`, while the existing loader supplies defaults. Use explicit values when
+validating legacy config documents; the historical schema identity has not
+been rewritten by these runtime fixes.
+
 ```sh
 htmdoc --config htmdoc.config.json
 ```

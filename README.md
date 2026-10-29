@@ -68,9 +68,14 @@ const result = await runHtmDoc({
 });
 ```
 
-The result follows `documentation-producer-result@0.1.0-draft`. Artifact paths
+The current source result follows `documentation-producer-result@1.0.0`. Artifact paths
 are relative to `outputDirectory` and can be consumed without exposing runtime
 absolute paths.
+
+The source producer descriptor uses `documentation-producer@1.0.0`. These
+contract versions are independent of package releases; previously published
+`0.1.0` packages keep their original behavior. The conformance reader accepts
+the exact legacy and current result versions and rejects unknown versions.
 
 ## HIA Producer
 

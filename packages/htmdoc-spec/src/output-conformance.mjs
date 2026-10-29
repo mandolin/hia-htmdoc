@@ -274,8 +274,9 @@ function validateArtifactRelations(extraction, document, docSourceMap, violation
 function validateProducerResult(producerResult, docSourceMap, violations) {
   // <lang><zh-CN>result metadata 是 target consumer 看到的 delivery boundary；它不能以 failed/partial 状态假装 conformance 成功。</zh-CN><en>Result metadata is the delivery boundary seen by target consumers; a failed or partial state cannot masquerade as conformance success.</en></lang>
   const artifacts = Array.isArray(producerResult?.artifacts) ? producerResult.artifacts.filter(isRecord) : [];
+  // <lang><zh-CN>实现身份独立于结果契约；精确接受已确认 1.0.0 与历史 draft，不按 semver 猜未来兼容。</zh-CN><en>Implementation identity is independent from the result contract; accept exactly confirmed 1.0.0 and the historical draft without guessing future semver compatibility.</en></lang>
   const producer = isRecord(producerResult?.producer) ? producerResult.producer : undefined;
-  if (!producerResult || producerResult.contract !== "documentation-producer-result" || producerResult.contractVersion !== "0.1.0-draft" || producer?.id !== "htmdoc" || producerResult.status !== "success" || artifacts.length === 0 || !docSourceMap) {
+  if (!producerResult || producerResult.contract !== "documentation-producer-result" || !["0.1.0-draft", "1.0.0"].includes(producerResult.contractVersion) || producer?.id !== "htmdoc" || producerResult.status !== "success" || artifacts.length === 0 || !docSourceMap) {
     addViolation(violations, "HTMDOC_OUTPUT_CONFORMANCE_PRODUCER_RESULT_INVALID", "HTMDoc producer result must expose the successful supported contract and delivery metadata.");
     return;
   }
