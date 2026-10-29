@@ -53,7 +53,11 @@ function main() {
   assert.equal(inventory.trustedPublisher?.allowedAction, "publish", "Trusted Publisher must allow npm publish only.");
   assert.equal(inventory.provenanceRequired, true, "Future public publication must require provenance.");
   if (inventory.releaseStatus === "local-release-candidate") {
-    assert.equal(inventory.trustedPublisher?.firstPublishBootstrap, "decision-required-before-first-publish", "First-publish bootstrap must remain unresolved before publication approval.");
+    // <lang><zh-CN>新版是既有八包的候选升级，保留真实首发历史而不再次制造首次发布未定案；publish-ready 仍要求单独批准。</zh-CN><en>This is a candidate upgrade of eight existing packages: retain genuine first-publication history without inventing an unresolved first publish; publish-ready still requires separate approval.</en></lang>
+    const historical = readJson(path.join(root, "release/history/public-packages-0.1.0.json"));
+    assert.equal(historical.releaseStatus, "published", "Original publication history must remain published.");
+    assert.equal(historical.candidateVersion, "0.1.0", "Historical package identity drifted.");
+    assert.equal(inventory.trustedPublisher?.firstPublishBootstrap, historical.trustedPublisher.firstPublishBootstrap, "Resolved publisher history drifted.");
   } else {
     assert.notEqual(inventory.trustedPublisher?.firstPublishBootstrap, "decision-required-before-first-publish", "A publish-approved train must resolve first-publish bootstrap.");
   }
@@ -78,11 +82,11 @@ function main() {
     assert.equal(manifest.engines?.node, expectedNodeRange, `${candidate.name} Node support range drifted.`);
     assert.equal(lock.packages?.[candidate.directory]?.engines?.node, expectedNodeRange, `${candidate.name} locked Node support range drifted.`);
     assert.equal(manifest.publishConfig?.access, "public", `${candidate.name} must opt into public scoped publication.`);
-    assert.deepEqual(manifest.files, ["src", "README.md", "LICENSE"], `${candidate.name} pack allow-list drifted.`);
+    assert.deepEqual(manifest.files, ["src", "README.md", "API.md", "MIGRATION.md", "LICENSE"], `${candidate.name} pack allow-list drifted.`);
     assert.ok(Array.isArray(manifest.keywords) && manifest.keywords.includes("documentation"), `${candidate.name} must expose public discovery metadata.`);
 
     // <lang><zh-CN>子包必须自带公开说明和许可证，不能借用私有 workspace 根文件。</zh-CN><en>Each child package must carry public documentation and a license instead of borrowing private workspace-root files.</en></lang>
-    for (const requiredFile of ["README.md", "LICENSE", "src/index.mjs"]) {
+    for (const requiredFile of ["README.md", "API.md", "MIGRATION.md", "LICENSE", "src/index.mjs"]) {
       const requiredPath = path.join(root, candidate.directory, requiredFile);
       assert.ok(fs.readFileSync(requiredPath, "utf8").trim(), `${candidate.name} is missing non-empty ${requiredFile}.`);
     }

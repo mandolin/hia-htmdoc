@@ -18,3 +18,7 @@ const extraction = cemManifestToHtmlExtraction(manifest, {
 
 The adapter consumes an already-loaded manifest object and does not discover
 packages or execute component code.
+
+## Public API and migration
+
+See [API reference](API.md) for every exported function, constant, resource and binary, including defaults, errors, effects, source precision and publication privacy. [Migration](MIGRATION.md) describes exact legacy/current contracts. Version 1.0.0 is a source candidate; registry publication is a separate event.

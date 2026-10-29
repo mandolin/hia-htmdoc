@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased
+## 1.0.0 source candidate
+
+- Coordinated eight original package versions, exact internal dependencies and runtime provenance at 1.0.0; publication remains separately gated.
+- Added packaged API references and migration guides for every public package, with root/resource/binary coverage checked continuously.
+- Refused inherited object keys in tag lookup and unsafe URI/drive-relative locators without echoing caller values.
+- Made embedded fragments follow exact UTF-16 exclusive ranges, preserving original whitespace and CRLF without adjacent-node text.
+- Expanded complete CI coverage to Linux and Windows on both supported Node.js versions.
 
 - Added coordinated config/extraction/profile 1.0.0, exact legacy schema resources/readers and explicit lossless migration with structure validation.
 - Kept historical schema module archives byte-for-byte; new defaults and nullable rules do not rewrite legacy definitions.

@@ -1,7 +1,7 @@
 export const HTML_DOC_SOURCE_CONTENT_POLICIES = Object.freeze(["none", "reference", "embed"]);
 
 // <lang><zh-CN>生产者包版本与映射契约版本分别记录；本次只更新逐引用范围契约。</zh-CN><en>The producer package version and map contract version are separate; this change updates per-reference range semantics only.</en></lang>
-const HTML_DOC_SOURCE_MAP_VERSION = "0.1.0";
+const HTML_DOC_SOURCE_MAP_VERSION = "1.0.0";
 
 /**
  * @lang zh-CN 已实测的 parse5 HTML 元素范围使用排除终点和 UTF-16 列；未知来源不得借工具名推断。
@@ -28,9 +28,10 @@ export function createHtmlDocSourceMapRef(options = {}) {
   };
 }
 
+/** @param {string} policy <lang><zh-CN>精确 none/reference/embed。</zh-CN><en>Exact none/reference/embed.</en></lang> @returns {string} <lang><zh-CN>不改输入的同一合法值。</zh-CN><en>The same valid value without mutation.</en></lang> @throws {TypeError} <lang><zh-CN>未知值固定拒绝，不回显原文。</zh-CN><en>Fixed refusal for unknown values without raw text.</en></lang> */
 export function normalizeSourcesContentPolicy(policy) {
   if (!HTML_DOC_SOURCE_CONTENT_POLICIES.includes(policy)) {
-    throw new Error(`Unsupported HTMDoc sourcesContent policy: ${policy}`);
+    throw new TypeError("Unsupported HTMDoc sourcesContent policy.");
   }
   return policy;
 }
@@ -195,7 +196,7 @@ function hasCompleteColumns(range) {
 function normalizeSafePath(value) {
   const normalized = String(value).replaceAll("\\", "/");
   if (!normalized || normalized.startsWith("/") || /^[A-Za-z][A-Za-z0-9+.-]*:/.test(normalized) || normalized.split("/").includes("..")) {
-    throw new Error(`Unsafe doc-source-map path: ${value}`);
+    throw new TypeError("Unsafe doc-source-map path.");
   }
   return normalized;
 }

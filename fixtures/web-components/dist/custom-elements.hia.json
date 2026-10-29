@@ -528,7 +528,7 @@
     "sourceContractVersion": "1.0.0",
     "producer": {
       "name": "@hia-doc/cem-adapter",
-      "version": "0.1.0"
+      "version": "1.0.0"
     },
     "sourceMap": {
       "kind": "hia-doc-source-map-ref",

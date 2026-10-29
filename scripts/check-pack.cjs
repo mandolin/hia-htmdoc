@@ -26,7 +26,7 @@ function main() {
 
     assert.equal(pack.name, candidate.name, `${candidate.name} pack identity drifted.`);
     assert.equal(pack.version, inventory.candidateVersion, `${candidate.name} pack version drifted.`);
-    for (const requiredPath of ["LICENSE", "README.md", "package.json", "src/index.mjs"]) {
+    for (const requiredPath of ["LICENSE", "README.md", "API.md", "MIGRATION.md", "package.json", "src/index.mjs"]) {
       assert.ok(packedPaths.has(requiredPath), `${candidate.name} pack is missing ${requiredPath}.`);
     }
     for (const filePath of packedPaths) {

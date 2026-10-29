@@ -1,23 +1,40 @@
 {
   "name": "@hia-doc/html-parser",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "HTML parser wrapper boundary for HTMDoc.",
   "license": "MIT",
-  "keywords": ["documentation", "html", "parser", "htmdoc"],
+  "keywords": [
+    "documentation",
+    "html",
+    "parser",
+    "htmdoc"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mandolin/hia-htmdoc.git",
     "directory": "packages/html-parser"
   },
-  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "bugs": {
+    "url": "https://github.com/mandolin/hia-htmdoc/issues"
+  },
   "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/html-parser#readme",
   "type": "module",
   "exports": {
     ".": "./src/index.mjs"
   },
-  "files": ["src", "README.md", "LICENSE"],
-  "engines": { "node": "^22.23.4 || ^24.22.1" },
-  "publishConfig": { "access": "public" },
+  "files": [
+    "src",
+    "README.md",
+    "API.md",
+    "MIGRATION.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": "^22.23.4 || ^24.22.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "parse5": "7.3.0"
   }

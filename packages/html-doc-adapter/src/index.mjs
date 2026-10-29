@@ -135,8 +135,29 @@ function titleFromPath(sourcePath) {
   return sourcePath.split("/").at(-1) || "HTMDoc Document";
 }
 
+/**
+ * @param {string} source <lang><zh-CN>已获显式 embed 许可的原文本。</zh-CN><en>Original text under explicit embed permission.</en></lang>
+ * @param {object} range <lang><zh-CN>parse5 一基 UTF-16 半开范围。</zh-CN><en>parse5 one-based UTF-16 exclusive range.</en></lang>
+ * @returns {string|null} <lang><zh-CN>精确原文本，不 trim/归一化换行；无效或空范围为 null。</zh-CN><en>Exact original text without trim/newline normalization; invalid or empty ranges return null.</en></lang>
+ */
 function extractRangeContent(source, range) {
-  const lines = String(source).split(/\r\n|\r|\n/);
-  const selected = lines.slice(range.start.line - 1, range.end.line);
-  return selected.join("\n").trim() || null;
+  // <lang><zh-CN>分别记录每行正文起止偏移，使 CRLF 宽度保留而列仍按 UTF-16 计。</zh-CN><en>Track each line's body offsets separately, preserving CRLF width while columns count UTF-16 units.</en></lang>
+  const text = String(source);
+  const starts = [0];
+  const ends = [];
+  for (const newline of text.matchAll(/\r\n|\r|\n/g)) {
+    ends.push(newline.index);
+    starts.push(newline.index + newline[0].length);
+  }
+  ends.push(text.length);
+  // <lang><zh-CN>不把越界坐标钳制到相邻文本，缺列/缺终点不能伪造片段。</zh-CN><en>Never clamp invalid coordinates into adjacent text; missing columns/ends cannot fabricate fragments.</en></lang>
+  const offsets = [];
+  for (const position of [range?.start, range?.end]) {
+    if (!Number.isSafeInteger(position?.line) || !Number.isSafeInteger(position?.column) || position.line < 1 || position.line > starts.length || position.column < 1) return null;
+    const line = position.line - 1;
+    if (position.column - 1 > ends[line] - starts[line]) return null;
+    offsets.push(starts[line] + position.column - 1);
+  }
+  if (offsets[1] < offsets[0]) return null;
+  return text.slice(offsets[0], offsets[1]) || null;
 }

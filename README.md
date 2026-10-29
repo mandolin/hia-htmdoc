@@ -21,11 +21,12 @@ Core annotations use unprefixed tags such as `@component`, `@template`,
 
 ## Standalone CLI
 
-Version `0.1.0` is published as eight public `@hia-doc/*` packages. For local
-development from a source checkout:
+Eight `@hia-doc/*` packages have coordinated `1.0.0` source candidates.
+Registry publication is separate; published `0.1.0` archives remain unchanged.
+For local development from a source checkout:
 
 ```sh
-npm install
+npm ci
 npm run smoke:standalone
 ```
 
@@ -121,6 +122,10 @@ linkage-only.
 - `@hia-doc/html-doc-source-map`: direct and generated source linkage helpers.
 - `@hia-doc/htmdoc-runner`: standalone API, config, CLI, metadata-only HTML-authoring handoff and source-comment projection-request adapter.
 - `@hia-doc/htmdoc-producer`: HIA documentation producer adapter.
+
+Each package includes an `API.md` responsibility reference and `MIGRATION.md`.
+The complete source gate verifies every root export, JSON resource and CLI
+against its packaged documentation and checks real isolated tarball consumption.
 
 ## Compatibility
 

@@ -19,7 +19,7 @@ const DEFAULT_LOCALE = "en";
 const HIA_TEXT_I18N_MODEL = "hia-text-i18n";
 const HIA_TEXT_I18N_MODEL_VERSION = "0.2.0";
 // <lang><zh-CN>提取产物 provenance 的版本必须与公开候选 manifest 同步，不能保留 skeleton 版本。</zh-CN><en>The extraction provenance version must match the public candidate manifest and cannot retain the skeleton version.</en></lang>
-const HTML_DOC_EXTRACTOR_VERSION = "0.1.0";
+const HTML_DOC_EXTRACTOR_VERSION = "1.0.0";
 
 /**
  * @param {string} source <lang><zh-CN>调用方显式提供的 HTML 文本。</zh-CN><en>Explicit caller-provided HTML text.</en></lang>
@@ -108,6 +108,11 @@ export function extractHtmlDoc(source, options = {}) {
   }));
 }
 
+/**
+ * @param {string} rawComment <lang><zh-CN>已取出的注释正文；不做 DOM 绑定。</zh-CN><en>Extracted comment body without DOM attachment.</en></lang>
+ * @param {{defaultLocale?:string}} [options] <lang><zh-CN>默认语言，合法化失败回退 en。</zh-CN><en>Default locale, falling back to en when invalid.</en></lang>
+ * @returns {object} <lang><zh-CN>annotations、summary 和可选字段级 i18n；保留未知标签供调用者诊断。</zh-CN><en>Annotations, summary and optional field-level i18n; unknown tags remain for caller diagnostics.</en></lang>
+ */
 export function parseHtmlDocComment(rawComment, options = {}) {
   const lines = String(rawComment)
     .replaceAll("\r\n", "\n")
@@ -501,10 +506,12 @@ function compactWhitespace(value) {
   return String(value ?? "").replace(/\s+/g, " ").trim();
 }
 
+/** @param {unknown} sourcePath <lang><zh-CN>显式来源定位器。</zh-CN><en>Explicit source locator.</en></lang> @returns {string} <lang><zh-CN>不含 URI/父级穿越的相对路径。</zh-CN><en>Relative path without URI/parent traversal.</en></lang> @throws {TypeError} <lang><zh-CN>固定安全失败，不回显原值。</zh-CN><en>Fixed safe failure without echoing raw values.</en></lang> */
 function normalizeSourcePath(sourcePath) {
-  const normalized = String(sourcePath).replaceAll("\\", "/");
-  if (!normalized || normalized.startsWith("/") || /^[a-zA-Z]:\//.test(normalized) || normalized.split("/").includes("..")) {
-    throw new Error(`Unsafe HTMDoc source path: ${sourcePath}`);
+  // <lang><zh-CN>来源仅限相对字符串，URI/盘符相对位置也不能进入公开工件。</zh-CN><en>Sources are relative strings only; URIs and drive-relative locators cannot enter public artifacts.</en></lang>
+  const normalized = typeof sourcePath === "string" ? sourcePath.replaceAll("\\", "/") : "";
+  if (!normalized || normalized.startsWith("/") || /^[A-Za-z][A-Za-z0-9+.-]*:/.test(normalized) || normalized.split("/").includes("..")) {
+    throw new TypeError("Unsafe HTMDoc source path.");
   }
   return normalized;
 }

@@ -27,3 +27,7 @@ positions from Custom Elements Manifest, parser recovery paths and unverified
 origins use `unknown` for both fields; consumers should treat them as source
 relations rather than exact cursor positions. A source reference without a
 range has no `rangeConvention`.
+
+## Public API and migration
+
+See [API reference](API.md) for every exported function, constant, resource and binary, including defaults, errors, effects, source precision and publication privacy. [Migration](MIGRATION.md) describes exact legacy/current contracts. Version 1.0.0 is a source candidate; registry publication is a separate event.

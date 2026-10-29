@@ -1,5 +1,20 @@
 # Release Checklist
 
+## 1.0.0 source candidate
+
+The current train is `local-release-candidate`. The checked historical sections
+below describe 0.1.0 and do not authorize publishing the new candidate.
+
+- Eight original 1.0.0 manifests, exact internal pins and implementation versions must agree.
+- API.md/MIGRATION.md/README/LICENSE must be present in all actual archives.
+- Root exports, four schema subpaths, both CLIs, input defaults/errors/effects and source/privacy limits must match the references.
+- Real HTML/fragment/template/CEM, old/current schemas and explicit migrations, SDK, source maps and bilingual core rendering must pass from ordinary installations.
+- Both supported Node.js versions must pass frozen source installs and the complete release gate; CI covers Linux and Windows.
+- The original 0.1.0 inventory is preserved under `release/history/`.
+- Publishing requires a separate approved train/package state and the existing Trusted Publisher workflow; no source-candidate check runs npm publish.
+
+## Historical 0.1.0 qualification
+
 ## Local RC
 
 - [x] Parser dependencies and licenses are reviewed.

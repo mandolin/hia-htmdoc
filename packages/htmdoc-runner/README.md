@@ -121,3 +121,7 @@ The runner writes `doc-source-map@1.1.0` and records the same exact version in
 its producer-result artifact. The source-comment and metadata handoff adapters
 accept both this version and historical `0.1.0-draft` inputs. They do not
 promote unknown source ranges to exact positions.
+
+## Public API and migration
+
+See [API reference](API.md) for every exported function, constant, resource and binary, including defaults, errors, effects, source precision and publication privacy. [Migration](MIGRATION.md) describes exact legacy/current contracts. Version 1.0.0 is a source candidate; registry publication is a separate event.

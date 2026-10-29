@@ -30,6 +30,7 @@ export {
   HTMDOC_OUTPUT_CONFORMANCE_VERSION
 } from "./output-conformance.mjs";
 
+/** @lang zh-CN 已确认 HTML-facing 符号 kind 注册；与 CEM 的 JS metadata 区分。 @lang en Confirmed HTML-facing kind registry, distinct from CEM JavaScript metadata. */
 export const HTMDOC_SYMBOL_KINDS = Object.freeze({
   component: "html-component",
   element: "html-element",
@@ -42,6 +43,7 @@ export const HTMDOC_SYMBOL_KINDS = Object.freeze({
   example: "html-example"
 });
 
+/** @lang zh-CN 规范化后支持的显式标签，description/lang 不独立创建 kind。 @lang en Supported canonical tags; description/lang do not create standalone kinds. */
 export const HTMDOC_TAGS = Object.freeze([
   "component",
   "element",
@@ -175,6 +177,7 @@ export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
   }
 });
 
+/** @lang zh-CN 显式映射只可通过自有属性读取，不能把对象原型变成语言标签。 @lang en Read explicit mappings through own properties only, never promoting object prototypes into language tags. */
 const TAG_TO_KIND = Object.freeze({
   component: HTMDOC_SYMBOL_KINDS.component,
   element: HTMDOC_SYMBOL_KINDS.element,
@@ -187,10 +190,12 @@ const TAG_TO_KIND = Object.freeze({
   example: HTMDOC_SYMBOL_KINDS.example
 });
 
+/** @param {string} tag <lang><zh-CN>已规范化的小写标签，不执行类型转换。</zh-CN><en>Normalized lowercase tag without coercion.</en></lang> @returns {string|null} <lang><zh-CN>只返回自有 registry kind；未知/非字符串返回 null。</zh-CN><en>Own registry kind only; unknown/nonstring inputs return null.</en></lang> */
 export function getHtmlDocSymbolKind(tag) {
-  return TAG_TO_KIND[tag] ?? null;
+  return typeof tag === "string" && Object.hasOwn(TAG_TO_KIND, tag) ? TAG_TO_KIND[tag] : null;
 }
 
+/** @param {string} tag <lang><zh-CN>区分大小写的规范标签。</zh-CN><en>Case-sensitive canonical tag.</en></lang> @returns {boolean} <lang><zh-CN>包含 description/lang 在内的显式标签注册；不修改输入。</zh-CN><en>Explicit registration including description/lang; input is unchanged.</en></lang> */
 export function isHtmlDocTag(tag) {
   return HTMDOC_TAGS.includes(tag);
 }

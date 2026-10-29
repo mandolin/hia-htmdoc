@@ -44,7 +44,7 @@ test("HTMDoc source candidate declares one Node.js 22/24 runtime range", async (
   for (const name of packageNames) {
     const packageDirectory = `packages/${name}`;
     const manifest = JSON.parse(await readRepositoryFile(`${packageDirectory}/package.json`));
-    assert.equal(manifest.version, "0.1.0", `${name} published-line identity changed`);
+    assert.equal(manifest.version, "1.0.0", `${name} source candidate identity changed`);
     assert.equal(manifest.engines?.node, supportedNodeRange, `${name} source engine drifted`);
     assert.equal(lock.packages[packageDirectory]?.engines?.node, supportedNodeRange, `${name} lock engine drifted`);
   }

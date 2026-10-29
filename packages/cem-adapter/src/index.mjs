@@ -6,7 +6,7 @@ import {
 } from "@hia-doc/htmdoc-spec";
 
 // <lang><zh-CN>产物 provenance 使用公开候选包版本，并与 package.json 的精确版本保持同步。</zh-CN><en>Artifact provenance uses the public candidate package version and stays aligned with the exact package.json version.</en></lang>
-const CEM_ADAPTER_VERSION = "0.1.0";
+const CEM_ADAPTER_VERSION = "1.0.0";
 
 /**
  * @param {object} manifest <lang><zh-CN>已物化 CEM JSON；不执行其代码或读取 module 路径。</zh-CN><en>Materialized CEM JSON; module code is never executed or read.</en></lang>
@@ -271,10 +271,12 @@ function slug(value) {
   return String(value).trim().toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-|-$/g, "") || "unnamed";
 }
 
+/** @param {unknown} sourcePath <lang><zh-CN>显式 CEM 定位器。</zh-CN><en>Explicit CEM locator.</en></lang> @returns {string} <lang><zh-CN>安全相对路径。</zh-CN><en>Safe relative path.</en></lang> @throws {TypeError} <lang><zh-CN>固定失败且不触发用户类型转换。</zh-CN><en>Fixed failure without caller coercion.</en></lang> */
 function normalizeSourcePath(sourcePath) {
-  const normalized = String(sourcePath).replaceAll("\\", "/");
-  if (!normalized || normalized.startsWith("/") || /^[a-zA-Z]:\//.test(normalized) || normalized.split("/").includes("..")) {
-    throw new Error(`Unsafe CEM source path: ${sourcePath}`);
+  // <lang><zh-CN>CEM 定位器与 HTML/地图一致，公开失败不回显原值。</zh-CN><en>CEM locators match HTML/maps and public failures never echo raw values.</en></lang>
+  const normalized = typeof sourcePath === "string" ? sourcePath.replaceAll("\\", "/") : "";
+  if (!normalized || normalized.startsWith("/") || /^[A-Za-z][A-Za-z0-9+.-]*:/.test(normalized) || normalized.split("/").includes("..")) {
+    throw new TypeError("Unsafe CEM source path.");
   }
   return normalized;
 }
