@@ -9,8 +9,8 @@ const { loadReleaseContext } = require("./release-packages.cjs");
 /**
  * Validate real HTMDoc tarballs in an isolated, offline consumer.
  *
- * @lang zh-CN 实际打包八个候选及两个已审计 parser 支撑包，在全新临时项目中离线安装并导入所有公开包，再运行 runner/producer/隐私 smoke。
- * @lang en Actually packs eight candidates plus two audited parser support packages, installs them offline in a fresh temporary project, imports every public package, and runs runner/producer/privacy smoke checks.
+ * @lang zh-CN 实际打包八个候选及全部已审计 parser/schema 支撑包，在全新临时项目中离线安装并导入所有公开包，再运行 runner/producer/隐私 smoke。
+ * @lang en Actually packs eight candidates plus all audited parser/schema support packages, installs them offline in a fresh temporary project, imports every public package, and runs runner/producer/privacy smoke checks.
  * @returns {void} 成功时只输出与临时路径无关的确定性摘要。 / On success, writes only a deterministic summary independent of temporary paths.
  * @throws {AssertionError|Error} 打包、离线安装、导入、运行或隐私检查失败时抛出。 / Thrown when packing, offline installation, imports, execution, or privacy checks fail.
  */
@@ -44,7 +44,7 @@ function main() {
       tarballs.set(supportManifest.name, packPackage(supportRoot, packDirectory, root));
     }
 
-    // <lang><zh-CN>消费 manifest 显式列出十个本地 tarball；安装后的 HIA manifest 仍必须只含精确 semver 内部依赖。</zh-CN><en>The consumer manifest explicitly lists ten local tarballs; installed HIA manifests must still contain exact-semver internal dependencies only.</en></lang>
+    // <lang><zh-CN>消费 manifest 显式列出候选和支撑包的全部本地 tarball；安装后的 HIA manifest 仍必须只含精确 semver 内部依赖。</zh-CN><en>The consumer manifest explicitly lists every candidate/support tarball; installed HIA manifests must still contain exact-semver internal dependencies only.</en></lang>
     const consumerDependencies = Object.fromEntries(
       [...tarballs.entries()].map(([name, tarballPath]) => [name, `file:${normalizeJsonPath(tarballPath)}`])
     );

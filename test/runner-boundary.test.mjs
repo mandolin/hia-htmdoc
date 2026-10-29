@@ -57,7 +57,7 @@ async function rejectsBeforeOutput(request) {
   await assert.rejects(access(request.outputDirectory), { code: "ENOENT" });
 }
 
-// <lang><zh-CN>已声明的三布尔选项不得用真值转换或 null 默认绕开类型。</zh-CN><en>None of the three declared booleans may bypass typing through truthiness or null defaults.</en></lang>
+// <lang><zh-CN>已声明的两个布尔选项不得用真值转换或 null 默认绕开类型。</zh-CN><en>Neither declared boolean may bypass typing through truthiness or null defaults.</en></lang>
 for (const option of ["emitDocSourceMap", "writeResultManifest"] ) {
   for (const value of [PRIVATE, 0, null]) {
     test(`runner rejects non-boolean ${option}: ${typeof value}`, async () => {
