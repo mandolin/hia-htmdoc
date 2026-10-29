@@ -22,35 +22,36 @@ import {
  * option set 特意不包含 target path、host、source-reader、network 或 publish switch。
  * @lang en The option set intentionally contains no target path, host, source-reader, network, or publish switch.
  */
-const { values } = parseArgs({
-  options: {
-    help: { type: "boolean", short: "h" },
-    input: { type: "string", short: "i" },
-    out: { type: "string", short: "o" },
-    version: { type: "boolean", short: "v" }
-  },
-  strict: true
-});
-
-/**
- * help 保持 static，不能检查 caller workspace。
- * @lang en Help remains static so it cannot inspect a caller workspace.
- */
-if (values.help) {
-  process.stdout.write(`HTMDoc HTML-authoring handoff ${HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION}\n\nUsage:\n  htmdoc-handoff --input <safe-relative-json> [--out <safe-relative-json>]\n\nThe command evaluates one explicit metadata-only request. It does not discover, read, run, or write a target project.\n`);
-  process.exit(0);
-}
-
-/**
- * version output 只包含 package-local draft metadata。
- * @lang en Version output is package-local draft metadata only.
- */
-if (values.version) {
-  process.stdout.write(`${HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION}\n`);
-  process.exit(0);
-}
-
 try {
+  // <lang><zh-CN>native 参数解析也可能包含私有 argv，必须由同一公开失败边界捕获。</zh-CN><en>Native argument parsing may contain private argv and must be caught by the same public failure boundary.</en></lang>
+  const { values } = parseArgs({
+    options: {
+      help: { type: "boolean", short: "h" },
+      input: { type: "string", short: "i" },
+      out: { type: "string", short: "o" },
+      version: { type: "boolean", short: "v" }
+    },
+    strict: true
+  });
+
+  /**
+   * help 保持 static，不能检查 caller workspace。
+   * @lang en Help remains static so it cannot inspect a caller workspace.
+   */
+  if (values.help) {
+    process.stdout.write(`HTMDoc HTML-authoring handoff ${HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION}\n\nUsage:\n  htmdoc-handoff --input <safe-relative-json> [--out <safe-relative-json>]\n\nThe command evaluates one explicit metadata-only request. It does not discover, read, run, or write a target project.\n`);
+    process.exit(0);
+  }
+
+  /**
+   * version output 只包含 package-local draft metadata。
+   * @lang en Version output is package-local draft metadata only.
+   */
+  if (values.version) {
+    process.stdout.write(`${HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION}\n`);
+    process.exit(0);
+  }
+
   // <lang><zh-CN>在 read 前先限制 input path，禁止 traversal、URI、absolute path 或 empty segment 扩大读取范围。</zh-CN><en>Constrain the input path before reading so traversal, URIs, absolute paths, or empty segments cannot expand the read scope.</en></lang>
   const inputPath = resolveSafeRelativePath(values.input, "--input");
   // <lang><zh-CN>这是 CLI 唯一 filesystem input；不会从 JSON value 继续发现目录、target state 或 artifact。</zh-CN><en>This is the CLI's only filesystem input; no directory, target state, or artifact is discovered from the JSON value.</en></lang>

@@ -18,6 +18,8 @@ import { loadHtmDocConfig, runHtmDoc } from "../packages/htmdoc-runner/src/index
 const PRIVATE = "private-runner-boundary-sentinel";
 /** @lang zh-CN 精确定位本仓 CLI，避免调用系统安装版本。 @lang en Resolves this repository's CLI rather than a globally installed version. */
 const cli = fileURLToPath(new URL("../packages/htmdoc-runner/src/cli.mjs", import.meta.url));
+/** @lang zh-CN 第二个公开 bin 的精确源码路径。 @lang en Exact source path of the second public binary. */
+const handoffCli = fileURLToPath(new URL("../packages/htmdoc-runner/src/html-authoring-handoff-cli.mjs", import.meta.url));
 
 /**
  * @param {Function} callback <lang><zh-CN>接收隔离根和合法基础请求的测试。</zh-CN><en>Test receiving an isolated root and valid baseline request.</en></lang>
@@ -135,6 +137,19 @@ for (const args of [[`--${PRIVATE}`], ["--kind", PRIVATE, "input.html"], ["--con
       assert.equal(`${child.stdout}${child.stderr}`.includes(PRIVATE), false);
       assert.equal(child.stderr.includes("\n    at "), false);
       assert.match(child.stderr, /HTMDoc failed:/);
+    });
+  });
+}
+// <lang><zh-CN>第二个 bin 的 native 参数解析不得绕过既有 safeErrorMessage。</zh-CN><en>The second binary's native parsing must not bypass its existing safeErrorMessage.</en></lang>
+for (const args of [[`--${PRIVATE}`], ["--input"], ["--input", `${PRIVATE}.json`]]) {
+  test(`handoff CLI redacts ${args.join(" ")} failure`, async () => {
+    await withWorkspace(async (root) => {
+      // <lang><zh-CN>不提供目标仓路径，仅测试本例创建的隔离目录。</zh-CN><en>No target repository path is provided; only the isolated case directory is used.</en></lang>
+      const child = spawnSync(process.execPath, [handoffCli, ...args], { cwd: root, encoding: "utf8" });
+      assert.equal(child.status, 1);
+      assert.equal(`${child.stdout}${child.stderr}`.includes(PRIVATE), false);
+      assert.equal(child.stderr.includes("\n    at "), false);
+      assert.match(child.stderr, /HTMDoc handoff failed:/);
     });
   });
 }
