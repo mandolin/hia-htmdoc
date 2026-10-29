@@ -37,8 +37,14 @@ export {
 export {
   HTMDOC_CONFIG_JSON_SCHEMA,
   HTMDOC_CONFIG_SCHEMA_ID,
-  HTMDOC_CONFIG_SCHEMA_VERSION
+  HTMDOC_CONFIG_SCHEMA_VERSION,
+  HTMDOC_LEGACY_CONFIG_JSON_SCHEMA,
+  HTMDOC_LEGACY_CONFIG_SCHEMA_ID,
+  HTMDOC_LEGACY_CONFIG_SCHEMA_VERSION
 } from "./schema.mjs";
+/** @lang zh-CN 精确 schema 查询和显式无损迁移；不读文件或改调用者对象。 @lang en Exact schema lookup and explicit lossless migration without file reads or caller mutation. */
+export { getHtmDocConfigSchema, migrateHtmDocConfig } from "./config-compatibility.mjs";
+import { getHtmDocConfigSchema, validateHtmDocConfigForReading } from "./config-compatibility.mjs";
 import { HTMDOC_CONFIG_SCHEMA_ID, HTMDOC_CONFIG_SCHEMA_VERSION } from "./schema.mjs";
 
 /**
@@ -168,13 +174,11 @@ export async function loadHtmDocConfig(configPath, options = {}) {
     throw new TypeError("HTMDoc config could not be read as JSON.");
   }
   assertRecord(config, "HTMDoc config must be a JSON object.");
+  // <lang><zh-CN>旧/新身份与结构分别核验；旧默认行为不冒充旧 schema 的断言。</zh-CN><en>Check exact legacy/current identity and structure separately; legacy defaults do not masquerade as legacy schema assertions.</en></lang>
+  validateHtmDocConfigForReading(config);
   assertKnownKeys(config, ["$schema", "schemaVersion", "workspaceRoot", "outputDirectory", "inputs", "options", "profileIds"], "config");
-  if (config.schemaVersion !== HTMDOC_CONFIG_SCHEMA_VERSION) {
-    throw new TypeError(`schemaVersion must be ${HTMDOC_CONFIG_SCHEMA_VERSION}.`);
-  }
-  if (config.$schema !== undefined && config.$schema !== HTMDOC_CONFIG_SCHEMA_ID) {
-    throw new TypeError(`$schema must be ${HTMDOC_CONFIG_SCHEMA_ID}.`);
-  }
+  const configSchema = getHtmDocConfigSchema(config.schemaVersion);
+  if (config.$schema !== undefined && config.$schema !== configSchema.$id) throw new TypeError("Unsupported HTMDoc config schema identity.");
 
   // <lang><zh-CN>以下定位器只保留在返回的内存请求中；旧版缺省规则保持。</zh-CN><en>These locators stay in the returned in-memory request only; existing legacy defaults remain.</en></lang>
   const configDirectory = path.dirname(absoluteConfigPath);

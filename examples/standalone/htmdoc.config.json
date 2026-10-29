@@ -1,5 +1,5 @@
 {
-  "schemaVersion": "0.1.0-draft",
+  "schemaVersion": "1.0.0",
   "workspaceRoot": ".",
   "outputDirectory": "dist/htmdoc",
   "inputs": [

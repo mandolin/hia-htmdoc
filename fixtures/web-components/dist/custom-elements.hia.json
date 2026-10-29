@@ -525,7 +525,7 @@
   "diagnostics": [],
   "metadata": {
     "sourceContract": "hia-htmdoc-extraction",
-    "sourceContractVersion": "0.1.0-draft",
+    "sourceContractVersion": "1.0.0",
     "producer": {
       "name": "@hia-doc/cem-adapter",
       "version": "0.1.0"

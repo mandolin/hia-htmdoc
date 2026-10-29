@@ -1,3 +1,5 @@
+import { validateHtmDocExtraction } from "./compatibility.mjs";
+
 /**
  * Owner-local contract identity for HTMDoc output conformance summaries.
  *
@@ -107,7 +109,7 @@ function createSummary(violations) {
  */
 function validateExtraction(extraction, violations) {
   // <lang><zh-CN>contract/version/symbols/source 是所有 downstream projection 的最小连续性锚点。</zh-CN><en>Contract/version/symbols/source are the minimum continuity anchors for every downstream projection.</en></lang>
-  if (!extraction || extraction.contract !== "hia-htmdoc-extraction" || extraction.contractVersion !== "0.1.0-draft" || !Array.isArray(extraction.symbols) || !isRecord(extraction.source)) {
+  if (!extraction || validateHtmDocExtraction(extraction).length || extraction.contract !== "hia-htmdoc-extraction" || !["0.1.0-draft", "1.0.0"].includes(extraction.contractVersion) || !Array.isArray(extraction.symbols) || !isRecord(extraction.source)) {
     addViolation(violations, "HTMDOC_OUTPUT_CONFORMANCE_EXTRACTION_INVALID", "HTMDoc extraction must expose the supported contract, version, source, and symbols.");
     return false;
   }

@@ -1,7 +1,20 @@
+/** @lang zh-CN 提取工件的固定中性身份，与包版本独立。 @lang en Fixed extraction artifact identity, independent of package versions. */
 export const HTMDOC_EXTRACTION_CONTRACT = "hia-htmdoc-extraction";
-export const HTMDOC_EXTRACTION_CONTRACT_VERSION = "0.1.0-draft";
-export const HTMDOC_EXTRACTION_SCHEMA_ID = "https://hia-doc.local/schema/hia-htmdoc-extraction-0.1.0-draft.json";
-export const HTMDOC_PROFILE_VERSION = "0.1.0-draft";
+/** @lang zh-CN 已确认的新版提取 wire 身份，旧版仍精确可读。 @lang en Confirmed current extraction wire identity with exact historical reading retained. */
+export const HTMDOC_EXTRACTION_CONTRACT_VERSION = "1.0.0";
+/** @lang zh-CN 公开 schema 身份，不执行网络请求。 @lang en Public schema identity without network requests. */
+export const HTMDOC_EXTRACTION_SCHEMA_ID = "https://mandolin.github.io/HIA-Documentation/schemas/hia-htmdoc-extraction-1.0.0.schema.json";
+/** @lang zh-CN 已确认 annotation/CEM 子集的 profile 身份，不表示全生态支持。 @lang en Profile identity for the confirmed annotation/CEM subset, not full ecosystem support. */
+export const HTMDOC_PROFILE_VERSION = "1.0.0";
+/** @lang zh-CN 不改写历史 schema，精确旧对象来自原模块档案。 @lang en Historical schemas remain unchanged and come from the original module archive. */
+export {
+  HTMDOC_EXTRACTION_JSON_SCHEMA as HTMDOC_LEGACY_EXTRACTION_JSON_SCHEMA,
+  HTMDOC_EXTRACTION_SCHEMA_ID as HTMDOC_LEGACY_EXTRACTION_SCHEMA_ID,
+  HTMDOC_EXTRACTION_CONTRACT_VERSION as HTMDOC_LEGACY_EXTRACTION_CONTRACT_VERSION,
+  HTMDOC_PROFILE_VERSION as HTMDOC_LEGACY_PROFILE_VERSION
+} from "./schema-legacy.mjs";
+/** @lang zh-CN 新旧精确读取和显式迁移均为无 I/O 纯 API。 @lang en Exact version reading and explicit migration are pure APIs without I/O. */
+export { getHtmDocExtractionSchema, validateHtmDocExtraction, migrateHtmDocExtraction } from "./compatibility.mjs";
 
 /**
  * Owner-local output conformance evaluator for already-generated HTMDoc artifacts.
@@ -43,6 +56,7 @@ export const HTMDOC_TAGS = Object.freeze([
   "lang"
 ]);
 
+/** @lang zh-CN 新版稳定子集 schema；nullable 为已确认新规则，旧 schema 不随之变化。 @lang en Current stable-subset schema; nullable support is a confirmed new rule that does not change the legacy schema. */
 export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: HTMDOC_EXTRACTION_SCHEMA_ID,
@@ -87,7 +101,7 @@ export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
       additionalProperties: true,
       properties: {
         name: { $ref: "#/$defs/nonEmptyString" },
-        version: { $ref: "#/$defs/nonEmptyString" }
+        version: { const: HTMDOC_PROFILE_VERSION }
       }
     },
     source: {
@@ -131,8 +145,8 @@ export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
         id: { $ref: "#/$defs/nonEmptyString" },
         kind: { enum: Object.values(HTMDOC_SYMBOL_KINDS) },
         name: { $ref: "#/$defs/nonEmptyString" },
-        parentId: { $ref: "#/$defs/nonEmptyString" },
-        summary: { type: "string" },
+        parentId: { anyOf: [{ $ref: "#/$defs/nonEmptyString" }, { type: "null" }] },
+        summary: { type: ["string", "null"] },
         source: {
           type: "object",
           required: ["path"],

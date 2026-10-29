@@ -34,10 +34,11 @@ function main() {
     }
 
     // <lang><zh-CN>parse5 与 entities 已在 THIRD_PARTY_NOTICES 中审计；本地 tarball 仅用于让空缓存安装保持真正离线。</zh-CN><en>parse5 and entities are audited in THIRD_PARTY_NOTICES; their local tarballs exist only to keep the empty-cache installation genuinely offline.</en></lang>
-    const supportPackageRoots = [
-      path.join(root, "packages", "html-parser", "node_modules", "parse5"),
-      path.join(root, "packages", "html-parser", "node_modules", "entities")
-    ];
+    // <lang><zh-CN>沿实际锁采集全部已审计 parser/schema 运行依赖，保证新 schema 验证在空缓存仍是真离线安装。</zh-CN><en>Collect every audited parser/schema runtime dependency from the real lock so schema validation remains a genuinely offline empty-cache install.</en></lang>
+    const lock = readJson(path.join(root, "package-lock.json"));
+    const supportPackageRoots = Object.entries(lock.packages)
+      .filter(([directory, entry]) => directory.includes("node_modules/") && !entry.link)
+      .map(([directory]) => path.join(root, directory));
     for (const supportRoot of supportPackageRoots) {
       const supportManifest = readJson(path.join(supportRoot, "package.json"));
       tarballs.set(supportManifest.name, packPackage(supportRoot, packDirectory, root));

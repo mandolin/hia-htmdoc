@@ -1,13 +1,13 @@
 {
   "contract": "hia-htmdoc-extraction",
-  "contractVersion": "0.1.0-draft",
+  "contractVersion": "1.0.0",
   "producer": {
     "name": "@hia-doc/cem-adapter",
     "version": "0.1.0"
   },
   "profile": {
     "name": "custom-elements-manifest",
-    "version": "0.1.0-draft"
+    "version": "1.0.0"
   },
   "source": {
     "kind": "custom-elements-manifest",

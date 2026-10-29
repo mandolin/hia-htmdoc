@@ -21,6 +21,14 @@ const HIA_TEXT_I18N_MODEL_VERSION = "0.2.0";
 // <lang><zh-CN>提取产物 provenance 的版本必须与公开候选 manifest 同步，不能保留 skeleton 版本。</zh-CN><en>The extraction provenance version must match the public candidate manifest and cannot retain the skeleton version.</en></lang>
 const HTML_DOC_EXTRACTOR_VERSION = "0.1.0";
 
+/**
+ * @param {string} source <lang><zh-CN>调用方显式提供的 HTML 文本。</zh-CN><en>Explicit caller-provided HTML text.</en></lang>
+ * @param {object} [options] <lang><zh-CN>相对 path、fragment、默认语言与内容策略，默认不嵌源码。</zh-CN><en>Relative path, fragment mode, default locale and content policy, defaulting to no embedded source.</en></lang>
+ * @returns {object} <lang><zh-CN>提取/profile 1.0.0 普通 JSON；可选 undefined 字段省略。</zh-CN><en>Ordinary-JSON extraction/profile 1.0.0 with optional undefined properties omitted.</en></lang>
+ * @throws {Error} <lang><zh-CN>不支持的路径/策略或 parser 输入错误。</zh-CN><en>Unsupported paths/policies or parser input failures.</en></lang>
+ * @lang zh-CN 只做已确认的保守注释绑定，不读取文件/网络或生成可见页面。
+ * @lang en Applies the confirmed conservative comment attachment only, without file/network reads or visible-page generation.
+ */
 export function extractHtmlDoc(source, options = {}) {
   const sourcePath = normalizeSourcePath(options.path ?? "input.html");
   const defaultLocale = normalizeLocale(options.defaultLocale) || DEFAULT_LOCALE;
@@ -74,7 +82,8 @@ export function extractHtmlDoc(source, options = {}) {
     sourceRecord.sourcesContent = source;
   }
 
-  return {
+  // <lang><zh-CN>返回 wire JSON 形状，省略既有可选 undefined，避免读者需要处理非 JSON 中间值。</zh-CN><en>Return the wire JSON shape, omitting existing optional undefined values so readers need no non-JSON intermediates.</en></lang>
+  return JSON.parse(JSON.stringify({
     contract: HTMDOC_EXTRACTION_CONTRACT,
     contractVersion: HTMDOC_EXTRACTION_CONTRACT_VERSION,
     producer: {
@@ -96,7 +105,7 @@ export function extractHtmlDoc(source, options = {}) {
       parser: parsed.parser,
       fragment: parsed.parser.mode === "fragment"
     }
-  };
+  }));
 }
 
 export function parseHtmlDocComment(rawComment, options = {}) {

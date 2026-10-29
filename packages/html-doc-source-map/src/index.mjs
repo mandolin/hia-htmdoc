@@ -44,7 +44,7 @@ export function normalizeSourcesContentPolicy(policy) {
  */
 export function createHtmlDocumentationSourceMap(options = {}) {
   const extraction = options.extraction;
-  if (!extraction || extraction.contract !== "hia-htmdoc-extraction") {
+  if (!extraction || extraction.contract !== "hia-htmdoc-extraction" || !["0.1.0-draft", "1.0.0"].includes(extraction.contractVersion)) {
     throw new Error("Expected hia-htmdoc-extraction artifact.");
   }
 
@@ -61,7 +61,7 @@ export function createHtmlDocumentationSourceMap(options = {}) {
   );
   // <lang><zh-CN>只接受本提取器且无 parse5 恢复诊断的 HTML 分支为实测精度；CEM 与外来提取件均保守标未知。</zh-CN><en>Only this extractor's HTML branch without parse5 recovery diagnostics receives proven precision; CEM and external extraction artifacts stay unknown.</en></lang>
   const provenParse5 = extraction.source?.kind === "html"
-    && extraction.contractVersion === "0.1.0-draft"
+    && ["0.1.0-draft", "1.0.0"].includes(extraction.contractVersion)
     && extraction.producer?.name === "@hia-doc/html-doc-extractor"
     && extraction.metadata?.parser?.name === "parse5"
     && !extraction.diagnostics?.some((diagnostic) => typeof diagnostic?.code === "string" && diagnostic.code.startsWith("HTML_PARSE_"));

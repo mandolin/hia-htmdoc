@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mandolin.github.io/HIA-Documentation/schemas/htmdoc-config-0.1.0-draft.schema.json",
+  "title": "HTMDoc Config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "workspaceRoot",
+    "outputDirectory",
+    "inputs"
+  ],
+  "properties": {
+    "$schema": {
+      "const": "https://mandolin.github.io/HIA-Documentation/schemas/htmdoc-config-0.1.0-draft.schema.json"
+    },
+    "schemaVersion": {
+      "const": "0.1.0-draft"
+    },
+    "workspaceRoot": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "^(?:[A-Za-z]:|/|\\\\|[A-Za-z][A-Za-z0-9+.-]*:)"
+          },
+          {
+            "pattern": "(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$)"
+          }
+        ]
+      }
+    },
+    "outputDirectory": {
+      "type": "string",
+      "minLength": 1,
+      "not": {
+        "anyOf": [
+          {
+            "pattern": "^(?:[A-Za-z]:|/|\\\\|[A-Za-z][A-Za-z0-9+.-]*:)"
+          },
+          {
+            "pattern": "(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$)"
+          }
+        ]
+      }
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "path"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "html",
+              "html-fragment",
+              "html-template",
+              "custom-elements-manifest"
+            ]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "not": {
+              "anyOf": [
+                {
+                  "pattern": "^(?:[A-Za-z]:|/|\\\\|[A-Za-z][A-Za-z0-9+.-]*:)"
+                },
+                {
+                  "pattern": "(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$)"
+                }
+              ]
+            }
+          },
+          "language": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "emitDocSourceMap": {
+          "type": "boolean"
+        },
+        "sourcesContentPolicy": {
+          "enum": [
+            "none",
+            "reference",
+            "embed"
+          ]
+        },
+        "writeResultManifest": {
+          "type": "boolean"
+        }
+      }
+    },
+    "profileIds": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._-]*$"
+      }
+    }
+  }
+}

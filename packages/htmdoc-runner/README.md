@@ -6,7 +6,8 @@ Standalone API and CLI for HTML documentation projects.
 npm install --save-dev @hia-doc/htmdoc-runner
 ```
 
-JSON configs use `schemaVersion: "0.1.0-draft"`. The package exports
+Current source JSON configs use `schemaVersion: "1.0.0"` and retain exact
+`0.1.0-draft` reads. The package exports
 `HTMDOC_CONFIG_JSON_SCHEMA` for validation and editor integration.
 
 ```js
@@ -43,6 +44,25 @@ The legacy exported schema still requires explicit directories and input
 `kind`, while the existing loader supplies defaults. Use explicit values when
 validating legacy config documents; the historical schema identity has not
 been rewritten by these runtime fixes.
+
+## Versioned config and migration
+
+`getHtmDocConfigSchema(versionOrId)` returns the exact current or historical
+schema; unknown identities return `undefined`. `HTMDOC_LEGACY_CONFIG_*` expose
+the original schema and identity. New config permits omitted `workspaceRoot`
+(`.`), `outputDirectory` (`dist/htmdoc`) and input `kind` (filename inference).
+The old schema remains stricter while the loader preserves its historical
+defaults. Neither schema validation nor reading inserts values into input JSON.
+
+`migrateHtmDocConfig(oldConfig)` is explicit, pure and lossless. It accepts only
+the exact legacy identity with supported JSON structure, changes
+`schemaVersion` and an existing `$schema`, preserves omissions, and validates
+the target. It returns a fresh object and throws a fixed `TypeError` for invalid,
+current or unknown versions, cycles, accessors and non-JSON data. It performs
+no file/network I/O. Bundled schemas are available at
+`@hia-doc/htmdoc-runner/schemas/htmdoc-config-1.0.0.schema.json` and the matching
+`htmdoc-config-0.1.0-draft.schema.json` subpath; their URLs are identities, not
+remote resources fetched by the runner.
 
 ```sh
 htmdoc --config htmdoc.config.json

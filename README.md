@@ -39,7 +39,7 @@ Minimal config:
 
 ```json
 {
-  "schemaVersion": "0.1.0-draft",
+  "schemaVersion": "1.0.0",
   "workspaceRoot": ".",
   "outputDirectory": "dist/htmdoc",
   "inputs": [
@@ -129,9 +129,8 @@ linkage-only.
 - The already published `0.1.0` tarballs retain their original package metadata;
   the source-tree engine declaration takes effect for consumers with a later package release.
 - parse5 `7.3.0`.
-- HTMDoc extraction contract `0.1.0-draft`.
-- HTMDoc config schema `0.1.0-draft`.
-- documentation producer contract `0.1.0-draft`.
+- Current source extraction/config/profile `1.0.0`, with exact historical `0.1.0-draft` reading and explicit migration; see [migration](MIGRATION.md).
+- Current source documentation producer/producer-result contract `1.0.0`.
 - doc-source-map output contract `1.1.0`; the owner-local conformance and
   HTML-authoring adapters also read historical `0.1.0-draft` maps. Ranged
   references declare their end boundary and column unit individually. Proven

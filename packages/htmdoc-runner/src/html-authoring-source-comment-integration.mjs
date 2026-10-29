@@ -1,7 +1,10 @@
+import { validateHtmDocExtraction } from "@hia-doc/htmdoc-spec";
+
 const SOURCE_COMMENT_PROJECTION_CONTRACT = "documentation-source-comment-projection";
 const SOURCE_COMMENT_PROJECTION_VERSION = "0.1.0-draft";
 const HTMDOC_EXTRACTION_CONTRACT = "hia-htmdoc-extraction";
-const HTMDOC_EXTRACTION_VERSION = "0.1.0-draft";
+/** @lang zh-CN 精确旧/新提取输入，投影请求自身的输出身份不变。 @lang en Exact legacy/current extraction inputs; the projection request's own output identity remains unchanged. */
+const HTMDOC_EXTRACTION_VERSIONS = Object.freeze(["0.1.0-draft", "1.0.0"]);
 const DOC_SOURCE_MAP_CONTRACT = "doc-source-map";
 // <lang><zh-CN>历史输入仍可只读投影；新版需要逐引用约定，未来版本不得静默进入。</zh-CN><en>Historical input remains readable for projection; current input requires per-reference conventions, and future versions cannot enter silently.</en></lang>
 const DOC_SOURCE_MAP_VERSIONS = Object.freeze(["0.1.0-draft", "1.1.0"]);
@@ -26,8 +29,8 @@ export function createHtmlAuthoringSourceCommentProjectionRequest(value) {
   const docSourceMap = requireRecord(request.docSourceMap, "HTML-authoring source-comment integration requires one doc-source-map.");
 
   // <lang><zh-CN>两个输入 contract 必须 exact-match；adapter 不猜测 future draft compatibility。</zh-CN><en>Both input contracts must match exactly; the adapter never guesses future draft compatibility.</en></lang>
-  if (extraction.contract !== HTMDOC_EXTRACTION_CONTRACT || extraction.contractVersion !== HTMDOC_EXTRACTION_VERSION || !Array.isArray(extraction.symbols)) {
-    throw new TypeError("HTML-authoring source-comment integration requires hia-htmdoc-extraction@0.1.0-draft.");
+  if (validateHtmDocExtraction(extraction).length || extraction.contract !== HTMDOC_EXTRACTION_CONTRACT || !HTMDOC_EXTRACTION_VERSIONS.includes(extraction.contractVersion) || !Array.isArray(extraction.symbols)) {
+    throw new TypeError("HTML-authoring source-comment integration requires an exact supported HTMDoc extraction.");
   }
   if (docSourceMap.contract !== DOC_SOURCE_MAP_CONTRACT || !DOC_SOURCE_MAP_VERSIONS.includes(docSourceMap.contractVersion)
     || !Array.isArray(docSourceMap.entries) || !Array.isArray(docSourceMap.sources)) {

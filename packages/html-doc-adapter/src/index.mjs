@@ -1,9 +1,15 @@
-import { HTMDOC_EXTRACTION_CONTRACT } from "@hia-doc/htmdoc-spec";
+import { HTMDOC_EXTRACTION_CONTRACT, validateHtmDocExtraction } from "@hia-doc/htmdoc-spec";
 
 const HIA_CORE_SCHEMA_VERSION = "0.2.0";
 const HIA_SOURCE_MODEL = "hia-source";
 const HIA_SOURCE_MODEL_VERSION = "0.2.0";
 
+/**
+ * @param {object} artifact <lang><zh-CN>普通 JSON 精确旧/新提取件；先校验完整 schema 与 profile 配对。</zh-CN><en>Ordinary-JSON exact legacy/current extraction, checked against its full schema/profile pairing.</en></lang>
+ * @param {object} [options] <lang><zh-CN>核心文档 id/title/locale 覆盖。</zh-CN><en>Core-document id/title/locale overrides.</en></lang>
+ * @returns {object} <lang><zh-CN>新的核心 0.2.0 文档，不修改提取输入。</zh-CN><en>Fresh core 0.2.0 document without mutating extraction input.</en></lang>
+ * @throws {TypeError} <lang><zh-CN>未知身份、无效结构或非 JSON 提取件固定拒绝。</zh-CN><en>Fixed refusal for unknown identities, invalid structure or non-JSON extractions.</en></lang>
+ */
 export function htmlExtractionToHiaDocument(artifact, options = {}) {
   assertHtmlExtractionArtifact(artifact);
   const title = options.title ?? titleFromPath(artifact.source.path);
@@ -35,7 +41,15 @@ export function htmlExtractionToHiaDocument(artifact, options = {}) {
   };
 }
 
+/**
+ * @param {unknown} artifact <lang><zh-CN>候选提取件。</zh-CN><en>Candidate extraction.</en></lang>
+ * @returns {void} <lang><zh-CN>精确旧/新 schema 验证通过时返回。</zh-CN><en>Returns when exact legacy/current schema validation succeeds.</en></lang>
+ * @throws {TypeError} <lang><zh-CN>失败固定报错，不回显输入/Ajv 详情。</zh-CN><en>Fixed error without echoing input/Ajv details.</en></lang>
+ */
 export function assertHtmlExtractionArtifact(artifact) {
+  if (validateHtmDocExtraction(artifact).length) {
+    throw new TypeError("HTMDoc extraction requires an exact supported identity and valid JSON structure.");
+  }
   if (!artifact || artifact.contract !== HTMDOC_EXTRACTION_CONTRACT) {
     throw new Error(`Expected ${HTMDOC_EXTRACTION_CONTRACT} artifact.`);
   }

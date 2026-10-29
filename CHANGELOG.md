@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added coordinated config/extraction/profile 1.0.0, exact legacy schema resources/readers and explicit lossless migration with structure validation.
+- Kept historical schema module archives byte-for-byte; new defaults and nullable rules do not rewrite legacy definitions.
+- Coordinated HTML/CEM writers, adapters, range metadata, conformance and source-comment projection inputs; retained their separate map/handoff identities.
+- Added pinned MIT/BSD Ajv validation dependencies with official-registry integrity checks and offline consumer coverage.
 - Enforced declared runner booleans, nonempty input languages, unique profile identifiers and explicit-null rejection before output creation.
 - Redacted unknown fields/enums and config read failures; included CLI argument parsing in the same safe failure boundary.
 - Adopted confirmed documentation producer/producer-result 1.0.0 in new source builds and retained exact legacy result conformance reads.

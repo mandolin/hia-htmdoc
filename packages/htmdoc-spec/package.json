@@ -3,19 +3,39 @@
   "version": "0.1.0",
   "description": "HTML documentation annotation, tag registry and rule drafts.",
   "license": "MIT",
-  "keywords": ["documentation", "html", "htmdoc", "schema"],
+  "keywords": [
+    "documentation",
+    "html",
+    "htmdoc",
+    "schema"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mandolin/hia-htmdoc.git",
     "directory": "packages/htmdoc-spec"
   },
-  "bugs": { "url": "https://github.com/mandolin/hia-htmdoc/issues" },
+  "bugs": {
+    "url": "https://github.com/mandolin/hia-htmdoc/issues"
+  },
   "homepage": "https://github.com/mandolin/hia-htmdoc/tree/main/packages/htmdoc-spec#readme",
   "type": "module",
   "exports": {
-    ".": "./src/index.mjs"
+    ".": "./src/index.mjs",
+    "./schemas/hia-htmdoc-extraction-1.0.0.schema.json": "./src/schemas/hia-htmdoc-extraction-1.0.0.schema.json",
+    "./schemas/hia-htmdoc-extraction-0.1.0-draft.schema.json": "./src/schemas/hia-htmdoc-extraction-0.1.0-draft.schema.json"
   },
-  "files": ["src", "README.md", "LICENSE"],
-  "engines": { "node": "^22.23.4 || ^24.22.1" },
-  "publishConfig": { "access": "public" }
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": "^22.23.4 || ^24.22.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "ajv": "8.17.1"
+  }
 }

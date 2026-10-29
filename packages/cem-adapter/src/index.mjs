@@ -8,6 +8,14 @@ import {
 // <lang><zh-CN>产物 provenance 使用公开候选包版本，并与 package.json 的精确版本保持同步。</zh-CN><en>Artifact provenance uses the public candidate package version and stays aligned with the exact package.json version.</en></lang>
 const CEM_ADAPTER_VERSION = "0.1.0";
 
+/**
+ * @param {object} manifest <lang><zh-CN>已物化 CEM JSON；不执行其代码或读取 module 路径。</zh-CN><en>Materialized CEM JSON; module code is never executed or read.</en></lang>
+ * @param {{path?:string}} [options] <lang><zh-CN>相对清单来源，默认 custom-elements.json。</zh-CN><en>Relative manifest source, defaulting to custom-elements.json.</en></lang>
+ * @returns {object} <lang><zh-CN>1.0.0 普通 JSON 提取件，位置占位不代表精确源码。</zh-CN><en>Ordinary-JSON 1.0.0 extraction; placeholder locations do not claim source precision.</en></lang>
+ * @throws {Error} <lang><zh-CN>不安全来源或不受支持的输入结构。</zh-CN><en>Unsafe source or unsupported input structure.</en></lang>
+ * @lang zh-CN 仅映射已确认 HTML-facing 子集；JS members/methods 保留 metadata，不宣称完整 CEM validator。
+ * @lang en Maps only the confirmed HTML-facing subset, retains JS members/methods as metadata, and claims no complete CEM validator.
+ */
 export function cemManifestToHtmlExtraction(manifest, options = {}) {
   const sourcePath = normalizeSourcePath(options.path ?? "custom-elements.json");
   const symbols = [];
@@ -156,7 +164,8 @@ export function cemManifestToHtmlExtraction(manifest, options = {}) {
     });
   }
 
-  return {
+  // <lang><zh-CN>输出以普通 JSON 传递，省略未提供的可选字段，不伪造空字符串或位置。</zh-CN><en>Output ordinary JSON, omitting absent optional fields without inventing empty strings or positions.</en></lang>
+  return JSON.parse(JSON.stringify({
     contract: HTMDOC_EXTRACTION_CONTRACT,
     contractVersion: HTMDOC_EXTRACTION_CONTRACT_VERSION,
     producer: {
@@ -183,7 +192,7 @@ export function cemManifestToHtmlExtraction(manifest, options = {}) {
     metadata: {
       schemaVersion: manifest?.schemaVersion ?? null
     }
-  };
+  }));
 }
 
 function createChildSymbol({ tag, kind, name, summary, parentId, sourcePath, usedIds, metadata = {} }) {
