@@ -15,8 +15,10 @@ const PARSE5_RANGE_CONVENTION = Object.freeze({ endBoundary: "exclusive", column
 const UNKNOWN_RANGE_CONVENTION = Object.freeze({ endBoundary: "unknown", columnUnit: "unknown" });
 
 /**
- * @param {{href?:string|null,sourcesContentPolicy?:"none"|"reference"|"embed"}} [options] <lang><zh-CN>提取件内的可选链接与源码内容策略。</zh-CN><en>Optional extraction-level link and source-content policy.</en></lang>
- * @returns {{kind:"hia-doc-source-map-ref",href:string|null,sourcesContentPolicy:string}} <lang><zh-CN>不宣称具体映射版本或存在性的占位引用。</zh-CN><en>A placeholder reference that claims neither a map version nor its existence.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>提取件内的可选链接与源码内容策略。</zh-CN><en>Optional extraction-level link and source-content policy.</en></lang>
+ * @param {(string|null)} [options.href=null] <lang><zh-CN>可选映射链接，null 表示未绑定。</zh-CN><en>Optional map link; null means unbound.</en></lang>
+ * @param {string} [options.sourcesContentPolicy="none"] <lang><zh-CN>精确 none/reference/embed；其它值拒绝。</zh-CN><en>Exact none/reference/embed; other values are rejected.</en></lang>
+ * @returns {{kind:string,href:(string|null),sourcesContentPolicy:string}} <lang><zh-CN>kind 固定为 hia-doc-source-map-ref；不宣称具体映射版本或存在性。</zh-CN><en>Kind is fixed to hia-doc-source-map-ref; claims neither a map version nor its existence.</en></lang>
  * @lang zh-CN `href:null` 表示尚未绑定输出映射；runner 是否产出映射由独立选项决定。
  * @lang en `href:null` means no output map is bound; the runner's separate option determines whether one is emitted.
  */
@@ -37,7 +39,12 @@ export function normalizeSourcesContentPolicy(policy) {
 }
 
 /**
- * @param {{extraction:Record<string,unknown>,extractionPath?:string,hiaDocumentPath?:string,sourcesContentPolicy?:"none"|"reference"|"embed",id?:string}} [options] <lang><zh-CN>已生成的 HTMDoc 提取件及安全相对输出路径。</zh-CN><en>Materialized HTMDoc extraction and safe relative output paths.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>已生成的 HTMDoc 提取件及安全相对输出路径。</zh-CN><en>Materialized HTMDoc extraction and safe relative output paths.</en></lang>
+ * @param {Object.<string,*>} options.extraction <lang><zh-CN>必需的已生成提取件。</zh-CN><en>Required materialized extraction.</en></lang>
+ * @param {string} [options.extractionPath="document.htmdoc.json"] <lang><zh-CN>提取件安全相对路径。</zh-CN><en>Safe relative extraction path.</en></lang>
+ * @param {string} [options.hiaDocumentPath="document.hia.json"] <lang><zh-CN>HIA 文档安全相对路径。</zh-CN><en>Safe relative HIA document path.</en></lang>
+ * @param {string} [options.sourcesContentPolicy] <lang><zh-CN>none/reference/embed；省略时继承提取件策略，再回退 none。</zh-CN><en>none/reference/embed; omission inherits the extraction policy, then falls back to none.</en></lang>
+ * @param {string} [options.id] <lang><zh-CN>映射身份；省略时由来源路径派生。</zh-CN><en>Map identity; derived from the source path when omitted.</en></lang>
  * @returns {Record<string,unknown>} <lang><zh-CN>`doc-source-map@1.1.0`，逐个有范围的来源引用声明端点与列单位。</zh-CN><en>A `doc-source-map@1.1.0` with endpoint and column-unit declarations on each ranged source reference.</en></lang>
  * @throws {Error} <lang><zh-CN>提取契约、相对路径或源码内容策略无效时抛出。</zh-CN><en>Throws for an invalid extraction contract, relative path, or source-content policy.</en></lang>
  * @lang zh-CN 已证 parse5 分支声明精确 UTF-16 半开范围；CEM 合成位置、错误恢复及缺列分支明确保持未知，不读取源码或执行主机动作。

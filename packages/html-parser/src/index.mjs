@@ -3,7 +3,9 @@ import { parse, parseFragment } from "parse5";
 
 /**
  * @param {string} source <lang><zh-CN>显式 HTML 文本。</zh-CN><en>Explicit HTML text.</en></lang>
- * @param {{path?:string,fragment?:boolean}} [options] <lang><zh-CN>相对来源与 fragment 开关，默认 input.html/document。</zh-CN><en>Relative source and fragment switch, defaulting to input.html/document.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>解析来源与模式配置。</zh-CN><en>Parser source and mode options.</en></lang>
+ * @param {string} [options.path="input.html"] <lang><zh-CN>相对来源路径。</zh-CN><en>Relative source path.</en></lang>
+ * @param {boolean} [options.fragment=false] <lang><zh-CN>是否解析片段；默认解析完整文档。</zh-CN><en>Whether to parse a fragment; defaults to a complete document.</en></lang>
  * @returns {object} <lang><zh-CN>parse5 树、相对来源及恢复诊断；隐式节点位置可能缺失。</zh-CN><en>parse5 tree, relative source and recovery diagnostics; implicit node positions may be absent.</en></lang>
  * @throws {TypeError|Error} <lang><zh-CN>不安全来源或 parser 输入失败；路径错误不回显原值。</zh-CN><en>Unsafe source or parser input failure; path errors never echo raw values.</en></lang>
  */

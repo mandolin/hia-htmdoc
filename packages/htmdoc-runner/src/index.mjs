@@ -157,7 +157,8 @@ export async function runHtmDoc(request, context = {}) {
 
 /**
  * @param {string} configPath <lang><zh-CN>调用方选定的配置文件定位器。</zh-CN><en>Caller-selected configuration locator.</en></lang>
- * @param {{cwd?:string}} [options] <lang><zh-CN>解析相对配置路径的运行基准，默认当前目录。</zh-CN><en>Runtime base for relative config paths, defaulting to cwd.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>配置加载选项。</zh-CN><en>Config loading options.</en></lang>
+ * @param {string} [options.cwd] <lang><zh-CN>解析相对配置路径的运行基准，默认当前目录。</zh-CN><en>Runtime base for relative config paths, defaulting to cwd.</en></lang>
  * @returns {Promise<object>} <lang><zh-CN>按旧版既有默认值解析后的内存请求；不生成产物。</zh-CN><en>In-memory request using existing legacy defaults; generates no artifacts.</en></lang>
  * @throws {TypeError} <lang><zh-CN>读取、JSON 或已声明输入不合法时抛固定错误，不回显原始 JSON/定位器。</zh-CN><en>Throws redacted errors for read, JSON or declared-input failures without raw JSON/locators.</en></lang>
  * @lang zh-CN 此修复不改旧 schema 的 required/default 冲突；新版本规则另经确认。

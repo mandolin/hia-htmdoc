@@ -10,7 +10,8 @@ const CEM_ADAPTER_VERSION = "1.0.0";
 
 /**
  * @param {object} manifest <lang><zh-CN>已物化 CEM JSON；不执行其代码或读取 module 路径。</zh-CN><en>Materialized CEM JSON; module code is never executed or read.</en></lang>
- * @param {{path?:string}} [options] <lang><zh-CN>相对清单来源，默认 custom-elements.json。</zh-CN><en>Relative manifest source, defaulting to custom-elements.json.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>清单来源配置。</zh-CN><en>Manifest source options.</en></lang>
+ * @param {string} [options.path="custom-elements.json"] <lang><zh-CN>相对清单来源。</zh-CN><en>Relative manifest source.</en></lang>
  * @returns {object} <lang><zh-CN>1.0.0 普通 JSON 提取件，位置占位不代表精确源码。</zh-CN><en>Ordinary-JSON 1.0.0 extraction; placeholder locations do not claim source precision.</en></lang>
  * @throws {Error} <lang><zh-CN>不安全来源或不受支持的输入结构。</zh-CN><en>Unsafe source or unsupported input structure.</en></lang>
  * @lang zh-CN 仅映射已确认 HTML-facing 子集；JS members/methods 保留 metadata，不宣称完整 CEM validator。

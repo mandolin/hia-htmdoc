@@ -2,6 +2,8 @@
 
 ## 1.0.0 source candidate
 
+- Use native JSDoc-compatible optional parameter properties and parenthesized nullable unions in public API comments; preserve runtime behavior, defaults and bilingual descriptions.
+
 - Coordinated eight original package versions, exact internal dependencies and runtime provenance at 1.0.0; publication remains separately gated.
 - Added packaged API references and migration guides for every public package, with root/resource/binary coverage checked continuously.
 - Refused inherited object keys in tag lookup and unsafe URI/drive-relative locators without echoing caller values.

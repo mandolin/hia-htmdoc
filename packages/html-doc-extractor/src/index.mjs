@@ -110,7 +110,8 @@ export function extractHtmlDoc(source, options = {}) {
 
 /**
  * @param {string} rawComment <lang><zh-CN>已取出的注释正文；不做 DOM 绑定。</zh-CN><en>Extracted comment body without DOM attachment.</en></lang>
- * @param {{defaultLocale?:string}} [options] <lang><zh-CN>默认语言，合法化失败回退 en。</zh-CN><en>Default locale, falling back to en when invalid.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>提取语言配置。</zh-CN><en>Extraction locale options.</en></lang>
+ * @param {string} [options.defaultLocale="en"] <lang><zh-CN>默认语言，合法化失败回退 en。</zh-CN><en>Default locale, falling back to en when invalid.</en></lang>
  * @returns {object} <lang><zh-CN>annotations、summary 和可选字段级 i18n；保留未知标签供调用者诊断。</zh-CN><en>Annotations, summary and optional field-level i18n; unknown tags remain for caller diagnostics.</en></lang>
  */
 export function parseHtmlDocComment(rawComment, options = {}) {
