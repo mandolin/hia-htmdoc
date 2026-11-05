@@ -11,13 +11,39 @@ const DOC_SOURCE_MAP_VERSIONS = Object.freeze(["0.1.0-draft", "1.1.0"]);
 const STABLE_ID_PATTERN = /^[A-Za-z0-9][A-Za-z0-9._:-]*$/;
 
 /**
+ * @typedef {Object} HtmlAuthoringProjectedComment
+ * @property {"comment.description"} commentId <lang><zh-CN>固定描述注释身份。</zh-CN><en>Fixed description-comment identity.</en></lang>
+ * @property {"documentation"} kind <lang><zh-CN>固定文档注释种类。</zh-CN><en>Fixed documentation-comment kind.</en></lang>
+ * @property {0} order <lang><zh-CN>唯一注释的固定顺序。</zh-CN><en>Fixed order of the sole comment.</en></lang>
+ * @property {Object.<string,string>} localizedText <lang><zh-CN>实际投影的逐语言文本。</zh-CN><en>Actually projected text by locale.</en></lang>
+ * @property {{start:{line:number,column:number},end:{line:number,column:number}}} [range] <lang><zh-CN>可选的一基行、零基列范围；缺失时省略，不伪造。</zh-CN><en>Optional one-based-line, zero-based-column range; omitted rather than fabricated when absent.</en></lang>
+ * @lang zh-CN 上游已物化的单条文档注释，不表示源文件读取授权。
+ * @lang en One materialized upstream documentation comment, without source-file read authorization.
+ */
+
+/**
+ * @typedef {Object} HtmlAuthoringSourceCommentProjection
+ * @property {"documentation-source-comment-projection"} contract <lang><zh-CN>冻结的投影契约名称。</zh-CN><en>Frozen projection contract name.</en></lang>
+ * @property {"0.1.0-draft"} contractVersion <lang><zh-CN>精确投影版本，独立于提取和地图版本。</zh-CN><en>Exact projection version, independent of extraction/map versions.</en></lang>
+ * @property {string} projectionId <lang><zh-CN>调用方逻辑投影身份。</zh-CN><en>Caller logical projection identity.</en></lang>
+ * @property {{documentId:string,symbolId:string,sourceId:string,docSourceMapEntryId:string}} source <lang><zh-CN>已核对的文档、符号、来源与地图项身份。</zh-CN><en>Verified document, symbol, source and map-entry identities.</en></lang>
+ * @property {string} requestedLocale <lang><zh-CN>请求语言。</zh-CN><en>Requested locale.</en></lang>
+ * @property {string} defaultLocale <lang><zh-CN>默认语言。</zh-CN><en>Default locale.</en></lang>
+ * @property {string[]} fallbackLocales <lang><zh-CN>按顺序使用的回退语言。</zh-CN><en>Fallback locales in order.</en></lang>
+ * @property {("none"|"explicit-projected-text")} contentPolicy <lang><zh-CN>无正文或显式投影文本，保持原闭集。</zh-CN><en>No body or explicit projected text, preserving the original closed set.</en></lang>
+ * @property {HtmlAuthoringProjectedComment[]} comments <lang><zh-CN>按内容策略生成的注释。</zh-CN><en>Comments generated under the content policy.</en></lang>
+ * @lang zh-CN 可交给核心pure evaluator的body-bounded请求，既有wire身份和字段不变。
+ * @lang en Body-bounded request for the core pure evaluator, preserving the existing wire identity and fields.
+ */
+
+/**
  * Create a neutral W-P96 projection request from already-materialized HTMDoc metadata.
  *
  * 中文：从已经 materialized 的 HTMDoc metadata 创建中性 W-P96 projection request。
  * English: Create a neutral W-P96 projection request from already-materialized HTMDoc metadata.
  *
  * @param {unknown} value <lang><zh-CN>只含 extraction、ordinary doc-source-map、logical identity 与 locale policy 的 closed request。</zh-CN><en>Closed request containing only an extraction, ordinary doc-source-map, logical identity, and locale policy.</en></lang>
- * @returns {{contract:"documentation-source-comment-projection",contractVersion:"0.1.0-draft",projectionId:string,source:{documentId:string,symbolId:string,sourceId:string,docSourceMapEntryId:string},requestedLocale:string,defaultLocale:string,fallbackLocales:string[],contentPolicy:"none"|"explicit-projected-text",comments:Array<{commentId:"comment.description",kind:"documentation",order:0,localizedText:Record<string,string>,range?:{start:{line:number,column:number},end:{line:number,column:number}}}>}} <lang><zh-CN>可直接交给 `@hia-doc/core` pure evaluator 的 body-bounded request。</zh-CN><en>Body-bounded request ready for the `@hia-doc/core` pure evaluator.</en></lang>
+ * @returns {HtmlAuthoringSourceCommentProjection} <lang><zh-CN>可直接交给 `@hia-doc/core` pure evaluator 的 body-bounded request；完整字段见类型定义。</zh-CN><en>Body-bounded request ready for the `@hia-doc/core` pure evaluator; see the complete type definition.</en></lang>
  * @throws {TypeError} <lang><zh-CN>contract、identity、locale、map linkage 或 structured text 不符合冻结边界时抛出固定错误。</zh-CN><en>Throws a fixed error when contract, identity, locale, map linkage, or structured text violates the frozen boundary.</en></lang>
  * @lang zh-CN 函数不读取文件、不运行 parser/core、不执行表达式，也不访问 target、host 或 network。
  * @lang en The function reads no file, runs no parser/core, executes no expression, and accesses no target, host, or network.

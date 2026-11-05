@@ -147,3 +147,14 @@ test("new schemas validate actual producer outputs and preserve exact old schema
   assert.deepEqual(runner.HTMDOC_LEGACY_CONFIG_JSON_SCHEMA.required, ["schemaVersion", "workspaceRoot", "outputDirectory", "inputs"]);
   assert.deepEqual(runner.HTMDOC_LEGACY_CONFIG_JSON_SCHEMA.properties.inputs.items.required, ["kind", "path"]);
 });
+
+import {test as legacyFacadeTest} from "node:test";
+/** @lang zh-CN 文档化兼容导出必须保持原对象及全部版本/身份值，不能用复制schema冒充原档案。 @lang en Documented compatibility exports must retain original objects and every version/identity value, never cloned schemas posing as archives. */
+legacyFacadeTest("documented legacy facades retain exact archived object identities",async()=>{
+  const config=await import("../packages/htmdoc-runner/src/schema.mjs");
+  const oldConfig=await import("../packages/htmdoc-runner/src/schema-legacy.mjs");
+  const currentSpec=await import("../packages/htmdoc-spec/src/index.mjs");
+  const oldSpec=await import("../packages/htmdoc-spec/src/schema-legacy.mjs");
+  for(const suffix of ["JSON_SCHEMA","SCHEMA_ID","SCHEMA_VERSION"]) assert.strictEqual(config[`HTMDOC_LEGACY_CONFIG_${suffix}`],oldConfig[`HTMDOC_CONFIG_${suffix}`]);
+  for(const suffix of ["EXTRACTION_JSON_SCHEMA","EXTRACTION_SCHEMA_ID","EXTRACTION_CONTRACT_VERSION","PROFILE_VERSION"]) assert.strictEqual(currentSpec[`HTMDOC_LEGACY_${suffix}`],oldSpec[`HTMDOC_${suffix}`]);
+});

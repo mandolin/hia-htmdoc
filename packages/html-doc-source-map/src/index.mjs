@@ -1,3 +1,7 @@
+/**
+ * @lang zh-CN 源码内容策略闭集；none不嵌入、reference仅引用、embed显式嵌入，列表不授予读取或公开权限。
+ * @lang en Closed source-content policies: none omits content, reference links it, and embed explicitly embeds it; the list grants no read or publication permission.
+ */
 export const HTML_DOC_SOURCE_CONTENT_POLICIES = Object.freeze(["none", "reference", "embed"]);
 
 // <lang><zh-CN>生产者包版本与映射契约版本分别记录；本次只更新逐引用范围契约。</zh-CN><en>The producer package version and map contract version are separate; this change updates per-reference range semantics only.</en></lang>

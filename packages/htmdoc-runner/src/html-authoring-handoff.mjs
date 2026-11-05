@@ -361,7 +361,7 @@ function hasExactKeys(value, expectedKeys) {
  * @lang en Identifies a non-null, non-array record before inspecting fixed fields.
  *
  * @param {unknown} value <lang><zh-CN>候选 value。</zh-CN><en>Candidate value.</en></lang>
- * @returns {value is Record<string, unknown>} <lang><zh-CN>是否为 record。</zh-CN><en>Whether the value is a record.</en></lang>
+ * @returns {boolean} <lang><zh-CN>是否为非null、非数组的record；不改变候选值。</zh-CN><en>Whether the value is a non-null, non-array record; leaves the candidate unchanged.</en></lang>
  */
 function isRecord(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);

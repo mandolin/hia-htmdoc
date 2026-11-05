@@ -42,7 +42,8 @@ export const HTMDOC_OUTPUT_CONFORMANCE_CODES = Object.freeze([
  * English: Evaluate whether already-materialized HTMDoc artifacts preserve the owner-local P1 output boundary.
  *
  * @param {unknown} artifacts <lang><zh-CN>extraction、HIA document、ordinary doc-source-map 与 producer result 的固定 bundle。</zh-CN><en>Fixed bundle containing extraction, HIA document, ordinary doc-source-map, and producer result.</en></lang>
- * @param {{allowEmbeddedSource?: boolean}} [options] <lang><zh-CN>只允许 caller 显式确认 `embed`；缺省保持 `none`/`reference` 不嵌入。</zh-CN><en>Only permits `embed` after explicit caller confirmation; the default keeps `none`/`reference` unembedded.</en></lang>
+ * @param {Object} [options] <lang><zh-CN>调用方显式内容策略。</zh-CN><en>Explicit caller content policy.</en></lang>
+ * @param {boolean} [options.allowEmbeddedSource=false] <lang><zh-CN>只允许 caller 显式确认 `embed`；缺省保持 `none`/`reference` 不嵌入。</zh-CN><en>Only permits `embed` after explicit caller confirmation; the default keeps `none`/`reference` unembedded.</en></lang>
  * @returns {{contract:string,contractVersion:string,conformant:boolean,violations:Array<{code:string,message:string}>}} <lang><zh-CN>不含 artifact 内容的确定性 summary。</zh-CN><en>Deterministic summary containing no artifact content.</en></lang>
  * @lang zh-CN 函数只比较 caller 已提供的 JSON records；不接收文件路径、workspace root、source text、network 或 sidecar path，也不会产生写入。
  */
@@ -319,7 +320,7 @@ function addViolation(violations, code, message) {
  * English: Determine whether a candidate is an object record suitable for fixed-field inspection.
  *
  * @param {unknown} value <lang><zh-CN>未受信任值。</zh-CN><en>Untrusted value.</en></lang>
- * @returns {value is Record<string, unknown>} <lang><zh-CN>record type guard。</zh-CN><en>Record type guard.</en></lang>
+ * @returns {boolean} <lang><zh-CN>是否为非null、非数组的record，不改变候选值。</zh-CN><en>Whether the value is a non-null, non-array record, without changing it.</en></lang>
  */
 function isRecord(value) {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
@@ -332,7 +333,7 @@ function isRecord(value) {
  * English: Determine whether a candidate is a non-empty string identity.
  *
  * @param {unknown} value <lang><zh-CN>未受信任 identity candidate。</zh-CN><en>Untrusted identity candidate.</en></lang>
- * @returns {value is string} <lang><zh-CN>是否可用作 stable identity。</zh-CN><en>Whether it can serve as a stable identity.</en></lang>
+ * @returns {boolean} <lang><zh-CN>是否为可用作stable identity的字符串。</zh-CN><en>Whether the value is a string usable as a stable identity.</en></lang>
  */
 function isNonEmptyString(value) {
   return typeof value === "string" && value.trim().length > 0;

@@ -6,13 +6,15 @@ export const HTMDOC_EXTRACTION_CONTRACT_VERSION = "1.0.0";
 export const HTMDOC_EXTRACTION_SCHEMA_ID = "https://mandolin.github.io/HIA-Documentation/schemas/hia-htmdoc-extraction-1.0.0.schema.json";
 /** @lang zh-CN 已确认 annotation/CEM 子集的 profile 身份，不表示全生态支持。 @lang en Profile identity for the confirmed annotation/CEM subset, not full ecosystem support. */
 export const HTMDOC_PROFILE_VERSION = "1.0.0";
-/** @lang zh-CN 不改写历史 schema，精确旧对象来自原模块档案。 @lang en Historical schemas remain unchanged and come from the original module archive. */
-export {
-  HTMDOC_EXTRACTION_JSON_SCHEMA as HTMDOC_LEGACY_EXTRACTION_JSON_SCHEMA,
-  HTMDOC_EXTRACTION_SCHEMA_ID as HTMDOC_LEGACY_EXTRACTION_SCHEMA_ID,
-  HTMDOC_EXTRACTION_CONTRACT_VERSION as HTMDOC_LEGACY_EXTRACTION_CONTRACT_VERSION,
-  HTMDOC_PROFILE_VERSION as HTMDOC_LEGACY_PROFILE_VERSION
-} from "./schema-legacy.mjs";
+import * as legacyExtraction from "./schema-legacy.mjs";
+/** @lang zh-CN 原档案提取schema的同一对象，不克隆或修改旧规则。 @lang en The original archived extraction-schema object without cloning or changing historical rules. */
+export const HTMDOC_LEGACY_EXTRACTION_JSON_SCHEMA = legacyExtraction.HTMDOC_EXTRACTION_JSON_SCHEMA;
+/** @lang zh-CN 原档案提取schema身份，不读取URL。 @lang en Original archived extraction-schema identity, without URL reads. */
+export const HTMDOC_LEGACY_EXTRACTION_SCHEMA_ID = legacyExtraction.HTMDOC_EXTRACTION_SCHEMA_ID;
+/** @lang zh-CN 原档案提取契约版本，不以当前版本替代旧语义。 @lang en Original archived extraction-contract version, never substituting current semantics. */
+export const HTMDOC_LEGACY_EXTRACTION_CONTRACT_VERSION = legacyExtraction.HTMDOC_EXTRACTION_CONTRACT_VERSION;
+/** @lang zh-CN 原档案领域profile版本，独立于包与全局规范版本。 @lang en Original archived domain-profile version, independent of package and global-specification versions. */
+export const HTMDOC_LEGACY_PROFILE_VERSION = legacyExtraction.HTMDOC_PROFILE_VERSION;
 /** @lang zh-CN 新旧精确读取和显式迁移均为无 I/O 纯 API。 @lang en Exact version reading and explicit migration are pure APIs without I/O. */
 export { getHtmDocExtractionSchema, validateHtmDocExtraction, migrateHtmDocExtraction } from "./compatibility.mjs";
 

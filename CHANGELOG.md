@@ -2,6 +2,10 @@
 
 ## 1.0.0 source candidate
 
+- Document legacy config/extraction exports individually through compatibility facades retaining the exact archived objects and values; historical modules and schemas remain unchanged.
+
+- Document source-content policies and preserve full source-comment projection types with standard JSDoc typedef/property syntax, including literal fields and optional ranges; correct native-parser-incompatible private predicate annotations without changing runtime code or frozen historical modules.
+
 - Use native JSDoc-compatible optional parameter properties and parenthesized nullable unions in public API comments; preserve runtime behavior, defaults and bilingual descriptions.
 
 - Coordinated eight original package versions, exact internal dependencies and runtime provenance at 1.0.0; publication remains separately gated.
