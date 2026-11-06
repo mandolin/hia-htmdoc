@@ -86,3 +86,9 @@ Runtime roots stay in memory; artifacts use relative locators. Explicit embed
 is opt-in; none/reference omit full source. Owner-selected documentation,
 attributes and CEM metadata still require publication review. Lexical relative
 paths are not symlink sandbox guarantees. Callbacks are trusted caller code.
+
+## Pure metadata entry
+
+Subpath `./metadata` exports `HTMDOC_RUNNER_VERSION`, `HTMDOC_INPUT_KINDS` and `HTMDOC_OUTPUT_KINDS` from pure definitions. The arrays are frozen, and the root API exposes the same references. This entry performs no runner operations.
+
+中文说明。metadata子入口提供同一版本与冻结输入/输出种类，适用于发现和文档工具。声明分支与运行分支分别提供，构建使用原运行API。

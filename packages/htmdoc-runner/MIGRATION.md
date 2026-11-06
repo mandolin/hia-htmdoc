@@ -41,3 +41,9 @@ use the separately confirmed SDK `1.0.0`.
 All schema resources are bundled; lookup and migration perform no file/network
 I/O and do not modify input. The schema URLs identify contracts and are never
 fetched during validation. No new UI, host action or CEM syntax is introduced.
+
+## Metadata subpath
+
+Tools can import pure runner metadata from `@hia-doc/htmdoc-runner/metadata`. Existing root imports continue to expose the same version and array objects. Producer descriptors retain mutable shallow copies of the arrays; staged descriptors keep their existing shared references.
+
+中文说明。工具发现可采用metadata子入口；原根入口继续引用同一定义。生产器的数组副本仍可变，暂存描述符继续共享基础副本。

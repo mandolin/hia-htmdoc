@@ -46,17 +46,9 @@ export {
 export { getHtmDocConfigSchema, migrateHtmDocConfig } from "./config-compatibility.mjs";
 import { getHtmDocConfigSchema, validateHtmDocConfigForReading } from "./config-compatibility.mjs";
 import { HTMDOC_CONFIG_SCHEMA_ID, HTMDOC_CONFIG_SCHEMA_VERSION } from "./schema.mjs";
-
-/**
- * HTMDoc runner public package version.
- *
- * @lang zh-CN 写入 producer descriptor/result 的精确实现版本；它与 draft contract version 是不同维度。
- * @lang en Exact implementation version written to producer descriptors/results; it is independent from draft contract versions.
- */
-export const HTMDOC_RUNNER_VERSION = "1.0.0";
 /** @lang zh-CN 复用包内纯数据定义的同一冻结对象。 @lang en Reuses the same frozen objects from owner-local plain-data definitions. */
-import {HTMDOC_INPUT_KINDS, HTMDOC_OUTPUT_KINDS} from './frozen-arrays.mjs';
-export {HTMDOC_INPUT_KINDS, HTMDOC_OUTPUT_KINDS};
+import {HTMDOC_RUNNER_VERSION, HTMDOC_INPUT_KINDS, HTMDOC_OUTPUT_KINDS} from './metadata.mjs';
+export {HTMDOC_RUNNER_VERSION, HTMDOC_INPUT_KINDS, HTMDOC_OUTPUT_KINDS} from './metadata.mjs';
 
 const RESULT_CONTRACT = "documentation-producer-result";
 /** @lang zh-CN 新 writer 采用已确认 SDK 1.0.0，保存的历史结果不重标。 @lang en New writers use the confirmed SDK 1.0.0 without relabeling saved legacy results. */

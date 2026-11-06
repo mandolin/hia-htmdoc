@@ -13,6 +13,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const inventory = JSON.parse(fs.readFileSync(path.join(root, "release/public-packages.json"), "utf8"));
 let slots = 0;
 let resources = 0;
+// <lang><zh-CN>代码元数据入口与JSON资源分别计数，公开根导出仍单独核对。</zh-CN><en>Count code metadata entries separately from JSON resources while checking root exports independently.</en></lang>
+let metadataEntries = 0;
+let metadataSlots = 0;
 let bins = 0;
 for (const item of inventory.packages) {
   // <lang><zh-CN>只导入清单内显式 src 根；这些纯模块导入不执行构建或读取用户配置。</zh-CN><en>Import only explicit source roots from the inventory; these pure imports never build or read user config.</en></lang>
@@ -32,7 +35,17 @@ for (const item of inventory.packages) {
     assert.equal(typeof target, "string");
     assert.ok(api.includes(subpath), `${item.name}: undocumented subpath ${subpath}`);
     assert.ok(fs.statSync(path.join(directory, target)).isFile());
-    resources++;
+    if (target.endsWith(".json")) resources++;
+    else {
+      assert.equal(subpath,"./metadata");
+      const metadata = await import(pathToFileURL(path.join(directory,target)).href);
+      for (const name of Object.keys(metadata)) {
+        assert.ok(api.includes("`" + name + "`"));
+        assert.equal(metadata[name],module[name]);
+        metadataSlots++;
+      }
+      metadataEntries++;
+    }
   }
   for (const bin of Object.keys(manifest.bin ?? {})) {
     assert.ok(api.includes(`\`${bin}\``), `${item.name}: undocumented bin ${bin}`);
@@ -46,5 +59,7 @@ for (const item of inventory.packages) {
 assert.equal(inventory.packages.length, 8);
 assert.equal(slots, 57);
 assert.equal(resources, 4);
+assert.equal(metadataEntries, 1);
+assert.equal(metadataSlots, 3);
 assert.equal(bins, 2);
-console.log(`HTMDoc public responsibility check passed: 8 packages, ${slots} exports, ${resources} resources, ${bins} bins.`);
+console.log(`HTMDoc public responsibility check passed: 8 packages, ${slots} exports, ${resources} resources, ${bins} bins, ${metadataEntries} metadata entries (${metadataSlots} exports).`);

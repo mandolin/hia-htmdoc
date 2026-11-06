@@ -125,3 +125,13 @@ promote unknown source ranges to exact positions.
 ## Public API and migration
 
 See [API reference](API.md) for every exported function, constant, resource and binary, including defaults, errors, effects, source precision and publication privacy. [Migration](MIGRATION.md) describes exact legacy/current contracts. Version 1.0.0 is a source candidate; registry publication is a separate event.
+
+## Pure metadata
+
+```js
+import { HTMDOC_RUNNER_VERSION, HTMDOC_INPUT_KINDS, HTMDOC_OUTPUT_KINDS } from "@hia-doc/htmdoc-runner/metadata";
+```
+
+This entry exposes the runner version and frozen input/output kind arrays from the same definitions used by the root API. It contains pure data definitions, with no runner execution dependencies.
+
+中文说明。metadata子入口提供版本及冻结的输入/输出种类，根入口与该入口引用同一定义。执行构建继续使用原运行API。

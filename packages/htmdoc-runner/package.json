@@ -22,7 +22,8 @@
   "exports": {
     ".": "./src/index.mjs",
     "./schemas/htmdoc-config-1.0.0.schema.json": "./src/schemas/htmdoc-config-1.0.0.schema.json",
-    "./schemas/htmdoc-config-0.1.0-draft.schema.json": "./src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+    "./schemas/htmdoc-config-0.1.0-draft.schema.json": "./src/schemas/htmdoc-config-0.1.0-draft.schema.json",
+    "./metadata": "./src/metadata.mjs"
   },
   "bin": {
     "htmdoc": "./src/cli.mjs",
