@@ -15,25 +15,9 @@ export const HTMDOC_OUTPUT_CONFORMANCE_CONTRACT = "htmdoc-output-conformance";
  * English: Frozen draft version for the owner-local HTMDoc output conformance result.
  */
 export const HTMDOC_OUTPUT_CONFORMANCE_VERSION = "0.1.0-draft";
-
-/**
- * Public-safe violation codes emitted by the HTMDoc output conformance evaluator.
- *
- * 中文：HTMDoc 输出 conformance evaluator 发出的 public-safe violation codes。
- * English: Public-safe violation codes emitted by the HTMDoc output conformance evaluator.
- * @lang zh-CN code 只描述 artifact boundary；绝不回显 source text、absolute path、private sidecar locator 或 caller supplied value。
- */
-export const HTMDOC_OUTPUT_CONFORMANCE_CODES = Object.freeze([
-  "HTMDOC_OUTPUT_CONFORMANCE_INPUT_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_EXTRACTION_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_DOCUMENT_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_RELATION_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_PROVENANCE_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_SOURCE_POLICY_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_EMBED_UNAUTHORIZED",
-  "HTMDOC_OUTPUT_CONFORMANCE_SIDECAR_BOUNDARY_INVALID",
-  "HTMDOC_OUTPUT_CONFORMANCE_PRODUCER_RESULT_INVALID"
-]);
+/** @lang zh-CN 复用包内纯数据定义的同一冻结对象。 @lang en Reuses the same frozen objects from owner-local plain-data definitions. */
+import {HTMDOC_OUTPUT_CONFORMANCE_CODES} from './output-conformance-arrays.mjs';
+export {HTMDOC_OUTPUT_CONFORMANCE_CODES};
 
 /**
  * Evaluate whether already-materialized HTMDoc artifacts preserve the owner-local P1 output boundary.

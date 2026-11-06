@@ -20,22 +20,9 @@ export const HTML_AUTHORING_DOCUMENTATION_HANDOFF_CONTRACT = "html-authoring-doc
  * @lang en Initial frozen draft version of the owner-local handoff result.
  */
 export const HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION = "0.1.0-draft";
-
-/**
- * HTML-authoring handoff refusal 的固定 public-safe diagnostic codes。
- *
- * @lang en Fixed public-safe diagnostic codes for HTML-authoring handoff refusal.
- * <lang><zh-CN>message 只由本模块选择，绝不插入 caller metadata、path、source、target 或 host state。</zh-CN><en>Messages are selected only by this module and never interpolate caller metadata, paths, source, target, or host state.</en>
- */
-export const HTML_AUTHORING_DOCUMENTATION_HANDOFF_DIAGNOSTIC_CODES = Object.freeze([
-  "HTMDOC_HTML_HANDOFF_VERSION_UNSUPPORTED",
-  "HTMDOC_HTML_HANDOFF_IDENTITY_INVALID",
-  "HTMDOC_HTML_HANDOFF_CONFORMANCE_UNACCEPTED",
-  "HTMDOC_HTML_HANDOFF_SOURCE_POLICY_DENIED",
-  "HTMDOC_HTML_HANDOFF_PRIVATE_DATA_DENIED",
-  "HTMDOC_HTML_HANDOFF_MAP_LINKAGE_DENIED",
-  "HTMDOC_HTML_HANDOFF_HOST_ACTION_DENIED"
-]);
+/** @lang zh-CN 复用包内纯数据定义的同一冻结对象。 @lang en Reuses the same frozen objects from owner-local plain-data definitions. */
+import {HTML_AUTHORING_DOCUMENTATION_HANDOFF_DIAGNOSTIC_CODES} from './html-authoring-handoff-arrays.mjs';
+export {HTML_AUTHORING_DOCUMENTATION_HANDOFF_DIAGNOSTIC_CODES};
 
 /** The explicit input contract avoids treating arbitrary evidence JSON as a handoff request. / 显式 input contract 避免把 arbitrary evidence JSON 当成 handoff request。 */
 const REQUEST_CONTRACT = "html-authoring-documentation-handoff-request";

@@ -80,21 +80,9 @@ export const HTMDOC_SYMBOL_KINDS = Object.freeze({
    */
   example: "html-example"
 });
-
-/** @lang zh-CN 规范化后支持的显式标签，description/lang 不独立创建 kind。 @lang en Supported canonical tags; description/lang do not create standalone kinds. */
-export const HTMDOC_TAGS = Object.freeze([
-  "component",
-  "element",
-  "template",
-  "attr",
-  "slot",
-  "event",
-  "stylehook",
-  "a11y",
-  "description",
-  "example",
-  "lang"
-]);
+/** @lang zh-CN 复用包内纯数据定义的同一冻结对象。 @lang en Reuses the same frozen objects from owner-local plain-data definitions. */
+import {HTMDOC_TAGS} from './frozen-arrays.mjs';
+export {HTMDOC_TAGS};
 
 /** @lang zh-CN 新版稳定子集 schema；nullable 为已确认新规则，旧 schema 不随之变化。 @lang en Current stable-subset schema; nullable support is a confirmed new rule that does not change the legacy schema. */
 export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
