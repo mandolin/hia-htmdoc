@@ -161,6 +161,14 @@ bootstrap with npm provenance and explicit reviewed partial-batch resume. Now,
 a clean registry-only consumer, while `npm run release:trust:check` verifies
 the per-package Trusted Publisher takeover.
 
+## API property documentation
+
+Producer descriptor properties and `HTMDOC_SYMBOL_KINDS` entries carry individual
+English and Simplified Chinese JSDoc descriptions. Generated API references can
+associate each field with its declaration and preserve its localized text.
+
+中文：生产器描述符与HTML领域种类表逐属性提供中英文原生注释，生成文档可关联对应声明并保留各语言正文。
+
 ## License
 
 MIT. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for reviewed parser

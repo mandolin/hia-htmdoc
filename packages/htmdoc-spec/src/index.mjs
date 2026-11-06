@@ -34,14 +34,50 @@ export {
 
 /** @lang zh-CN 已确认 HTML-facing 符号 kind 注册；与 CEM 的 JS metadata 区分。 @lang en Confirmed HTML-facing kind registry, distinct from CEM JavaScript metadata. */
 export const HTMDOC_SYMBOL_KINDS = Object.freeze({
+  /**
+   * @lang zh-CN HTML组件文档节点的领域种类。
+   * @lang en Domain kind for an HTML component documentation node.
+   */
   component: "html-component",
+  /**
+   * @lang zh-CN HTML元素文档节点的领域种类。
+   * @lang en Domain kind for an HTML element documentation node.
+   */
   element: "html-element",
+  /**
+   * @lang zh-CN HTML模板文档节点的领域种类。
+   * @lang en Domain kind for an HTML template documentation node.
+   */
   template: "html-template",
+  /**
+   * @lang zh-CN HTML属性文档节点的领域种类。
+   * @lang en Domain kind for an HTML attribute documentation node.
+   */
   attribute: "html-attribute",
+  /**
+   * @lang zh-CN HTML插槽文档节点的领域种类。
+   * @lang en Domain kind for an HTML slot documentation node.
+   */
   slot: "html-slot",
+  /**
+   * @lang zh-CN HTML事件文档节点的领域种类。
+   * @lang en Domain kind for an HTML event documentation node.
+   */
   event: "html-event",
+  /**
+   * @lang zh-CN HTML样式挂钩文档节点的领域种类。
+   * @lang en Domain kind for an HTML style-hook documentation node.
+   */
   styleHook: "html-style-hook",
+  /**
+   * @lang zh-CN HTML可访问性说明节点的领域种类。
+   * @lang en Domain kind for an HTML accessibility-note node.
+   */
   a11yNote: "html-a11y-note",
+  /**
+   * @lang zh-CN HTML示例文档节点的领域种类。
+   * @lang en Domain kind for an HTML example documentation node.
+   */
   example: "html-example"
 });
 
