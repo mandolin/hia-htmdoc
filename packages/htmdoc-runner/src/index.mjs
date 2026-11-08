@@ -180,6 +180,8 @@ export async function loadHtmDocConfig(configPath, options = {}) {
 }
 
 /**
+ * @lang zh-CN 仅按文件名后缀推断自定义元素清单、模板、片段或完整HTML输入种类，默认html。
+ * @lang en Infers custom-elements manifest, template, fragment or full-HTML input kinds from filename suffixes alone, defaulting to html.
  * @param {string} inputPath <lang><zh-CN>文件名线索；此函数不验证路径或读取文件。</zh-CN><en>Filename hint; this function neither validates the path nor reads a file.</en></lang>
  * @returns {string} <lang><zh-CN>按已有 CEM/template/fragment 后缀匹配，否则 html。</zh-CN><en>Matches existing CEM/template/fragment suffixes, otherwise html.</en></lang>
  */

@@ -2,6 +2,8 @@
 import { parse, parseFragment } from "parse5";
 
 /**
+ * @lang zh-CN 使用parse5解析显式HTML文档或片段，返回原生树、受限相对来源及带一基UTF-16位置的恢复诊断。
+ * @lang en Parses an explicit HTML document or fragment with parse5, returning its native tree, bounded relative provenance and recovery diagnostics with one-based UTF-16 positions.
  * @param {string} source <lang><zh-CN>显式 HTML 文本。</zh-CN><en>Explicit HTML text.</en></lang>
  * @param {Object} [options] <lang><zh-CN>解析来源与模式配置。</zh-CN><en>Parser source and mode options.</en></lang>
  * @param {string} [options.path="input.html"] <lang><zh-CN>相对来源路径。</zh-CN><en>Relative source path.</en></lang>
@@ -51,6 +53,8 @@ export function parseHtml(source, options = {}) {
 }
 
 /**
+ * @lang zh-CN 同步前序访问当前HTML节点及其childNodes，逐层将实际父节点引用交给回调。
+ * @lang en Visits the current HTML node and its childNodes synchronously in preorder, passing actual parent-node references to the callback.
  * @param {object} node <lang><zh-CN>parse5 节点。</zh-CN><en>parse5 node.</en></lang>
  * @param {Function} visitor <lang><zh-CN>同步前序回调(node,parent)，异常传播。</zh-CN><en>Synchronous preorder callback(node,parent); exceptions propagate.</en></lang>
  * @param {object|null} [parent] <lang><zh-CN>根父节点默认 null。</zh-CN><en>Root parent defaults to null.</en></lang>
@@ -63,22 +67,38 @@ export function visitHtmlNodes(node, visitor, parent = null) {
   }
 }
 
-/** @param {unknown} node <lang><zh-CN>候选节点。</zh-CN><en>Candidate node.</en></lang> @returns {boolean} <lang><zh-CN>存在字符串 tagName 时真；无 I/O。</zh-CN><en>True for a string tagName; no I/O.</en></lang> */
+/**
+ * @lang zh-CN 根据字符串tagName属性判断候选节点是否具备HTML元素节点形状。
+ * @lang en Checks whether a candidate has the HTML element-node shape through a string-valued tagName property.
+ * @param {unknown} node <lang><zh-CN>候选节点。</zh-CN><en>Candidate node.</en></lang> @returns {boolean} <lang><zh-CN>存在字符串 tagName 时真；无 I/O。</zh-CN><en>True for a string tagName; no I/O.</en></lang>
+ */
 export function isHtmlElementNode(node) {
   return typeof node?.tagName === "string";
 }
 
-/** @param {unknown} node <lang><zh-CN>候选节点。</zh-CN><en>Candidate node.</en></lang> @returns {boolean} <lang><zh-CN>仅 #comment 节点为真。</zh-CN><en>True only for a #comment node.</en></lang> */
+/**
+ * @lang zh-CN 检查候选节点的nodeName是否精确为#comment，返回注释节点识别结果。
+ * @lang en Checks whether a candidate's nodeName is exactly #comment and returns the comment-node recognition result.
+ * @param {unknown} node <lang><zh-CN>候选节点。</zh-CN><en>Candidate node.</en></lang> @returns {boolean} <lang><zh-CN>仅 #comment 节点为真。</zh-CN><en>True only for a #comment node.</en></lang>
+ */
 export function isHtmlCommentNode(node) {
   return node?.nodeName === "#comment";
 }
 
-/** @param {object} node <lang><zh-CN>parse5 节点。</zh-CN><en>parse5 node.</en></lang> @returns {object} <lang><zh-CN>新属性记录，缺 attrs 为空；不修改节点。</zh-CN><en>Fresh attribute record, empty without attrs; never mutates the node.</en></lang> */
+/**
+ * @lang zh-CN 将HTML节点attrs中的name/value对收集为新属性记录，重复名称采用最后一项。
+ * @lang en Collects name/value pairs from an HTML node's attrs into a fresh attribute record, using the last item for duplicate names.
+ * @param {object} node <lang><zh-CN>parse5 节点。</zh-CN><en>parse5 node.</en></lang> @returns {object} <lang><zh-CN>新属性记录，缺 attrs 为空；不修改节点。</zh-CN><en>Fresh attribute record, empty without attrs; never mutates the node.</en></lang>
+ */
 export function getHtmlNodeAttributes(node) {
   return Object.fromEntries((node.attrs ?? []).map((attr) => [attr.name, attr.value]));
 }
 
-/** @param {unknown} node <lang><zh-CN>候选节点。</zh-CN><en>Candidate node.</en></lang> @returns {object|null} <lang><zh-CN>原位置引用或 null，不补造位置。</zh-CN><en>Original location reference or null, without invented positions.</en></lang> */
+/**
+ * @lang zh-CN 返回HTML节点原始sourceCodeLocation对象引用，缺少位置时返回null。
+ * @lang en Returns an HTML node's original sourceCodeLocation object reference, or null when its location is absent.
+ * @param {unknown} node <lang><zh-CN>候选节点。</zh-CN><en>Candidate node.</en></lang> @returns {object|null} <lang><zh-CN>原位置引用或 null，不补造位置。</zh-CN><en>Original location reference or null, without invented positions.</en></lang>
+ */
 export function getHtmlNodeLocation(node) {
   return node?.sourceCodeLocation ?? null;
 }

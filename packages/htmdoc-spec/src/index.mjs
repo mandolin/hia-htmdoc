@@ -246,12 +246,20 @@ const TAG_TO_KIND = Object.freeze({
   example: HTMDOC_SYMBOL_KINDS.example
 });
 
-/** @param {string} tag <lang><zh-CN>已规范化的小写标签，不执行类型转换。</zh-CN><en>Normalized lowercase tag without coercion.</en></lang> @returns {string|null} <lang><zh-CN>只返回自有 registry kind；未知/非字符串返回 null。</zh-CN><en>Own registry kind only; unknown/nonstring inputs return null.</en></lang> */
+/**
+ * @lang zh-CN 按原样字符串查询HTML文档标签到符号种类的自有注册表，未知标签返回null。
+ * @lang en Looks up an unchanged string in the HTML documentation tag-to-symbol-kind registry's own entries, returning null for unknown tags.
+ * @param {string} tag <lang><zh-CN>已规范化的小写标签，不执行类型转换。</zh-CN><en>Normalized lowercase tag without coercion.</en></lang> @returns {string|null} <lang><zh-CN>只返回自有 registry kind；未知/非字符串返回 null。</zh-CN><en>Own registry kind only; unknown/nonstring inputs return null.</en></lang>
+ */
 export function getHtmlDocSymbolKind(tag) {
   return typeof tag === "string" && Object.hasOwn(TAG_TO_KIND, tag) ? TAG_TO_KIND[tag] : null;
 }
 
-/** @param {string} tag <lang><zh-CN>区分大小写的规范标签。</zh-CN><en>Case-sensitive canonical tag.</en></lang> @returns {boolean} <lang><zh-CN>包含 description/lang 在内的显式标签注册；不修改输入。</zh-CN><en>Explicit registration including description/lang; input is unchanged.</en></lang> */
+/**
+ * @lang zh-CN 按大小写敏感的规范名称匹配HTML文档标签注册列表，返回识别结果。
+ * @lang en Matches case-sensitive canonical names against the HTML documentation tag registry and returns the recognition result.
+ * @param {string} tag <lang><zh-CN>区分大小写的规范标签。</zh-CN><en>Case-sensitive canonical tag.</en></lang> @returns {boolean} <lang><zh-CN>包含 description/lang 在内的显式标签注册；不修改输入。</zh-CN><en>Explicit registration including description/lang; input is unchanged.</en></lang>
+ */
 export function isHtmlDocTag(tag) {
   return HTMDOC_TAGS.includes(tag);
 }

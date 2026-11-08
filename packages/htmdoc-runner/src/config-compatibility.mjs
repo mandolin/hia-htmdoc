@@ -12,6 +12,8 @@ const failure = "HTMDoc config must match an exact supported identity and declar
 let currentValidator;
 
 /**
+ * @lang zh-CN 按精确配置版本或Schema身份返回对应HTML文档配置Schema对象，未知身份返回undefined。
+ * @lang en Returns the HTML documentation config schema object selected by an exact version or schema identity, or undefined for an unknown identity.
  * @param {string} identity <lang><zh-CN>精确版本或 schema ID。</zh-CN><en>Exact version or schema ID.</en></lang>
  * @returns {object|undefined} <lang><zh-CN>原 schema；未知身份不猜默认。</zh-CN><en>Original schema; unknown identities have no guessed default.</en></lang>
  */
@@ -45,6 +47,8 @@ export function validateHtmDocConfigForReading(value) {
 }
 
 /**
+ * @lang zh-CN 校验旧版普通JSON配置并在独立副本中协调当前版本与已有Schema引用，保留省略字段。
+ * @lang en Validates an ordinary-JSON legacy config and coordinates the current version and any existing schema reference in a detached copy while preserving omitted fields.
  * @param {unknown} value <lang><zh-CN>精确旧配置的普通 JSON，允许已有 loader 的省略默认。</zh-CN><en>Ordinary JSON of an exact legacy config, allowing omissions supported by the existing loader.</en></lang>
  * @returns {object} <lang><zh-CN>只协调 schemaVersion/已有 $schema 的新副本，保留省略字段与全部内容。</zh-CN><en>Fresh copy coordinating only schemaVersion/existing $schema while preserving omissions and all content.</en></lang>
  * @throws {TypeError} <lang><zh-CN>未知/当前版本、非 JSON 或目标验证失败时固定拒绝。</zh-CN><en>Fixed refusal for unknown/current versions, non-JSON or failed target validation.</en></lang>

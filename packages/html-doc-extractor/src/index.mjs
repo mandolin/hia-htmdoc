@@ -109,6 +109,8 @@ export function extractHtmlDoc(source, options = {}) {
 }
 
 /**
+ * @lang zh-CN 将HTML注释正文中的行首标签与普通正文分开解析，按描述优先级和语言配置生成摘要及字段级多语言信息。
+ * @lang en Parses line-leading tags separately from ordinary HTML comment prose, producing a summary and field-level localization according to description precedence and locale options.
  * @param {string} rawComment <lang><zh-CN>已取出的注释正文；不做 DOM 绑定。</zh-CN><en>Extracted comment body without DOM attachment.</en></lang>
  * @param {Object} [options] <lang><zh-CN>提取语言配置。</zh-CN><en>Extraction locale options.</en></lang>
  * @param {string} [options.defaultLocale="en"] <lang><zh-CN>默认语言，合法化失败回退 en。</zh-CN><en>Default locale, falling back to en when invalid.</en></lang>

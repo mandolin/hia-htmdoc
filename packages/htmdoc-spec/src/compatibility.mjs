@@ -12,6 +12,8 @@ const failure = "HTMDoc extraction must match an exact supported contract and JS
 const validators = new Map();
 
 /**
+ * @lang zh-CN 按精确版本或Schema身份选择原HTML文档提取Schema对象，未知身份返回undefined。
+ * @lang en Selects the original HTML documentation extraction schema object by exact version or schema identity, returning undefined for unknown identities.
  * @param {string} identity <lang><zh-CN>精确版本或 schema ID。</zh-CN><en>Exact version or schema ID.</en></lang>
  * @returns {object|undefined} <lang><zh-CN>对应的原 schema；未知值返回 undefined，无默认猜测。</zh-CN><en>Corresponding original schema; unknown identities return undefined with no guessed default.</en></lang>
  */
@@ -22,6 +24,8 @@ export function getHtmDocExtractionSchema(identity) {
 }
 
 /**
+ * @lang zh-CN 在普通JSON副本上校验HTML文档提取件的精确契约与profile配对，返回空数组或固定公开诊断。
+ * @lang en Validates an HTML documentation extraction's exact contract/profile pairing on an ordinary-JSON copy, returning an empty array or fixed public diagnostics.
  * @param {unknown} value <lang><zh-CN>已物化的普通 JSON 提取件，不接受访问器或循环。</zh-CN><en>Materialized ordinary-JSON extraction excluding accessors/cycles.</en></lang>
  * @returns {Array<object>} <lang><zh-CN>有效为空，否则只含固定公开诊断；不改变输入。</zh-CN><en>Empty when valid, otherwise fixed public diagnostics only; input is unchanged.</en></lang>
  */
@@ -44,6 +48,8 @@ export function validateHtmDocExtraction(value) {
 }
 
 /**
+ * @lang zh-CN 将合法旧版HTML文档提取件复制并协调契约及profile版本，返回通过当前Schema校验的副本。
+ * @lang en Copies a valid legacy HTML documentation extraction, coordinates its contract/profile versions and returns the copy after current-schema validation.
  * @param {unknown} value <lang><zh-CN>精确 0.1.0-draft JSON 提取件，扩展字段也必须为普通 JSON。</zh-CN><en>Exact 0.1.0-draft JSON extraction, with ordinary JSON extensions.</en></lang>
  * @returns {object} <lang><zh-CN>新对象，只协调契约/profile 身份，其余字段无损保留。</zh-CN><en>Fresh object coordinating only contract/profile identity while preserving all other fields losslessly.</en></lang>
  * @throws {TypeError} <lang><zh-CN>旧结构或目标验证失败时固定拒绝，不修改输入。</zh-CN><en>Fixed refusal when legacy structure or target validation fails; input is unchanged.</en></lang>

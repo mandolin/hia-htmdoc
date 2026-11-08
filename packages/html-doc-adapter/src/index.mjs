@@ -5,6 +5,8 @@ const HIA_SOURCE_MODEL = "hia-source";
 const HIA_SOURCE_MODEL_VERSION = "0.2.0";
 
 /**
+ * @lang zh-CN 校验精确旧版或当前HTML提取件后构造核心文档，保留符号身份、语言及源码关联。
+ * @lang en Constructs a core document after validating an exact legacy or current HTML extraction, retaining symbol identities, locales and source associations.
  * @param {object} artifact <lang><zh-CN>普通 JSON 精确旧/新提取件；先校验完整 schema 与 profile 配对。</zh-CN><en>Ordinary-JSON exact legacy/current extraction, checked against its full schema/profile pairing.</en></lang>
  * @param {object} [options] <lang><zh-CN>核心文档 id/title/locale 覆盖。</zh-CN><en>Core-document id/title/locale overrides.</en></lang>
  * @returns {object} <lang><zh-CN>新的核心 0.2.0 文档，不修改提取输入。</zh-CN><en>Fresh core 0.2.0 document without mutating extraction input.</en></lang>
@@ -42,6 +44,8 @@ export function htmlExtractionToHiaDocument(artifact, options = {}) {
 }
 
 /**
+ * @lang zh-CN 在HTML提取件边界校验受支持的精确契约及完整结构，失败以固定公开异常拒绝。
+ * @lang en Checks supported exact contracts and complete structure at the HTML-extraction boundary, refusing failures with fixed public errors.
  * @param {unknown} artifact <lang><zh-CN>候选提取件。</zh-CN><en>Candidate extraction.</en></lang>
  * @returns {void} <lang><zh-CN>精确旧/新 schema 验证通过时返回。</zh-CN><en>Returns when exact legacy/current schema validation succeeds.</en></lang>
  * @throws {TypeError} <lang><zh-CN>失败固定报错，不回显输入/Ajv 详情。</zh-CN><en>Fixed error without echoing input/Ajv details.</en></lang>

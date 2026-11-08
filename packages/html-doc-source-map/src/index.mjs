@@ -34,7 +34,11 @@ export function createHtmlDocSourceMapRef(options = {}) {
   };
 }
 
-/** @param {string} policy <lang><zh-CN>精确 none/reference/embed。</zh-CN><en>Exact none/reference/embed.</en></lang> @returns {string} <lang><zh-CN>不改输入的同一合法值。</zh-CN><en>The same valid value without mutation.</en></lang> @throws {TypeError} <lang><zh-CN>未知值固定拒绝，不回显原文。</zh-CN><en>Fixed refusal for unknown values without raw text.</en></lang> */
+/**
+ * @lang zh-CN 精确校验HTML源码内容策略none、reference或embed，返回同一有效策略值。
+ * @lang en Validates the exact HTML source-content policies none, reference or embed and returns the same valid policy value.
+ * @param {string} policy <lang><zh-CN>精确 none/reference/embed。</zh-CN><en>Exact none/reference/embed.</en></lang> @returns {string} <lang><zh-CN>不改输入的同一合法值。</zh-CN><en>The same valid value without mutation.</en></lang> @throws {TypeError} <lang><zh-CN>未知值固定拒绝，不回显原文。</zh-CN><en>Fixed refusal for unknown values without raw text.</en></lang>
+ */
 export function normalizeSourcesContentPolicy(policy) {
   if (!HTML_DOC_SOURCE_CONTENT_POLICIES.includes(policy)) {
     throw new TypeError("Unsupported HTMDoc sourcesContent policy.");
