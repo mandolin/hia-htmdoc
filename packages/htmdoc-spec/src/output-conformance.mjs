@@ -1,18 +1,14 @@
 import { validateHtmDocExtraction } from "./compatibility.mjs";
 
 /**
- * Owner-local contract identity for HTMDoc output conformance summaries.
- *
- * 中文：HTMDoc 输出 conformance summary 的 owner-local contract identity。
- * English: Owner-local contract identity for HTMDoc output conformance summaries.
+ * @lang zh-CN HTML文档输出一致性摘要使用的所属模块契约身份。
+ * @lang en Owner-local contract identity for HTML documentation output conformance summaries.
  */
 export const HTMDOC_OUTPUT_CONFORMANCE_CONTRACT = "htmdoc-output-conformance";
 
 /**
- * Frozen draft version for the owner-local HTMDoc output conformance result.
- *
- * 中文：HTMDoc owner-local 输出 conformance result 的冻结 draft version。
- * English: Frozen draft version for the owner-local HTMDoc output conformance result.
+ * @lang zh-CN HTML文档输出一致性结果使用的所属模块冻结草案版本。
+ * @lang en Frozen draft version for the owner-local HTML documentation output conformance result.
  */
 export const HTMDOC_OUTPUT_CONFORMANCE_VERSION = "0.1.0-draft";
 /** @lang zh-CN 复用包内纯数据定义的同一冻结对象。 @lang en Reuses the same frozen objects from owner-local plain-data definitions. */
@@ -20,16 +16,12 @@ import {HTMDOC_OUTPUT_CONFORMANCE_CODES} from './output-conformance-arrays.mjs';
 export {HTMDOC_OUTPUT_CONFORMANCE_CODES};
 
 /**
- * Evaluate whether already-materialized HTMDoc artifacts preserve the owner-local P1 output boundary.
- *
- * 中文：评估已经 materialized 的 HTMDoc artifact 是否保持 owner-local P1 output boundary。
- * English: Evaluate whether already-materialized HTMDoc artifacts preserve the owner-local P1 output boundary.
- *
+ * @lang zh-CN 评估已物化的HTML文档工件是否保持所属模块的既有输出边界。函数仅比较调用方提供的JSON记录，输入排除文件路径、工作区根、源码正文、网络及侧车路径，计算过程无写入。
+ * @lang en Evaluates whether already-materialized HTML documentation artifacts preserve the existing owner-local output boundary. It compares only caller-provided JSON records, accepts no file paths, workspace root, source text, network or sidecar paths, and performs no writes.
  * @param {unknown} artifacts <lang><zh-CN>extraction、HIA document、ordinary doc-source-map 与 producer result 的固定 bundle。</zh-CN><en>Fixed bundle containing extraction, HIA document, ordinary doc-source-map, and producer result.</en></lang>
  * @param {Object} [options] <lang><zh-CN>调用方显式内容策略。</zh-CN><en>Explicit caller content policy.</en></lang>
  * @param {boolean} [options.allowEmbeddedSource=false] <lang><zh-CN>只允许 caller 显式确认 `embed`；缺省保持 `none`/`reference` 不嵌入。</zh-CN><en>Only permits `embed` after explicit caller confirmation; the default keeps `none`/`reference` unembedded.</en></lang>
  * @returns {{contract:string,contractVersion:string,conformant:boolean,violations:Array<{code:string,message:string}>}} <lang><zh-CN>不含 artifact 内容的确定性 summary。</zh-CN><en>Deterministic summary containing no artifact content.</en></lang>
- * @lang zh-CN 函数只比较 caller 已提供的 JSON records；不接收文件路径、workspace root、source text、network 或 sidecar path，也不会产生写入。
  */
 export function evaluateHtmDocOutputConformance(artifacts, options = {}) {
   // <lang><zh-CN>violation 仅累积固定 code/message，避免诊断把不可信 artifact 字段回显到 public output。</zh-CN><en>Violations accumulate only fixed code/message pairs so diagnostics never echo untrusted artifact fields into public output.</en></lang>

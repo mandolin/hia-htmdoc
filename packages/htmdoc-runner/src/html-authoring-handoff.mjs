@@ -8,15 +8,13 @@
  */
 
 /**
- * 便携 HTML-authoring review handoff 的 owner-local contract identifier。
- *
+ * @lang zh-CN 便携 HTML-authoring review handoff 的 owner-local contract identifier。
  * @lang en Owner-local contract identifier for a portable HTML-authoring review handoff.
  */
 export const HTML_AUTHORING_DOCUMENTATION_HANDOFF_CONTRACT = "html-authoring-documentation-handoff";
 
 /**
- * owner-local handoff result 的初始冻结 draft version。
- *
+ * @lang zh-CN owner-local handoff result 的初始冻结 draft version。
  * @lang en Initial frozen draft version of the owner-local handoff result.
  */
 export const HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION = "0.1.0-draft";
@@ -63,11 +61,10 @@ const REFUSAL_REASON_ORDER = Object.freeze([
 ]);
 
 /**
- * 构建一个确定性的 metadata-only handoff report 或 fail-closed refusal。
- *
+ * @lang zh-CN 构建确定性的纯元数据交接报告，校验失败时默认拒绝。评估过程限定为内存计算，无文件读写、命令执行及Tauri、Obsidian或网络API调用。
+ * @lang en Builds a deterministic metadata-only handoff report or fail-closed refusal. This pure evaluator reads and writes no files, executes no command, and calls no Tauri, Obsidian or network API.
  * @param {unknown} request <lang><zh-CN>caller-provided 的显式 metadata request；不得包含 target/source/path/body。</zh-CN><en>Caller-provided explicit metadata request; it must not contain target/source/path/body data.</en></lang>
  * @returns {object} <lang><zh-CN>accepted metadata report，或不反射 caller input 的 refused report。</zh-CN><en>An accepted metadata report, or a refused report that reflects no caller input.</en></lang>
- * @lang en Builds a deterministic metadata-only handoff report or fail-closed refusal. This pure evaluator reads and writes no files, executes no command, and calls no Tauri, Obsidian, or network API.
  */
 export function createHtmlAuthoringDocumentationHandoff(request) {
   // <lang><zh-CN>primitive/array request 退化为 empty record；所有 failure 仍只返回 fixed diagnostics。</zh-CN><en>A primitive or array request degrades to an empty record; every failure still returns only fixed diagnostics.</en></lang>

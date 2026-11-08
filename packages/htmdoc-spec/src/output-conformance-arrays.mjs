@@ -1,11 +1,8 @@
 /** @file @lang zh-CN 包内冻结数组纯数据定义，无导入和运行器副作用。 @lang en Owner-local frozen-array plain-data definitions without imports or runner side effects. */
 
 /**
- * Public-safe violation codes emitted by the HTMDoc output conformance evaluator.
- *
- * 中文：HTMDoc 输出 conformance evaluator 发出的 public-safe violation codes。
- * English: Public-safe violation codes emitted by the HTMDoc output conformance evaluator.
- * @lang zh-CN code 只描述 artifact boundary；绝不回显 source text、absolute path、private sidecar locator 或 caller supplied value。
+ * @lang zh-CN HTML文档输出一致性评估器发出的可公开违规码，仅描述工件边界，诊断内容排除源码正文、绝对路径、私有侧车定位器及调用方值。
+ * @lang en Public-safe violation codes emitted by the HTML documentation output conformance evaluator. Codes describe artifact boundaries and never echo source text, absolute paths, private sidecar locators or caller-supplied values.
  */
 export const HTMDOC_OUTPUT_CONFORMANCE_CODES = Object.freeze([
   "HTMDOC_OUTPUT_CONFORMANCE_INPUT_INVALID",
