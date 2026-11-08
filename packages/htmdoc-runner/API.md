@@ -1,5 +1,8 @@
 # HTML documentation runner API
 
+中文。交接命令的完整示例、路径、退出码和写入说明见随包指南。
+See the bundled [handoff guide](HANDOFF.md) for command examples, paths, exit codes, and writes.
+
 ## Public exports
 
 | Export | Responsibility |

@@ -40,6 +40,17 @@ function main() {
       for (const runnerPath of ["src/cli.mjs", "src/html-authoring-handoff.mjs", "src/html-authoring-handoff-cli.mjs"]) {
         assert.ok(packedPaths.has(runnerPath), `@hia-doc/htmdoc-runner pack is missing ${runnerPath}.`);
       }
+      // <lang><zh-CN>首用指南与两份完整合成请求是消费者材料，必须与命令共同分发。</zh-CN><en>The first-use guide and two complete synthetic requests are consumer materials distributed with the command.</en></lang>
+      for (const documentPath of ["HANDOFF.md", "examples/handoff.accepted.request.json", "examples/handoff.refused-version.request.json"]) {
+        assert.ok(packedPaths.has(documentPath), `@hia-doc/htmdoc-runner pack is missing ${documentPath}.`);
+      }
+      // <lang><zh-CN>示例复用已验收夹具的精确元数据，防止另造字段或扩大权限。</zh-CN><en>Examples reuse exact validated fixture metadata so fields and permissions cannot silently drift.</en></lang>
+      for (const fixtureName of ["accepted", "refused-version"]) {
+        assert.deepEqual(
+          JSON.parse(fs.readFileSync(path.join(root, candidate.directory, "examples", `handoff.${fixtureName}.request.json`), "utf8")),
+          JSON.parse(fs.readFileSync(path.join(root, "fixtures", "html-authoring-handoff", `${fixtureName}.request.json`), "utf8"))
+        );
+      }
     }
   }
 

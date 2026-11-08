@@ -73,6 +73,9 @@ explicitly in the config `options` object.
 
 ## HTML-authoring metadata handoff
 
+中文。随包指南含完整合成请求、接受与拒绝示例、退出码及输出写入说明。
+See the bundled [handoff guide](HANDOFF.md) for complete synthetic requests, accepted/refused runs, exit codes, and output effects.
+
 `createHtmlAuthoringDocumentationHandoff()` evaluates one explicit,
 metadata-only handoff request. It accepts only `sourcesContentPolicy: "none"`,
 stable output/entry identities, an accepted HTMDoc conformance summary, and an

@@ -34,6 +34,9 @@
     "README.md",
     "API.md",
     "MIGRATION.md",
+    "HANDOFF.md",
+    "examples/handoff.accepted.request.json",
+    "examples/handoff.refused-version.request.json",
     "LICENSE"
   ],
   "engines": {
