@@ -82,7 +82,12 @@ function main() {
     assert.equal(manifest.engines?.node, expectedNodeRange, `${candidate.name} Node support range drifted.`);
     assert.equal(lock.packages?.[candidate.directory]?.engines?.node, expectedNodeRange, `${candidate.name} locked Node support range drifted.`);
     assert.equal(manifest.publishConfig?.access, "public", `${candidate.name} must opt into public scoped publication.`);
-    assert.deepEqual(manifest.files, ["src", "README.md", "API.md", "MIGRATION.md", "LICENSE"], `${candidate.name} pack allow-list drifted.`);
+    // <lang><zh-CN>仅 runner 分发首用交接指南和两份合成请求，其余包保持原精确白名单。</zh-CN><en>Only the runner distributes the first-use handoff guide and two synthetic requests; other packages retain their exact allow-list.</en></lang>
+    const expectedFiles = ["src", "README.md", "API.md", "MIGRATION.md", "LICENSE"];
+    if (candidate.name === "@hia-doc/htmdoc-runner") {
+      expectedFiles.splice(4, 0, "HANDOFF.md", "examples/handoff.accepted.request.json", "examples/handoff.refused-version.request.json");
+    }
+    assert.deepEqual(manifest.files, expectedFiles, `${candidate.name} pack allow-list drifted.`);
     assert.ok(Array.isArray(manifest.keywords) && manifest.keywords.includes("documentation"), `${candidate.name} must expose public discovery metadata.`);
 
     // <lang><zh-CN>子包必须自带公开说明和许可证，不能借用私有 workspace 根文件。</zh-CN><en>Each child package must carry public documentation and a license instead of borrowing private workspace-root files.</en></lang>
