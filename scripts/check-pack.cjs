@@ -5,6 +5,12 @@ const path = require("node:path");
 
 const { loadReleaseContext } = require("./release-packages.cjs");
 
+// <lang><zh-CN>随包CLI参考须保留全部选项和模式/安装路由，实际语义由命令测试核对。</zh-CN><en>The packaged CLI reference retains all options and mode/installation routes, with command tests checking actual semantics.</en></lang>
+const runnerReadme = fs.readFileSync(path.join(__dirname, "../packages/htmdoc-runner/README.md"), "utf8");
+for (const token of ["## Command reference", "### Config and direct modes", "### Installation and version routing", "--config/-c", "--workspace-root", "--kind/-k", "--out-dir/-o", "--sources-content-policy", "--no-doc-source-map", "--help/-h", "--version/-v"]) {
+  assert.ok(runnerReadme.includes(token), `Runner documentation is missing ${token}.`);
+}
+
 /**
  * Inspect each public candidate using npm's own pack calculation.
  *

@@ -138,3 +138,44 @@ import { HTMDOC_RUNNER_VERSION, HTMDOC_INPUT_KINDS, HTMDOC_OUTPUT_KINDS } from "
 This entry exposes the runner version and frozen input/output kind arrays from the same definitions used by the root API. It contains pure data definitions, with no runner execution dependencies.
 
 中文说明。metadata子入口提供版本及冻结的输入/输出种类，根入口与该入口引用同一定义。执行构建继续使用原运行API。
+
+## Command reference
+
+中文。使用本地npm脚本，或 `npm exec --offline -- htmdoc --help`。帮助退出0，版本输出运行器版本；构建success退出0，partial/failed、参数或配置错误退出1。未知参数拒绝，错误使用固定安全消息。构建写出产物及生产结果清单，可能覆盖同名文件；失败或部分成功时可已有写入。
+
+English. Use an installed npm script or `npm exec --offline -- htmdoc --help`. Help exits 0 and version prints the runner version. Successful builds exit 0; partial/failed builds and argument/config errors exit 1. Unknown options are rejected with controlled messages. Builds write artifacts and a producer result, may replace existing files, and may leave writes after a partial/failed run.
+
+| Option | 中文 | English |
+| --- | --- | --- |
+| `--config/-c <file>` | 调用目录下的JSON配置 | JSON config resolved from cwd |
+| `--workspace-root <dir>` | 仅直接模式，相对调用目录，默认`.` | Direct mode only, cwd-relative, default `.` |
+| `--kind/-k <kind>` | 仅直接模式，html/html-fragment/html-template/custom-elements-manifest | Direct mode only, one of the four listed input kinds |
+| `--out-dir/-o <dir>` | 两模式覆盖，相对工作区 | Override in both modes, workspace-relative |
+| `--sources-content-policy <policy>` | 两模式覆盖，none/reference/embed，默认none | Override in both modes, none/reference/embed, default none |
+| `--no-doc-source-map` | 两模式关闭地图输出，默认启用 | Disable map output in both modes, enabled by default |
+| `--help/-h` | 帮助，退出0 | Help, exit 0 |
+| `--version/-v` | 运行器实现版本 | Runner implementation version |
+| 位置输入 / positional inputs | 仅直接模式，必填且相对工作区 | Direct mode only, required and workspace-relative |
+
+### Config and direct modes
+
+中文。配置workspaceRoot相对配置文件目录，默认`.`；outputDirectory相对工作区，默认dist/htmdoc。配置模式忽略workspace-root、kind和位置输入，其余三覆盖项如表所示。直接模式按文件名推断kind，亦可用kind显式覆盖。embed会将源码正文写入产物，请先确认公开许可。
+
+English. Config workspaceRoot uses the config directory and defaults to `.`; outputDirectory is workspace-relative and defaults to dist/htmdoc. Config mode ignores workspace-root, kind, and positionals, applying the three overrides listed above. Direct mode infers kind from filenames unless explicitly supplied. Confirm publication permission before embed writes source bodies into artifacts.
+
+保存为项目根的htmdoc.config.json，并准备获准sample.html。Save at the project root and prepare authorized sample.html.
+
+```json
+{"schemaVersion":"1.0.0","workspaceRoot":".","outputDirectory":"dist/htmdoc","inputs":[{"kind":"html","path":"sample.html"}],"options":{"sourcesContentPolicy":"none"}}
+```
+
+```sh
+npm exec --offline -- htmdoc --config htmdoc.config.json
+npm exec --offline -- htmdoc --workspace-root . --kind html --out-dir dist/html-direct --sources-content-policy none --no-doc-source-map sample.html
+```
+
+### Installation and version routing
+
+中文。本页为1.0.0源码候选，候选归档须与配套内部依赖一起安装；离线安装另需第三方依赖缓存。注册表路线先用 `npm view @hia-doc/htmdoc-runner@1.0.0 version` 核目标，再核配套版本并安装。`npm list @hia-doc/htmdoc-runner --depth=0` 核本地安装。旧0.1.x配置教程按旧包阅读，当前配置身份为1.0.0。htmdoc-handoff来自同一包，其version输出交接契约身份0.1.0-draft，完整选项见随包指南。
+
+English. This is the 1.0.0 source candidate. Install its archive with matching internal dependencies and prepare a third-party cache for offline installation. For registry installs, check the target with `npm view @hia-doc/htmdoc-runner@1.0.0 version` and verify matching dependencies first. Check the installed package with `npm list @hia-doc/htmdoc-runner --depth=0`. Older 0.1.x guides retain their package scope; current config identity is 1.0.0. htmdoc-handoff is supplied by the same package and prints handoff contract version 0.1.0-draft. Its complete options are in the bundled guide.
