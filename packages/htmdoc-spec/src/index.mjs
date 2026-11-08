@@ -1,19 +1,43 @@
-/** @lang zh-CN 提取工件的固定中性身份，与包版本独立。 @lang en Fixed extraction artifact identity, independent of package versions. */
+/**
+ * @lang zh-CN 提取工件的固定中性身份，与包版本独立。
+ * @lang en Fixed extraction artifact identity, independent of package versions.
+ */
 export const HTMDOC_EXTRACTION_CONTRACT = "hia-htmdoc-extraction";
-/** @lang zh-CN 已确认的新版提取 wire 身份，旧版仍精确可读。 @lang en Confirmed current extraction wire identity with exact historical reading retained. */
+/**
+ * @lang zh-CN 已确认的新版提取 wire 身份，旧版仍精确可读。
+ * @lang en Confirmed current extraction wire identity with exact historical reading retained.
+ */
 export const HTMDOC_EXTRACTION_CONTRACT_VERSION = "1.0.0";
-/** @lang zh-CN 公开 schema 身份，不执行网络请求。 @lang en Public schema identity without network requests. */
+/**
+ * @lang zh-CN 公开 schema 身份，不执行网络请求。
+ * @lang en Public schema identity without network requests.
+ */
 export const HTMDOC_EXTRACTION_SCHEMA_ID = "https://mandolin.github.io/HIA-Documentation/schemas/hia-htmdoc-extraction-1.0.0.schema.json";
-/** @lang zh-CN 已确认 annotation/CEM 子集的 profile 身份，不表示全生态支持。 @lang en Profile identity for the confirmed annotation/CEM subset, not full ecosystem support. */
+/**
+ * @lang zh-CN 已确认 annotation/CEM 子集的 profile 身份，不表示全生态支持。
+ * @lang en Profile identity for the confirmed annotation/CEM subset, not full ecosystem support.
+ */
 export const HTMDOC_PROFILE_VERSION = "1.0.0";
 import * as legacyExtraction from "./schema-legacy.mjs";
-/** @lang zh-CN 原档案提取schema的同一对象，不克隆或修改旧规则。 @lang en The original archived extraction-schema object without cloning or changing historical rules. */
+/**
+ * @lang zh-CN 原档案提取schema的同一对象，不克隆或修改旧规则。
+ * @lang en The original archived extraction-schema object without cloning or changing historical rules.
+ */
 export const HTMDOC_LEGACY_EXTRACTION_JSON_SCHEMA = legacyExtraction.HTMDOC_EXTRACTION_JSON_SCHEMA;
-/** @lang zh-CN 原档案提取schema身份，不读取URL。 @lang en Original archived extraction-schema identity, without URL reads. */
+/**
+ * @lang zh-CN 原档案提取schema身份，不读取URL。
+ * @lang en Original archived extraction-schema identity, without URL reads.
+ */
 export const HTMDOC_LEGACY_EXTRACTION_SCHEMA_ID = legacyExtraction.HTMDOC_EXTRACTION_SCHEMA_ID;
-/** @lang zh-CN 原档案提取契约版本，不以当前版本替代旧语义。 @lang en Original archived extraction-contract version, never substituting current semantics. */
+/**
+ * @lang zh-CN 原档案提取契约版本，不以当前版本替代旧语义。
+ * @lang en Original archived extraction-contract version, never substituting current semantics.
+ */
 export const HTMDOC_LEGACY_EXTRACTION_CONTRACT_VERSION = legacyExtraction.HTMDOC_EXTRACTION_CONTRACT_VERSION;
-/** @lang zh-CN 原档案领域profile版本，独立于包与全局规范版本。 @lang en Original archived domain-profile version, independent of package and global-specification versions. */
+/**
+ * @lang zh-CN 原档案领域profile版本，独立于包与全局规范版本。
+ * @lang en Original archived domain-profile version, independent of package and global-specification versions.
+ */
 export const HTMDOC_LEGACY_PROFILE_VERSION = legacyExtraction.HTMDOC_PROFILE_VERSION;
 /** @lang zh-CN 新旧精确读取和显式迁移均为无 I/O 纯 API。 @lang en Exact version reading and explicit migration are pure APIs without I/O. */
 export { getHtmDocExtractionSchema, validateHtmDocExtraction, migrateHtmDocExtraction } from "./compatibility.mjs";
@@ -32,7 +56,10 @@ export {
   HTMDOC_OUTPUT_CONFORMANCE_VERSION
 } from "./output-conformance.mjs";
 
-/** @lang zh-CN 已确认 HTML-facing 符号 kind 注册；与 CEM 的 JS metadata 区分。 @lang en Confirmed HTML-facing kind registry, distinct from CEM JavaScript metadata. */
+/**
+ * @lang zh-CN 已确认 HTML-facing 符号 kind 注册；与 CEM 的 JS metadata 区分。
+ * @lang en Confirmed HTML-facing kind registry, distinct from CEM JavaScript metadata.
+ */
 export const HTMDOC_SYMBOL_KINDS = Object.freeze({
   /**
    * @lang zh-CN HTML组件文档节点的领域种类。
@@ -84,7 +111,10 @@ export const HTMDOC_SYMBOL_KINDS = Object.freeze({
 import {HTMDOC_TAGS} from './frozen-arrays.mjs';
 export {HTMDOC_TAGS};
 
-/** @lang zh-CN 新版稳定子集 schema；nullable 为已确认新规则，旧 schema 不随之变化。 @lang en Current stable-subset schema; nullable support is a confirmed new rule that does not change the legacy schema. */
+/**
+ * @lang zh-CN 新版稳定子集 schema；nullable 为已确认新规则，旧 schema 不随之变化。
+ * @lang en Current stable-subset schema; nullable support is a confirmed new rule that does not change the legacy schema.
+ */
 export const HTMDOC_EXTRACTION_JSON_SCHEMA = Object.freeze({
   $schema: "https://json-schema.org/draft/2020-12/schema",
   $id: HTMDOC_EXTRACTION_SCHEMA_ID,

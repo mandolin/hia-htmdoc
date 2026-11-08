@@ -1,6 +1,9 @@
 /** @file @lang zh-CN 运行器纯元数据，含版本及冻结输入/输出种类。 @lang en Pure runner metadata containing its version and frozen input/output kinds. */
 
-/** @lang zh-CN 单次构建支持的四种显式输入；缺省 kind 由已有文件名规则推断。 @lang en Four supported build inputs; omitted kinds follow the existing filename inference. */
+/**
+ * @lang zh-CN 单次构建支持的四种显式输入；缺省 kind 由已有文件名规则推断。
+ * @lang en Four supported build inputs; omitted kinds follow the existing filename inference.
+ */
 export const HTMDOC_INPUT_KINDS = Object.freeze([
   "html",
   "html-fragment",
@@ -8,7 +11,10 @@ export const HTMDOC_INPUT_KINDS = Object.freeze([
   "custom-elements-manifest"
 ]);
 
-/** @lang zh-CN 提取件、核心文档和可选源码地图；不是可见站点布局能力。 @lang en Extraction, core documents and optional source maps, not site layout capabilities. */
+/**
+ * @lang zh-CN 提取件、核心文档和可选源码地图；不是可见站点布局能力。
+ * @lang en Extraction, core documents and optional source maps, not site layout capabilities.
+ */
 export const HTMDOC_OUTPUT_KINDS = Object.freeze([
   "htmdoc-extraction",
   "hia-document",

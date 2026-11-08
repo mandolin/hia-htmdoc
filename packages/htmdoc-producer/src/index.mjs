@@ -3,7 +3,10 @@ import {runHtmDoc} from '@hia-doc/htmdoc-runner';
 import {htmdocProducerDescriptor} from './descriptor.mjs';
 export {htmdocProducerDescriptor} from './descriptor.mjs';
 
-/** @lang zh-CN 一次性无增量生产器；不在导入时读取/生成或连接宿主。 @lang en One-shot nonincremental producer; importing it performs no reads, generation or host integration. */
+/**
+ * @lang zh-CN 一次性无增量生产器；不在导入时读取/生成或连接宿主。
+ * @lang en One-shot nonincremental producer; importing it performs no reads, generation or host integration.
+ */
 export const htmdocProducer = Object.freeze({
   descriptor: htmdocProducerDescriptor,
   /**
