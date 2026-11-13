@@ -95,3 +95,9 @@ paths are not symlink sandbox guarantees. Callbacks are trusted caller code.
 Subpath `./metadata` exports `HTMDOC_RUNNER_VERSION`, `HTMDOC_INPUT_KINDS` and `HTMDOC_OUTPUT_KINDS` from pure definitions. The arrays are frozen, and the root API exposes the same references. This entry performs no runner operations.
 
 中文说明。metadata子入口提供同一版本与冻结输入/输出种类，适用于发现和文档工具。声明分支与运行分支分别提供，构建使用原运行API。
+
+## Command documentation assets
+
+The `src/command-documentation/` directory ships two command descriptions, their independent actual parser observations, standard HiaDocument, self-contained schemas, static help and a generation receipt. htmdoc displays its runner version, while htmdoc-handoff displays the handoff artifact version. Package-relative source digests and line-only anchors are retained for each implementation.
+
+中文。两个实现分别保留实际声明、版本及来源，同一字段内容驱动帮助和标准文档，列单位及终点未知。

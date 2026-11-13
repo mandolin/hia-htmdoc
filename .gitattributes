@@ -1,0 +1,16 @@
+# 中文：命令来源与静态资产固定LF，供跨平台原字节核验。
+# English: Pin command sources and static assets to LF for cross-platform original-byte verification.
+/packages/htmdoc-runner/src/cli.mjs text eol=lf
+/packages/htmdoc-runner/src/html-authoring-handoff-cli.mjs text eol=lf
+/packages/htmdoc-runner/src/html-authoring-handoff.mjs text eol=lf
+/packages/htmdoc-runner/HANDOFF.md text eol=lf
+/packages/htmdoc-runner/src/command-content.mjs text eol=lf
+/packages/htmdoc-runner/src/metadata.mjs text eol=lf
+/packages/htmdoc-runner/src/index.mjs text eol=lf
+/packages/htmdoc-runner/src/schema.mjs text eol=lf
+/packages/htmdoc-runner/src/config-compatibility.mjs text eol=lf
+/packages/htmdoc-runner/src/schemas/htmdoc-config-0.1.0-draft.schema.json text eol=lf
+/packages/htmdoc-runner/src/schemas/htmdoc-config-1.0.0.schema.json text eol=lf
+/packages/htmdoc-runner/README.md text eol=lf
+/packages/htmdoc-runner/package.json text eol=lf
+/packages/htmdoc-runner/src/command-documentation/* text eol=lf

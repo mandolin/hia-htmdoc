@@ -57,3 +57,9 @@ English. Resolve both paths from the invocation directory. Absolute paths, URLs,
 中文。源码检出可在本包目录运行 `node src/html-authoring-handoff-cli.mjs --input examples/handoff.accepted.request.json`。请求排除源码、地图和 sidecar 正文及凭据。交接过程不执行目标构建、宿主集成或网络访问。正文公开和目标项目权限分别管理。
 
 English. In a source checkout, run `node src/html-authoring-handoff-cli.mjs --input examples/handoff.accepted.request.json` from this package directory. Requests exclude source, map, and sidecar bodies and credentials. Evaluation performs no target build, host integration, or network access. Manage actual body publication and target permissions independently.
+
+## Generated reference and terminal behavior
+
+中文。80/120列帮助由共享双语描述生成，与15符号组合命令文档一同随包分发。执行评估要求input，help/version提前返回。严格解析拒绝未知选项与位置输入，重复值取末值。省略或空out输出stdout，非空out写既有父目录下选定文件。路径按当前词法safe-relative规则检查，JSON由正文解析，不按后缀判断。
+
+English. Shared bilingual descriptions generate 80/120-column help and ship with the combined 15-symbol command document. Evaluation requires input, while help/version return early. Strict parsing rejects unknown options and positionals, and repeated values use the last value. Omitted or empty out writes stdout, while nonempty out selects a file under an existing parent. Current lexical safe-relative checks govern paths and JSON is parsed from the body independently of filename suffixes.

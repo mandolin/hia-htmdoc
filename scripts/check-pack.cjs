@@ -43,7 +43,7 @@ function main() {
 
     if (candidate.name === "@hia-doc/htmdoc-runner") {
       // <lang><zh-CN>两个 CLI 和纯 handoff evaluator 属于 runner 的公开表面，必须随入口一起打包。</zh-CN><en>Both CLIs and the pure handoff evaluator are runner public surface and must be packed with the entry point.</en></lang>
-      for (const runnerPath of ["src/cli.mjs", "src/html-authoring-handoff.mjs", "src/html-authoring-handoff-cli.mjs"]) {
+      for (const runnerPath of ["src/cli.mjs", "src/command-documentation/description.json", "src/command-documentation/observations.json", "src/command-documentation/document.hia.json", "src/command-documentation/command.schema.json", "src/command-documentation/document.schema.json", "src/command-documentation/help.mjs", "src/command-documentation/generation.json", "src/html-authoring-handoff.mjs", "src/html-authoring-handoff-cli.mjs"]) {
         assert.ok(packedPaths.has(runnerPath), `@hia-doc/htmdoc-runner pack is missing ${runnerPath}.`);
       }
       // <lang><zh-CN>首用指南与两份完整合成请求是消费者材料，必须与命令共同分发。</zh-CN><en>The first-use guide and two complete synthetic requests are consumer materials distributed with the command.</en></lang>

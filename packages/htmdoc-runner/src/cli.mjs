@@ -33,7 +33,10 @@ try {
   });
 
   if (values.help) {
-    process.stdout.write(`HTMDoc ${HTMDOC_RUNNER_VERSION}\n\nUsage:\n  htmdoc --config htmdoc.config.json\n  htmdoc [options] <input...>\n\nOptions:\n  -c, --config <path>\n  -k, --kind <kind>\n  -o, --out-dir <path>\n      --workspace-root <path>\n      --sources-content-policy <none|reference|embed>\n      --no-doc-source-map\n  -v, --version\n`);
+    // <lang><zh-CN>加载共享字段生成的静态帮助，真实宽终端120列，其余与重定向80列。</zh-CN><en>Load static help generated from shared fields, using 120 columns on actual wide terminals and 80 elsewhere and for redirection.</en></lang>
+    const help = await import("./command-documentation/help.mjs");
+    process.stdout.write(process.stdout.isTTY && process.stdout.columns >= 120
+      ? help.HTMDOC_HELP_120 : help.HTMDOC_HELP_80);
     process.exit(0);
   }
 

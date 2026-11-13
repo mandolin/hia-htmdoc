@@ -1,0 +1,106 @@
+[
+  {
+    "commandId": "htmdoc",
+    "sourceDigests": {
+      "src/cli.mjs": "a85c37c95c1d3adb96dfdd84a00a6f0a6c8321b62e6957220ac1a4e5ca4ddcc3",
+      "src/html-authoring-handoff-cli.mjs": "c704ca846d30c709f08dd06a80034888492c2a09a75db488704b61915ec64fae",
+      "src/html-authoring-handoff.mjs": "6bd89c472f75cc39c7d5f607c63d7dd36adcd956cdaf1c5b0e6dc8a13943f486",
+      "HANDOFF.md": "0b033bcc6c449f26485b7e1cea1ec6255b9f319342c29042851aff73711ce4f7",
+      "src/command-content.mjs": "b17e49181663d0b5154c073217808e3802c1b4c73eb14474894ae22ebf5711b3",
+      "src/metadata.mjs": "c4a380d39eb8c355a515a520c935400be25634c706146c82f231810f8d66ac1b",
+      "src/index.mjs": "6941e3fa09984f5b486a9ea44682f16a066e6539b5157f5b717882e6b0be0da0",
+      "src/schema.mjs": "4f3bcae4bae7284ef6aa430fec658aea7945ce9aad04d0074eb99e4f10877abf",
+      "src/config-compatibility.mjs": "308dbf0c1993ca23593ed735c5354b4f5982f0b270902c7298372f2aab44f1d1",
+      "src/schemas/htmdoc-config-0.1.0-draft.schema.json": "a912b47fc325ba040e434ab92f478542d411f859c445dbab6a75a6bb2687561b",
+      "src/schemas/htmdoc-config-1.0.0.schema.json": "64c6a726a3d1735d28615f12278c714b30c0410a6f1aacee317e86372a9ddb03",
+      "README.md": "566f891d3166741869609398552b4d0ab8b8a80a411774f2f3b1c560b0584f9d",
+      "package.json": "084550999cf132051e06cdcb24d6bcc33fe6f46ad86c7304a52aaf6f7d3c338e"
+    },
+    "options": [
+      {
+        "name": "config",
+        "valueType": "string",
+        "short": "c"
+      },
+      {
+        "name": "help",
+        "valueType": "boolean",
+        "short": "h"
+      },
+      {
+        "name": "kind",
+        "valueType": "string",
+        "short": "k"
+      },
+      {
+        "name": "no-doc-source-map",
+        "valueType": "boolean"
+      },
+      {
+        "name": "out-dir",
+        "valueType": "string",
+        "short": "o"
+      },
+      {
+        "name": "sources-content-policy",
+        "valueType": "string"
+      },
+      {
+        "name": "version",
+        "valueType": "boolean",
+        "short": "v"
+      },
+      {
+        "name": "workspace-root",
+        "valueType": "string"
+      }
+    ],
+    "positionals": [
+      {
+        "name": "positionals",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "commandId": "htmdoc-handoff",
+    "sourceDigests": {
+      "src/cli.mjs": "a85c37c95c1d3adb96dfdd84a00a6f0a6c8321b62e6957220ac1a4e5ca4ddcc3",
+      "src/html-authoring-handoff-cli.mjs": "c704ca846d30c709f08dd06a80034888492c2a09a75db488704b61915ec64fae",
+      "src/html-authoring-handoff.mjs": "6bd89c472f75cc39c7d5f607c63d7dd36adcd956cdaf1c5b0e6dc8a13943f486",
+      "HANDOFF.md": "0b033bcc6c449f26485b7e1cea1ec6255b9f319342c29042851aff73711ce4f7",
+      "src/command-content.mjs": "b17e49181663d0b5154c073217808e3802c1b4c73eb14474894ae22ebf5711b3",
+      "src/metadata.mjs": "c4a380d39eb8c355a515a520c935400be25634c706146c82f231810f8d66ac1b",
+      "src/index.mjs": "6941e3fa09984f5b486a9ea44682f16a066e6539b5157f5b717882e6b0be0da0",
+      "src/schema.mjs": "4f3bcae4bae7284ef6aa430fec658aea7945ce9aad04d0074eb99e4f10877abf",
+      "src/config-compatibility.mjs": "308dbf0c1993ca23593ed735c5354b4f5982f0b270902c7298372f2aab44f1d1",
+      "src/schemas/htmdoc-config-0.1.0-draft.schema.json": "a912b47fc325ba040e434ab92f478542d411f859c445dbab6a75a6bb2687561b",
+      "src/schemas/htmdoc-config-1.0.0.schema.json": "64c6a726a3d1735d28615f12278c714b30c0410a6f1aacee317e86372a9ddb03",
+      "README.md": "566f891d3166741869609398552b4d0ab8b8a80a411774f2f3b1c560b0584f9d",
+      "package.json": "084550999cf132051e06cdcb24d6bcc33fe6f46ad86c7304a52aaf6f7d3c338e"
+    },
+    "options": [
+      {
+        "name": "help",
+        "valueType": "boolean",
+        "short": "h"
+      },
+      {
+        "name": "input",
+        "valueType": "string",
+        "short": "i"
+      },
+      {
+        "name": "out",
+        "valueType": "string",
+        "short": "o"
+      },
+      {
+        "name": "version",
+        "valueType": "boolean",
+        "short": "v"
+      }
+    ],
+    "positionals": []
+  }
+]

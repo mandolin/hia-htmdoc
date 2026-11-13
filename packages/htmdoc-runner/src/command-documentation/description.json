@@ -1,0 +1,2807 @@
+{
+  "contract": "command-documentation",
+  "contractVersion": "0.1.0-draft",
+  "owner": {
+    "packageName": "@hia-doc/htmdoc-runner",
+    "packageVersion": "1.0.0"
+  },
+  "sources": [
+    {
+      "id": "src/cli.mjs",
+      "path": "src/cli.mjs",
+      "sha256": "a85c37c95c1d3adb96dfdd84a00a6f0a6c8321b62e6957220ac1a4e5ca4ddcc3",
+      "language": "javascript"
+    },
+    {
+      "id": "src/html-authoring-handoff-cli.mjs",
+      "path": "src/html-authoring-handoff-cli.mjs",
+      "sha256": "c704ca846d30c709f08dd06a80034888492c2a09a75db488704b61915ec64fae",
+      "language": "javascript"
+    },
+    {
+      "id": "src/html-authoring-handoff.mjs",
+      "path": "src/html-authoring-handoff.mjs",
+      "sha256": "6bd89c472f75cc39c7d5f607c63d7dd36adcd956cdaf1c5b0e6dc8a13943f486",
+      "language": "javascript"
+    },
+    {
+      "id": "HANDOFF.md",
+      "path": "HANDOFF.md",
+      "sha256": "0b033bcc6c449f26485b7e1cea1ec6255b9f319342c29042851aff73711ce4f7",
+      "language": "markdown"
+    },
+    {
+      "id": "src/command-content.mjs",
+      "path": "src/command-content.mjs",
+      "sha256": "b17e49181663d0b5154c073217808e3802c1b4c73eb14474894ae22ebf5711b3",
+      "language": "javascript"
+    },
+    {
+      "id": "src/metadata.mjs",
+      "path": "src/metadata.mjs",
+      "sha256": "c4a380d39eb8c355a515a520c935400be25634c706146c82f231810f8d66ac1b",
+      "language": "javascript"
+    },
+    {
+      "id": "src/index.mjs",
+      "path": "src/index.mjs",
+      "sha256": "6941e3fa09984f5b486a9ea44682f16a066e6539b5157f5b717882e6b0be0da0",
+      "language": "javascript"
+    },
+    {
+      "id": "src/schema.mjs",
+      "path": "src/schema.mjs",
+      "sha256": "4f3bcae4bae7284ef6aa430fec658aea7945ce9aad04d0074eb99e4f10877abf",
+      "language": "javascript"
+    },
+    {
+      "id": "src/config-compatibility.mjs",
+      "path": "src/config-compatibility.mjs",
+      "sha256": "308dbf0c1993ca23593ed735c5354b4f5982f0b270902c7298372f2aab44f1d1",
+      "language": "javascript"
+    },
+    {
+      "id": "src/schemas/htmdoc-config-0.1.0-draft.schema.json",
+      "path": "src/schemas/htmdoc-config-0.1.0-draft.schema.json",
+      "sha256": "a912b47fc325ba040e434ab92f478542d411f859c445dbab6a75a6bb2687561b",
+      "language": "json"
+    },
+    {
+      "id": "src/schemas/htmdoc-config-1.0.0.schema.json",
+      "path": "src/schemas/htmdoc-config-1.0.0.schema.json",
+      "sha256": "64c6a726a3d1735d28615f12278c714b30c0410a6f1aacee317e86372a9ddb03",
+      "language": "json"
+    },
+    {
+      "id": "README.md",
+      "path": "README.md",
+      "sha256": "566f891d3166741869609398552b4d0ab8b8a80a411774f2f3b1c560b0584f9d",
+      "language": "markdown"
+    },
+    {
+      "id": "package.json",
+      "path": "package.json",
+      "sha256": "084550999cf132051e06cdcb24d6bcc33fe6f46ad86c7304a52aaf6f7d3c338e",
+      "language": "json"
+    }
+  ],
+  "commands": [
+    {
+      "id": "htmdoc",
+      "executable": "htmdoc",
+      "path": [],
+      "kind": "command",
+      "signature": "htmdoc [options] <input...>",
+      "i18n": {
+        "enabled": true,
+        "model": "hia-text-i18n",
+        "modelVersion": "1.0.0",
+        "defaultLocale": "zh-CN",
+        "locales": [
+          "zh-CN",
+          "en"
+        ],
+        "fields": {
+          "summary": {
+            "fieldPath": "summary",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "提取HTML与Custom Elements Manifest文档",
+              "en": "Extract HTML and Custom Elements Manifest documentation"
+            }
+          },
+          "description": {
+            "fieldPath": "description",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "按明确配置或直接输入抽取HTML类文档并生成标准工件。",
+              "en": "Extract HTML-family documentation and generate standard artifacts from explicit configuration or direct inputs."
+            }
+          },
+          "configUsage": {
+            "fieldPath": "configUsage",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "htmdoc --config htmdoc.config.json",
+              "en": "htmdoc --config htmdoc.config.json"
+            }
+          },
+          "configOverrides": {
+            "fieldPath": "configOverrides",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "配置模式非空out-dir和sources-content-policy覆盖原值，no-doc-source-map可关闭地图。",
+              "en": "In config mode nonempty out-dir and sources-content-policy override configuration, and no-doc-source-map can disable maps."
+            }
+          },
+          "directOnly": {
+            "fieldPath": "directOnly",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "kind、workspace-root和位置输入仅用于直接模式；配置模式忽略。",
+              "en": "kind, workspace-root and positional inputs apply only to direct mode and are ignored in config mode."
+            }
+          },
+          "paths": {
+            "fieldPath": "paths",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "配置路径相对调用目录，配置工作区相对配置目录；直接工作区相对调用目录，输出相对工作区。",
+              "en": "Config paths use cwd and configured workspaces use the config directory; direct workspaces use cwd and output uses the workspace."
+            }
+          },
+          "writes": {
+            "fieldPath": "writes",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "构建创建目录并写工件，partial或failed可能保留成功输出；embed策略序列化获准的来源正文。",
+              "en": "Builds create directories and artifacts; partial or failed results may retain successful output, and embed serializes authorized source bodies."
+            }
+          },
+          "parsing": {
+            "fieldPath": "parsing",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "Node严格解析先于help，未知或缺值返回1；重复带值选项取末值，--后是位置输入。",
+              "en": "Node strict parsing precedes help; unknown switches or missing values exit 1. Repeated value options use the last value, and tokens after -- are positional."
+            }
+          },
+          "offline": {
+            "fieldPath": "offline",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "@hia-doc/htmdoc-runner/README.md",
+              "en": "@hia-doc/htmdoc-runner/README.md"
+            }
+          }
+        }
+      },
+      "displayVersion": {
+        "kind": "runner",
+        "value": "1.0.0"
+      },
+      "parsing": {
+        "helpOrder": "after-argument-validation",
+        "unknownOptions": "reject"
+      },
+      "options": [
+        {
+          "id": "config",
+          "kind": "option",
+          "name": "config",
+          "short": "c",
+          "valueType": "string",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "从JSON配置构造请求。",
+                  "en": "Build a request from JSON configuration."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "从JSON配置构造请求。",
+                  "en": "Build a request from JSON configuration."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "path",
+                  "en": "path"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "kind",
+          "kind": "option",
+          "name": "kind",
+          "short": "k",
+          "valueType": "string",
+          "required": false,
+          "multiple": false,
+          "choices": [
+            "html",
+            "html-fragment",
+            "html-template",
+            "custom-elements-manifest"
+          ],
+          "defaultRule": {
+            "kind": "conditional",
+            "conditions": [
+              "description"
+            ]
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接输入类型，省略时按文件名推断。",
+                  "en": "Direct-input kind, inferred from the filename when omitted."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接输入类型，省略时按文件名推断。",
+                  "en": "Direct-input kind, inferred from the filename when omitted."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "kind",
+                  "en": "kind"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "choices",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "choices",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "out-dir",
+          "kind": "option",
+          "name": "out-dir",
+          "short": "o",
+          "valueType": "string",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "conditional",
+            "conditions": [
+              "description"
+            ]
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出相对工作区，直接模式缺省dist/htmdoc；配置模式仅非空值覆盖。",
+                  "en": "Output is workspace-relative, defaults to dist/htmdoc in direct mode, and only nonempty values override config mode."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出相对工作区，直接模式缺省dist/htmdoc；配置模式仅非空值覆盖。",
+                  "en": "Output is workspace-relative, defaults to dist/htmdoc in direct mode, and only nonempty values override config mode."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "path",
+                  "en": "path"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "workspace-root",
+          "kind": "option",
+          "name": "workspace-root",
+          "valueType": "string",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "conditional",
+            "conditions": [
+              "description"
+            ]
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接模式相对调用目录，省略为当前目录。",
+                  "en": "Direct mode resolves from cwd and defaults to cwd."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接模式相对调用目录，省略为当前目录。",
+                  "en": "Direct mode resolves from cwd and defaults to cwd."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "path",
+                  "en": "path"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "sources-content-policy",
+          "kind": "option",
+          "name": "sources-content-policy",
+          "valueType": "string",
+          "required": false,
+          "multiple": false,
+          "choices": [
+            "none",
+            "reference",
+            "embed"
+          ],
+          "defaultRule": {
+            "kind": "conditional",
+            "conditions": [
+              "description"
+            ]
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接模式缺省none，配置模式仅非空值覆盖。",
+                  "en": "Direct mode defaults to none, while config mode accepts only nonempty overrides."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接模式缺省none，配置模式仅非空值覆盖。",
+                  "en": "Direct mode defaults to none, while config mode accepts only nonempty overrides."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "none|reference|embed",
+                  "en": "none|reference|embed"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "choices",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "choices",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "no-doc-source-map",
+          "kind": "option",
+          "name": "no-doc-source-map",
+          "valueType": "boolean",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "conditional",
+            "conditions": [
+              "description"
+            ]
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "提供时关闭地图；直接模式省略则生成，配置模式保留原值。",
+                  "en": "Supplying the flag disables maps; omission enables direct-mode maps and retains the configured value."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "提供时关闭地图；直接模式省略则生成，配置模式保留原值。",
+                  "en": "Supplying the flag disables maps; omission enables direct-mode maps and retains the configured value."
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "help",
+          "kind": "option",
+          "name": "help",
+          "short": "h",
+          "valueType": "boolean",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出帮助并退出0。",
+                  "en": "Print help and exit 0."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出帮助并退出0。",
+                  "en": "Print help and exit 0."
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        },
+        {
+          "id": "version",
+          "kind": "option",
+          "name": "version",
+          "short": "v",
+          "valueType": "boolean",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出运行器版本并退出0。",
+                  "en": "Print runner version and exit 0."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出运行器版本并退出0。",
+                  "en": "Print runner version and exit 0."
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        }
+      ],
+      "positionals": [
+        {
+          "id": "positionals",
+          "kind": "positional",
+          "name": "positionals",
+          "valueType": "string",
+          "required": false,
+          "multiple": true,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接模式至少一个工作区相对输入；配置模式忽略。",
+                  "en": "Direct mode requires at least one workspace-relative input; config mode ignores positionals."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "直接模式至少一个工作区相对输入；配置模式忽略。",
+                  "en": "Direct mode requires at least one workspace-relative input; config mode ignores positionals."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "input...",
+                  "en": "input..."
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs",
+              "range": {
+                "start": {
+                  "line": 20
+                },
+                "end": {
+                  "line": 20
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "README.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/index.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/config-compatibility.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-1.0.0.schema.json"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/schemas/htmdoc-config-0.1.0-draft.schema.json"
+            }
+          ]
+        }
+      ],
+      "examples": [
+        "htmdoc --config htmdoc.config.json"
+      ],
+      "effects": {
+        "filesystem": "read-write",
+        "network": "none"
+      },
+      "exitCodes": [
+        {
+          "code": 0,
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "成功、帮助或版本",
+                  "en": "Success, help or version"
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "成功、帮助或版本",
+                  "en": "Success, help or version"
+                }
+              }
+            }
+          }
+        },
+        {
+          "code": 1,
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "参数、配置或构建失败",
+                  "en": "Argument, configuration or build failure"
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "参数/配置错误或partial/failed构建",
+                  "en": "Argument/configuration errors or partial/failed builds"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "fieldPath": "signature",
+          "sourceId": "src/cli.mjs",
+          "range": {
+            "start": {
+              "line": 20
+            },
+            "end": {
+              "line": 20
+            }
+          },
+          "rangeConvention": {
+            "endBoundary": "unknown",
+            "columnUnit": "unknown"
+          }
+        },
+        {
+          "fieldPath": "executable",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "executable",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "path",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "path",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "kind",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "kind",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "signature",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "signature",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "displayVersion",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "displayVersion",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "parsing",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "parsing",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "examples",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "examples",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "effects",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "effects",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "exitCodes",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "exitCodes",
+          "sourceId": "src/cli.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.summary",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.summary",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.description",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.description",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.configUsage",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.configUsage",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.configOverrides",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.configOverrides",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.directOnly",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.directOnly",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.paths",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.paths",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.writes",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.writes",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.parsing",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.parsing",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "i18n.fields.offline",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.offline",
+          "sourceId": "README.md"
+        },
+        {
+          "fieldPath": "executable",
+          "sourceId": "package.json"
+        },
+        {
+          "fieldPath": "displayVersion",
+          "sourceId": "src/metadata.mjs"
+        }
+      ]
+    },
+    {
+      "id": "htmdoc-handoff",
+      "executable": "htmdoc-handoff",
+      "path": [],
+      "kind": "command",
+      "signature": "htmdoc-handoff --input <safe-relative-json> [--out <safe-relative-json>]",
+      "i18n": {
+        "enabled": true,
+        "model": "hia-text-i18n",
+        "modelVersion": "1.0.0",
+        "defaultLocale": "zh-CN",
+        "locales": [
+          "zh-CN",
+          "en"
+        ],
+        "fields": {
+          "summary": {
+            "fieldPath": "summary",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "评估显式HTML编写交接元数据",
+              "en": "Evaluate explicit HTML authoring handoff metadata"
+            }
+          },
+          "description": {
+            "fieldPath": "description",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "读取明确选定的元数据，纯评估生成accepted/refused交接报告。",
+              "en": "Read explicitly selected metadata and purely evaluate an accepted/refused handoff report."
+            }
+          },
+          "versionIdentity": {
+            "fieldPath": "versionIdentity",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "显示工件契约0.1.0-draft；安装包为独立版本身份。",
+              "en": "Displays artifact contract 0.1.0-draft; package version is independent."
+            }
+          },
+          "paths": {
+            "fieldPath": "paths",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "路径相对调用目录且受safe-relative检查；输出文件由调用者显式选择。",
+              "en": "Paths are cwd-relative and checked as safe-relative; callers select output explicitly."
+            }
+          },
+          "writes": {
+            "fieldPath": "writes",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "运行读取所选元数据并可写所选结果文件；帮助不读取工作区。",
+              "en": "Runs read selected metadata and may write the selected result file; help does not inspect the workspace."
+            }
+          },
+          "parsing": {
+            "fieldPath": "parsing",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "Node严格解析先于help，拒绝位置输入。评估执行要求input，help/version提前返回。重复带值选项取末值。",
+              "en": "Node strict parsing precedes help and rejects positionals. Evaluation requires input, while help/version return early. Repeated value options use the last value."
+            }
+          },
+          "defaults": {
+            "fieldPath": "defaults",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "省略或空out将报告写stdout；非空out写所选路径，已有父目录由调用者准备。",
+              "en": "Omitted or empty out writes the report to stdout; nonempty out writes the selected path, whose parent directory is prepared by the caller."
+            }
+          },
+          "offline": {
+            "fieldPath": "offline",
+            "kind": "text",
+            "defaultLocale": "zh-CN",
+            "localizedText": {
+              "zh-CN": "@hia-doc/htmdoc-runner/README.md",
+              "en": "@hia-doc/htmdoc-runner/README.md"
+            }
+          }
+        }
+      },
+      "displayVersion": {
+        "kind": "artifact",
+        "value": "0.1.0-draft"
+      },
+      "parsing": {
+        "helpOrder": "after-argument-validation",
+        "unknownOptions": "reject"
+      },
+      "options": [
+        {
+          "id": "htmdoc-handoff.input",
+          "kind": "option",
+          "name": "input",
+          "short": "i",
+          "valueType": "string",
+          "required": true,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "必填，仅读取这一份元数据JSON。",
+                  "en": "Required; read only this metadata JSON."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "必填，仅读取这一份元数据JSON。",
+                  "en": "Required; read only this metadata JSON."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "safe-relative-json",
+                  "en": "safe-relative-json"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs",
+              "range": {
+                "start": {
+                  "line": 28
+                },
+                "end": {
+                  "line": 28
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff.mjs"
+            }
+          ]
+        },
+        {
+          "id": "htmdoc-handoff.out",
+          "kind": "option",
+          "name": "out",
+          "short": "o",
+          "valueType": "string",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "conditional",
+            "conditions": [
+              "description"
+            ]
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "可选输出文件；省略时将结果写stdout。",
+                  "en": "Optional output file; omission writes the result to stdout."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "可选输出文件；省略时将结果写stdout。",
+                  "en": "Optional output file; omission writes the result to stdout."
+                }
+              },
+              "metavar": {
+                "fieldPath": "metavar",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "safe-relative-json",
+                  "en": "safe-relative-json"
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs",
+              "range": {
+                "start": {
+                  "line": 28
+                },
+                "end": {
+                  "line": 28
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.metavar",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff.mjs"
+            }
+          ]
+        },
+        {
+          "id": "htmdoc-handoff.help",
+          "kind": "option",
+          "name": "help",
+          "short": "h",
+          "valueType": "boolean",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出帮助并退出0。",
+                  "en": "Print help and exit 0."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出帮助并退出0。",
+                  "en": "Print help and exit 0."
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs",
+              "range": {
+                "start": {
+                  "line": 28
+                },
+                "end": {
+                  "line": 28
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff.mjs"
+            }
+          ]
+        },
+        {
+          "id": "htmdoc-handoff.version",
+          "kind": "option",
+          "name": "version",
+          "short": "v",
+          "valueType": "boolean",
+          "required": false,
+          "multiple": false,
+          "defaultRule": {
+            "kind": "not-applicable"
+          },
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出工件契约版本并退出0。",
+                  "en": "Print artifact contract version and exit 0."
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "输出工件契约版本并退出0。",
+                  "en": "Print artifact contract version and exit 0."
+                }
+              }
+            }
+          },
+          "evidence": [
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs",
+              "range": {
+                "start": {
+                  "line": 28
+                },
+                "end": {
+                  "line": 28
+                }
+              },
+              "rangeConvention": {
+                "endBoundary": "unknown",
+                "columnUnit": "unknown"
+              }
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "kind",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "name",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "short",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "valueType",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "required",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "multiple",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff-cli.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.summary",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "src/command-content.mjs"
+            },
+            {
+              "fieldPath": "i18n.fields.description",
+              "sourceId": "HANDOFF.md"
+            },
+            {
+              "fieldPath": "defaultRule",
+              "sourceId": "src/html-authoring-handoff.mjs"
+            }
+          ]
+        }
+      ],
+      "positionals": [],
+      "examples": [
+        "htmdoc-handoff --input request.json"
+      ],
+      "effects": {
+        "filesystem": "read-write",
+        "network": "none"
+      },
+      "exitCodes": [
+        {
+          "code": 0,
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "交接评估accepted、帮助或版本",
+                  "en": "Accepted handoff, help or version"
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "交接评估accepted、帮助或版本",
+                  "en": "Accepted handoff, help or version"
+                }
+              }
+            }
+          }
+        },
+        {
+          "code": 1,
+          "i18n": {
+            "enabled": true,
+            "model": "hia-text-i18n",
+            "modelVersion": "1.0.0",
+            "defaultLocale": "zh-CN",
+            "locales": [
+              "zh-CN",
+              "en"
+            ],
+            "fields": {
+              "summary": {
+                "fieldPath": "summary",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "交接评估refused或参数、读取、处理失败",
+                  "en": "Refused handoff or argument, read or processing failure"
+                }
+              },
+              "description": {
+                "fieldPath": "description",
+                "kind": "text",
+                "defaultLocale": "zh-CN",
+                "localizedText": {
+                  "zh-CN": "交接评估refused或参数、读取、处理失败",
+                  "en": "Refused handoff or argument, read or processing failure"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "evidence": [
+        {
+          "fieldPath": "signature",
+          "sourceId": "src/html-authoring-handoff-cli.mjs",
+          "range": {
+            "start": {
+              "line": 28
+            },
+            "end": {
+              "line": 28
+            }
+          },
+          "rangeConvention": {
+            "endBoundary": "unknown",
+            "columnUnit": "unknown"
+          }
+        },
+        {
+          "fieldPath": "executable",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "executable",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "path",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "path",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "kind",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "kind",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "signature",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "signature",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "displayVersion",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "displayVersion",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "parsing",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "parsing",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "examples",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "examples",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "effects",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "effects",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "exitCodes",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "exitCodes",
+          "sourceId": "src/html-authoring-handoff-cli.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.summary",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.summary",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.description",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.description",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.versionIdentity",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.versionIdentity",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.paths",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.paths",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.writes",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.writes",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.parsing",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.parsing",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.defaults",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.defaults",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "i18n.fields.offline",
+          "sourceId": "src/command-content.mjs"
+        },
+        {
+          "fieldPath": "i18n.fields.offline",
+          "sourceId": "HANDOFF.md"
+        },
+        {
+          "fieldPath": "executable",
+          "sourceId": "package.json"
+        },
+        {
+          "fieldPath": "displayVersion",
+          "sourceId": "src/html-authoring-handoff.mjs"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+HIA-Documentation-Sys · htmdoc-handoff
+评估显式HTML编写交接元数据 / Evaluate explicit HTML authoring handoff metadata
+
+版本身份 / Version identity
+  显示工件契约0.1.0-draft；安装包为独立版本身份。
+  Displays artifact contract 0.1.0-draft; package version is independent.
+
+用法 / Usage
+  htmdoc-handoff --input <safe-relative-json> [--out <safe-relative-json>]
+
+参数 / Options
+  -i, --input <safe-relative-json>
+    必填，仅读取这一份元数据JSON。
+    Required; read only this metadata JSON.
+  -o, --out <safe-relative-json>
+    可选输出文件；省略时将结果写stdout。
+    Optional output file; omission writes the result to stdout.
+  -h, --help
+    输出帮助并退出0。 / Print help and exit 0.
+  -v, --version
+    输出工件契约版本并退出0。 / Print artifact contract version and exit 0.
+
+路径与副作用 / Paths and effects
+  路径相对调用目录且受safe-relative检查；输出文件由调用者显式选择。
+  Paths are cwd-relative and checked as safe-relative; callers select output explicitly.
+  运行读取所选元数据并可写所选结果文件；帮助不读取工作区。
+  Runs read selected metadata and may write the selected result file; help does not inspect the workspace.
+
+退出码 / Exit codes
+  0 交接评估accepted、帮助或版本 / Accepted handoff, help or version
+  1 交接评估refused或参数、读取、处理失败
+    Refused handoff or argument, read or processing failure
+
+离线完整说明 / Complete offline reference
+  @hia-doc/htmdoc-runner/README.md

@@ -179,3 +179,17 @@ npm exec --offline -- htmdoc --workspace-root . --kind html --out-dir dist/html-
 中文。本页为1.0.0源码候选，候选归档须与配套内部依赖一起安装；离线安装另需第三方依赖缓存。注册表路线先用 `npm view @hia-doc/htmdoc-runner@1.0.0 version` 核目标，再核配套版本并安装。`npm list @hia-doc/htmdoc-runner --depth=0` 核本地安装。旧0.1.x配置教程按旧包阅读，当前配置身份为1.0.0。htmdoc-handoff来自同一包，其version输出交接契约身份0.1.0-draft，完整选项见随包指南。
 
 English. This is the 1.0.0 source candidate. Install its archive with matching internal dependencies and prepare a third-party cache for offline installation. For registry installs, check the target with `npm view @hia-doc/htmdoc-runner@1.0.0 version` and verify matching dependencies first. Check the installed package with `npm list @hia-doc/htmdoc-runner --depth=0`. Older 0.1.x guides retain their package scope; current config identity is 1.0.0. htmdoc-handoff is supplied by the same package and prints handoff contract version 0.1.0-draft. Its complete options are in the bundled guide.
+
+## Generated command help and documentation
+
+中文。htmdoc与htmdoc-handoff采用同一字段级双语描述，分别保留八/四选项、一个HTML位置输入和不同版本身份，生成15个标准HiaDocument符号。真实宽终端使用120列帮助，其余及重定向使用80列。Node严格解析先于帮助，未知选项及缺值按原受控错误退出1。htmdoc接收位置输入，handoff拒绝位置输入。重复带值选项取最后值，合法help/version提前返回。
+
+English. htmdoc and htmdoc-handoff use shared field-level bilingual descriptions, retaining eight/four options, one HTML positional input, and separate version identities to produce 15 standard HiaDocument symbols. Wide terminals use 120-column help, with 80 columns elsewhere and for redirection. Strict Node parsing precedes help, with unknown options and missing values exiting 1 through controlled errors. htmdoc accepts positional inputs and handoff rejects them. Repeated value options use the last value, while valid help/version return early.
+
+中文。构建命令配置模式仅非空输出/来源策略覆盖，关闭地图标志也会应用。直接模式空输出选择工作区根，配置模式空输出保留配置。handoff默认stdout，省略或空out按stdout分支处理，非空out写明确路径且已有父目录由调用者准备。accepted与refused会输出完整报告，退出码分别为0/1，参数/文件错误走stderr。交接指南见[HANDOFF](HANDOFF.md)。
+
+English. Build config mode applies nonempty output/source-policy overrides and the map-disabling flag. Empty direct output selects the workspace root, while empty config-mode output retains configuration. Handoff defaults to stdout, including omitted or empty out values. Nonempty out writes the selected path whose parent directory is prepared by the caller. Accepted and refused evaluations output complete reports with exit codes 0 and 1 respectively, while argument/file errors use stderr. See the bundled [handoff guide](HANDOFF.md).
+
+The package ships seven files in `src/command-documentation/`: `description.json`, `observations.json`, `document.hia.json`, `command.schema.json`, `document.schema.json`, `help.mjs` and `generation.json`. Maintainers use `npm run commands:check` to verify actual parser declarations, original source bytes, schemas and snapshots offline. Regeneration uses `npm run commands:build -- --core-module <core-entry>`. Package-relative provenance uses scoped LF attributes and actual parser-call lines, with unknown column units and endpoints. Each CLI loads its corresponding generated help strings.
+
+中文。开发期core严格投影，运行期使用静态帮助，日常检查复用现有Ajv。两个解析实现各自观察并绑定来源，省略的位置输入许可声明与运行行为分别核验。原包版本1.0.0与交接工件0.1.0-draft分别记录。

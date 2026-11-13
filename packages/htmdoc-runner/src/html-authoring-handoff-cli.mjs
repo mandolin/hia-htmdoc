@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * HTMDoc HTML-authoring metadata handoff 的显式文件 CLI。
+ * @file
+ * @lang zh-CN HTMDoc HTML-authoring metadata handoff 的显式文件 CLI。
  *
  * 本命令只读取一份 caller-selected metadata JSON file；绝不发现 repository、读取 source/artifact/source-map
  * body、打开 Tauri/Obsidian 或访问 network service。
@@ -39,7 +40,10 @@ try {
    * @lang en Help remains static so it cannot inspect a caller workspace.
    */
   if (values.help) {
-    process.stdout.write(`HTMDoc HTML-authoring handoff ${HTML_AUTHORING_DOCUMENTATION_HANDOFF_VERSION}\n\nUsage:\n  htmdoc-handoff --input <safe-relative-json> [--out <safe-relative-json>]\n\nThe command evaluates one explicit metadata-only request. It does not discover, read, run, or write a target project.\n`);
+    // <lang><zh-CN>加载共享字段生成的静态帮助，真实宽终端120列，其余与重定向80列。</zh-CN><en>Load static help generated from shared fields, using 120 columns on actual wide terminals and 80 elsewhere and for redirection.</en></lang>
+    const help = await import("./command-documentation/help.mjs");
+    process.stdout.write(process.stdout.isTTY && process.stdout.columns >= 120
+      ? help.HTMDOC_HANDOFF_HELP_120 : help.HTMDOC_HANDOFF_HELP_80);
     process.exit(0);
   }
 
@@ -78,7 +82,7 @@ try {
 }
 
 /**
- * 在 invocation directory 下解析一份安全 relative JSON path。
+ * @lang zh-CN 在 invocation directory 下解析一份安全 relative JSON path。
  *
  * @lang en Resolves one safe relative JSON path under the invocation directory.
  *
@@ -104,7 +108,7 @@ function resolveSafeRelativePath(value, optionName) {
 }
 
 /**
- * 读取一份显式 JSON request，同时从 CLI surface 隐藏 parser/filesystem detail。
+ * @lang zh-CN 读取一份显式 JSON request，同时从 CLI surface 隐藏 parser/filesystem detail。
  *
  * @lang en Reads one explicit JSON request while hiding parser/filesystem detail from the CLI surface.
  *
@@ -120,7 +124,7 @@ async function readRequestJson(filePath) {
 }
 
 /**
- * 将 unexpected errors 转为固定 public-safe CLI message。
+ * @lang zh-CN 将 unexpected errors 转为固定 public-safe CLI message。
  *
  * @lang en Converts unexpected errors to a fixed public-safe CLI message.
  *

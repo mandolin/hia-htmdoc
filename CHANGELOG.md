@@ -1,5 +1,11 @@
 # Changelog
 
+## Command documentation and bilingual help
+
+- Generate shared field-level 80/120-column help and standard documentation for htmdoc and htmdoc-handoff.
+- Verify independent actual parser declarations, source bytes and seven packaged assets.
+- 中文。八/四选项与位置输入能力分别核验，运行器和交接工件版本各自保留。
+
 ## 1.0.0 source candidate
 
 - Document legacy config/extraction exports individually through compatibility facades retaining the exact archived objects and values; historical modules and schemas remain unchanged.
