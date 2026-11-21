@@ -3,16 +3,26 @@ name: npm Trusted Publish
 on:
   workflow_dispatch:
     inputs:
+      operation:
+        description: Select which release path to run
+        type: choice
+        required: true
+        default: stable
+        options:
+          - stable
+          - candidate-audit
+          - candidate-publish
       package_name:
         description: "Candidate package name, for example @hia-doc/htmdoc-spec"
-        required: true
+        required: false
         type: string
       confirm_publish:
         description: "Type: publish @hia-doc htmdoc package"
-        required: true
+        required: false
         type: string
 
 permissions:
+  actions: read
   contents: read
   id-token: write
 
@@ -23,7 +33,7 @@ concurrency:
 jobs:
   publish:
     name: Publish one approved package with npm provenance
-    if: inputs.confirm_publish == 'publish @hia-doc htmdoc package'
+    if: inputs.operation == 'stable' && inputs.package_name != '' && inputs.confirm_publish == 'publish @hia-doc htmdoc package'
     runs-on: ubuntu-latest
 
     steps:
@@ -42,7 +52,9 @@ jobs:
 
       - name: Refuse candidates without explicit publish approval
         id: resolve
-        run: node scripts/resolve-release-package.cjs "${{ inputs.package_name }}" --publish-ready --github-output
+        env:
+          FORMAL_PACKAGE: ${{ inputs.package_name }}
+        run: node scripts/resolve-release-package.cjs "$FORMAL_PACKAGE" --publish-ready --github-output
 
       - name: Install dependencies
         run: npm ci --ignore-scripts --no-audit --no-fund
@@ -58,3 +70,15 @@ jobs:
 
       - name: Publish package tarball
         run: npm publish "$RUNNER_TEMP"/hia-pack/*.tgz --access public --provenance --registry=https://registry.npmjs.org/
+
+  candidate:
+    # <lang lang="zh-CN">只使用全局已核对的归档和审批入口。</lang><lang lang="en">Use the coordinated verified archive and approval path.</lang>
+    if: github.ref == 'refs/heads/main' && (inputs.operation == 'candidate-audit' || inputs.operation == 'candidate-publish')
+    uses: mandolin/HIA-Documentation/.github/workflows/publish-npm-candidate.yml@e5c4cc403c8bd6755bd4f83b5988145c087a719d
+    with:
+      release_revision: e5c4cc403c8bd6755bd4f83b5988145c087a719d
+      mode: ${{ inputs.operation == 'candidate-audit' && 'audit' || 'publish' }}
+      package_name: ${{ inputs.package_name }}
+      confirmation: ${{ inputs.confirm_publish }}
+    secrets:
+      bootstrap_token: ${{ secrets.HIA_NPM_BOOTSTRAP_TOKEN }}
