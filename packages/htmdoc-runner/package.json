@@ -51,6 +51,6 @@
     "@hia-doc/html-doc-extractor": "1.0.0",
     "@hia-doc/html-doc-source-map": "1.0.0",
     "@hia-doc/htmdoc-spec": "1.0.0",
-    "ajv": "8.17.1"
+    "ajv": "8.20.0"
   }
 }
